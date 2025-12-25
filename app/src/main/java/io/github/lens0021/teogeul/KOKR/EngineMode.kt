@@ -7,6 +7,9 @@ import io.github.lens0021.teogeul.KOKR.layout.LayoutGongSebul
 import io.github.lens0021.teogeul.KOKR.layout.LayoutMoachigiSebul
 import io.github.lens0021.teogeul.KOKR.layout.LayoutShinSebul
 
+private const val LANG_EN_CODE = 0
+private const val LANG_KO_CODE = 3
+
 enum class EngineMode(
     val properties: Properties,
     val layout: Array<IntArray>?,
@@ -42,15 +45,15 @@ enum class EngineMode(
     SEBUL_393Y(Properties(), LayoutGongSebul.JAMO_SEBUL_393Y, null, LayoutGongSebul.COMB_FULL, null, "keyboard_sebul_393y"),
     SEBUL_3_2015Y(Properties(), LayoutShinSebul.JAMO_SEBUL_3_2015Y, null, LayoutGongSebul.COMB_FULL, null, "keyboard_sebul_3_2015y"),
 
-    ENGLISH_QWERTY(Properties(LANG_EN, false, false, false, false, false, false), null, null, null, null, "keyboard_alphabet_qwerty"),
-    ENGLISH_DVORAK(Properties(LANG_EN, false, false, false, false, false, false), LayoutAlphabet.CONVERT_ENGLISH_DVORAK, null, null, null, "keyboard_alphabet_dvorak"),
-    ENGLISH_COLEMAK(Properties(LANG_EN, false, false, false, false, false, false), LayoutAlphabet.CONVERT_ENGLISH_COLEMAK, null, null, null, "keyboard_alphabet_colemak");
+    ENGLISH_QWERTY(Properties(LANG_EN_CODE, false, false, false, false, false, false), null, null, null, null, "keyboard_alphabet_qwerty"),
+    ENGLISH_DVORAK(Properties(LANG_EN_CODE, false, false, false, false, false, false), LayoutAlphabet.CONVERT_ENGLISH_DVORAK, null, null, null, "keyboard_alphabet_dvorak"),
+    ENGLISH_COLEMAK(Properties(LANG_EN_CODE, false, false, false, false, false, false), LayoutAlphabet.CONVERT_ENGLISH_COLEMAK, null, null, null, "keyboard_alphabet_colemak");
 
     val prefValues: Array<out String> = prefValues
 
     companion object {
-        const val LANG_EN = 0
-        const val LANG_KO = 3
+        const val LANG_EN = LANG_EN_CODE
+        const val LANG_KO = LANG_KO_CODE
 
         @JvmStatic
         fun get(defaultLayout: String): EngineMode {
@@ -102,7 +105,7 @@ enum class EngineMode(
             fullMoachigi: Boolean,
             twelveEngine: Boolean,
             timeout: Boolean
-        ) : this(LANG_KO, altMode, direct, predictive, fullMoachigi, twelveEngine, timeout)
+        ) : this(LANG_KO_CODE, altMode, direct, predictive, fullMoachigi, twelveEngine, timeout)
 
         constructor(
             direct: Boolean,

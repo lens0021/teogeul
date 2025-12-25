@@ -110,10 +110,26 @@ class HangulEngine {
 
     private val histories: Stack<History> = Stack()
 
-    var jamoTable: Array<IntArray>? = null
-    var jamoSet: Array<Array<IntArray>>? = null
-    var currentJamoTable: Array<IntArray>? = null
-    private var combinationTable: Array<IntArray>? = null
+    private var jamoTableData: Array<IntArray>? = null
+    private var jamoSetData: Array<Array<IntArray>>? = null
+    private var currentJamoTable: Array<IntArray>? = null
+    private var combinationTableData: Array<IntArray>? = null
+
+    var jamoTable: Array<IntArray>?
+        get() = jamoTableData
+        set(value) {
+            jamoTableData = value
+            jamoSetData = null
+            currentJamoTable = null
+        }
+
+    var jamoSet: Array<Array<IntArray>>?
+        get() = jamoSetData
+        set(value) {
+            jamoSetData = value
+            jamoTableData = null
+            changeJamoTable(lastInputType)
+        }
 
     constructor() {
         resetComposition()
@@ -148,8 +164,8 @@ class HangulEngine {
 
     fun inputCode(code: Int, shift: Int): Int {
         val table = when {
-            jamoTable != null -> jamoTable
-            jamoSet != null -> currentJamoTable
+            jamoTableData != null -> jamoTableData
+            jamoSetData != null -> currentJamoTable
             else -> null
         } ?: return -1
         for (item in table) {
@@ -408,7 +424,7 @@ class HangulEngine {
     }
 
     private fun getCombination(a: Int, b: Int): Int {
-        val table = combinationTable ?: return -1
+        val table = combinationTableData ?: return -1
         for (item in table) {
             if (item[0] == a && item[1] == b) {
                 return item[2]
@@ -420,7 +436,7 @@ class HangulEngine {
     private class Pair(val jong: Int, val cho: Int)
 
     private fun getJongseongPair(jong: Int): Pair? {
-        val table = combinationTable ?: return null
+        val table = combinationTableData ?: return null
         for (item in table) {
             if (item[2] == jong) {
                 var resultCho = 0
@@ -521,77 +537,17 @@ class HangulEngine {
         return filtered in 0x11a8..0x11ff
     }
 
-    fun isMoachigi(): Boolean {
-        return moachigi
-    }
-
-    fun setMoachigi(moachigi: Boolean) {
-        this.moachigi = moachigi
-    }
-
-    fun isFullMoachigi(): Boolean {
-        return fullMoachigi
-    }
-
-    fun setFullMoachigi(fullMoachigi: Boolean) {
-        this.fullMoachigi = fullMoachigi
-    }
-
-    fun isFirstMidEnd(): Boolean {
-        return firstMidEnd
-    }
-
-    fun setFirstMidEnd(firstMidEnd: Boolean) {
-        this.firstMidEnd = firstMidEnd
-    }
-
-    fun getListener(): HangulEngineListener? {
-        return listener
-    }
-
-    fun setListener(listener: HangulEngineListener?) {
-        this.listener = listener
-    }
-
-    fun getComposing(): String {
-        return composing
-    }
-
-    fun setComposing(composing: String) {
-        this.composing = composing
-    }
-
-    fun getJamoTable(): Array<IntArray>? {
-        return currentJamoTable ?: jamoTable
-    }
-
-    fun setJamoTable(jamoTable: Array<IntArray>?) {
-        this.jamoTable = jamoTable
-        this.jamoSet = null
-        this.currentJamoTable = null
-    }
-
-    fun getJamoSet(): Array<Array<IntArray>>? {
-        return jamoSet
-    }
-
-    fun setJamoSet(jamoSet: Array<Array<IntArray>>?) {
-        this.jamoSet = jamoSet
-        this.jamoTable = null
-        changeJamoTable(lastInputType)
-    }
-
     fun changeJamoTable(num: Int) {
-        val table = jamoSet?.getOrNull(num) ?: return
+        val table = jamoSetData?.getOrNull(num) ?: return
         currentJamoTable = table
     }
 
     fun getCombinationTable(): Array<IntArray>? {
-        return combinationTable
+        return combinationTableData
     }
 
     fun setCombinationTable(combinations: Array<IntArray>?) {
-        this.combinationTable = combinations
+        this.combinationTableData = combinations
     }
 
     interface HangulEngineListener {
@@ -604,7 +560,4 @@ class HangulEngine {
 
     class SetComposingEvent(val composing: String) : HangulEngineEvent()
 
-    fun getLastInputType(): Int {
-        return lastInputType
-    }
 }

@@ -30,7 +30,7 @@ import io.github.lens0021.teogeul.event.OpenWnnEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
+class OpenWnnKOKR : OpenWnn, HangulEngineListener {
     companion object {
         @JvmField
         val SHIFT_CONVERT = arrayOf(
@@ -129,7 +129,6 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
     private val mShiftKeyToggle = intArrayOf(0, MetaKeyKeyListener.META_SHIFT_ON, MetaKeyKeyListener.META_CAP_LOCKED)
     private val mAltKeyToggle = intArrayOf(0, MetaKeyKeyListener.META_ALT_ON, MetaKeyKeyListener.META_ALT_LOCKED)
 
-    var mDirectInputMode: Boolean = false
     var mEnableTimeout: Boolean = false
 
     var mMoachigi: Boolean = false
@@ -160,7 +159,7 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
         mSelf = this
 
         mQwertyEngine = HangulEngine()
-        mQwertyEngine.setListener(this)
+        mQwertyEngine.listener = this
         mHangulEngine = mQwertyEngine
 
         mAutoHideMode = false
@@ -453,7 +452,8 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
                 KeyEvent.KEYCODE_DPAD_LEFT,
                 KeyEvent.KEYCODE_DPAD_RIGHT -> {
                     if (!mSelectionMode) {
-                        mSelectionEnd = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0).length
+                        val beforeAll = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0)
+                        mSelectionEnd = beforeAll?.length ?: 0
                         mSelectionStart = mSelectionEnd
                         mSelectionMode = true
                     } else {
@@ -464,16 +464,17 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
                             var text: CharSequence = ""
                             var end: Boolean
                             while (true) {
-                                val before = inputConnection.getTextBeforeCursor(i, 0)
+                                val before = inputConnection.getTextBeforeCursor(i, 0) ?: ""
                                 end = before == text
                                 text = before
-                                if (end || text[0] == '\n') {
+                                if (end || (text.isNotEmpty() && text[0] == '\n')) {
                                     break
                                 }
                                 i++
                             }
                             if (end) {
-                                mSelectionEnd -= inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0).length
+                                val beforeAll = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0)
+                                mSelectionEnd -= beforeAll?.length ?: 0
                             } else {
                                 mSelectionEnd -= i
                             }
@@ -483,16 +484,17 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
                             var text: CharSequence = ""
                             var end: Boolean
                             while (true) {
-                                val after = inputConnection.getTextAfterCursor(i, 0)
+                                val after = inputConnection.getTextAfterCursor(i, 0) ?: ""
                                 end = after == text
                                 text = after
-                                if (end || text[text.length - 1] == '\n') {
+                                if (end || (text.isNotEmpty() && text[text.length - 1] == '\n')) {
                                     break
                                 }
                                 i++
                             }
                             if (end) {
-                                mSelectionEnd += inputConnection.getTextAfterCursor(Char.MAX_VALUE.code, 0).length
+                                val afterAll = inputConnection.getTextAfterCursor(Char.MAX_VALUE.code, 0)
+                                mSelectionEnd += afterAll?.length ?: 0
                             } else {
                                 mSelectionEnd += i
                             }
@@ -633,7 +635,7 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
         mStandardJamo = pref.getBoolean("system_use_standard_jamo", mStandardJamo)
         mLangKeyAction = pref.getString("system_action_on_lang_key_press", LANGKEY_SWITCH_KOR_ENG)
         mHardLangKey = KeystrokePreference.parseKeyStroke(
-            pref.getString("system_hardware_lang_key_stroke", "---s62")
+            pref.getString("system_hardware_lang_key_stroke", "---s62") ?: "---s62"
         )
         mAltDirect = pref.getBoolean("hardware_alt_direct", true)
         mEnableDvorakLayout = pref.getBoolean("hardware_enable_dvorak", true)
@@ -653,7 +655,7 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
             mEnableTimeout = false
             mFullMoachigi = false
             mHangulEngine = mQwertyEngine
-            mHangulEngine.setJamoTable(null)
+            mHangulEngine.jamoTable = null
             mHangulEngine.setCombinationTable(null)
             return
         }
@@ -664,14 +666,14 @@ class OpenWnnKOKR : OpenWnn(), HangulEngineListener {
         mFullMoachigi = prop.fullMoachigi
         mHangulEngine = mQwertyEngine
         if (mode.jamoset != null) {
-            mHangulEngine.setJamoSet(mode.jamoset)
+            mHangulEngine.jamoSet = mode.jamoset
         } else {
-            mHangulEngine.setJamoTable(mode.layout)
+            mHangulEngine.jamoTable = mode.layout
         }
         mHangulEngine.setCombinationTable(mode.combination)
-        mHangulEngine.setFirstMidEnd(mStandardJamo)
-        mHangulEngine.setMoachigi(mHardwareMoachigi)
-        mHangulEngine.setFullMoachigi(mFullMoachigi)
+        mHangulEngine.firstMidEnd = mStandardJamo
+        mHangulEngine.moachigi = mHardwareMoachigi
+        mHangulEngine.fullMoachigi = mFullMoachigi
         if (mFullMoachigi) {
             mEnableTimeout = true
         }

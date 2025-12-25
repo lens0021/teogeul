@@ -171,6 +171,12 @@
 
   <string name="teogeul_korean_r">Teogeul (ver. 2004 and later)</string>
   <string name="teogeul_korean_r_copyright">devrivmt@gmail.com</string>
+  <string name="openwnn_korean_r">Teogeul (ver. 2004 and later)</string>
+  <string name="openwnn_korean_r_copyright" translatable="false">devrivmt@gmail.com</string>
+  <string name="openwnn_korean">Teogeul</string>
+  <string name="openwnn_korean_copyright" translatable="false">hgl1002@naver.com</string>
+  <string name="openwnn_korean_license" translatable="false">Apache License 2.0</string>
+  <string name="openwnn_korean_source_code" translatable="false"><a href="">https://github.com/lens0021/Teogeul</a></string>
   <string name="preference_about_license">License</string>
     <string name="teogeul_korean_license" translatable="false">Apache License 2.0</string>
   <string name="preference_about_source_code">Source Code</string>

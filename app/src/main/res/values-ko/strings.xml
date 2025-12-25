@@ -95,6 +95,12 @@
     <string name="app_name" translatable="false">터글 키보드</string>
     <string name="teogeul_korean">터글</string>
     <string name="teogeul_korean_r">터글 (버전 2004 이후)</string>
+    <string name="openwnn_korean">터글</string>
+    <string name="openwnn_korean_r">터글 (버전 2004 이후)</string>
+    <string name="openwnn_korean_r_copyright" translatable="false">devrivmt@gmail.com</string>
+    <string name="openwnn_korean_copyright" translatable="false">hgl1002@naver.com</string>
+    <string name="openwnn_korean_license" translatable="false">Apache License 2.0</string>
+    <string name="openwnn_korean_source_code" translatable="false"><a href="">https://github.com/lens0021/Teogeul</a></string>
     <string name="preference_about_license">라이센스</string>
     <string name="preference_about_source_code">소스코드</string>
 
