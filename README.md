@@ -1,8 +1,9 @@
 # Teogeul (터글)
 
-Korean Keyboard for Android
+터치형 기기를 위한 한글 키보드.
 
-Based on [hyegyulee/openwnn-korean](https://bitbucket.org/hyegyulee/openwnn-korean/src/master/) and [RivMt/Openwnn-korean-custom](https://github.com/RivMt/Openwnn-korean-custom)
+> [!WARNING]
+> 이 리포지토리는 개인 목적을 위해 운영되며 AI Agent가 작성한 커밋이 다수 포함됩니다. 이를 원치 않는 분은 참고하시기 바랍니다.
 
 ## 기능 Features
 
@@ -38,3 +39,7 @@ This app provide 3 themes based on material design and 1 theme for E-Ink devices
 * Dark
 * Flat Dark
 * E-Ink
+
+## Contributing
+
+See `CONTRIBUTE.md`.
