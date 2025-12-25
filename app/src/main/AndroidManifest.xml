@@ -39,20 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity-alias
-            android:name="io.github.lens0021.teogeul.OpenWnnControlPanelKOKREink"
-            android:label="@string/preference_ime_setting_app"
-            android:taskAffinity=""
-            android:exported="true"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_eink"
-            android:targetActivity="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
         <activity android:name="io.github.lens0021.teogeul.KOKR.ListLangKeyActionDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:launchMode="singleInstance"

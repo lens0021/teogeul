@@ -1,9 +1,7 @@
 package io.github.lens0021.teogeul.KOKR;
 
-import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,19 +29,9 @@ public class CandidatesViewManagerKOKR {
 
 	public View initView(OpenWnn parent, int width, int height) {
 		this.parent = parent;
-
-		final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(parent);
-
-		String skin = pref.getString("keyboard_skin", parent.getResources().getString(R.string.keyboard_skin_id_default));
-		int id = parent.getResources().getIdentifier("candidates_view_" + skin, "layout", parent.getPackageName());
-		int itemViewId = parent.getResources().getIdentifier("candidates_item_" + skin, "layout", parent.getPackageName());
-
-		if (id == 0) id = R.layout.candidates_view;
-		if (itemViewId == 0) itemViewId = R.layout.candidates_item;
-
-		View view = parent.getLayoutInflater().inflate(id, null, false);
+		View view = parent.getLayoutInflater().inflate(R.layout.candidates_view, null, false);
 		mainView = view.findViewById(R.id.candidate_view_scroll);
-		adapter = new CandidatesViewAdapter(itemViewId, parent);
+		adapter = new CandidatesViewAdapter(R.layout.candidates_item, parent);
 
 		LinearLayoutManager manager = new LinearLayoutManager(parent);
 		manager.setSmoothScrollbarEnabled(true);

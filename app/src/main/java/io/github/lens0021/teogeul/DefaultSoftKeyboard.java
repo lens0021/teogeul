@@ -530,12 +530,7 @@ public class DefaultSoftKeyboard implements InputViewManager, KeyboardView.OnKey
          */
         createKeyboards(parent);
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(parent);
-        String skin = pref.getString("keyboard_skin",
-                                     mWnn.getResources().getString(R.string.keyboard_skin_id_default));
-        int id = parent.getResources().getIdentifier(skin, "layout", "me.blog.hgl1002.openwnn");
-
-        mKeyboardView = (KeyboardView) mWnn.getLayoutInflater().inflate(id, null);
+        mKeyboardView = (KeyboardView) mWnn.getLayoutInflater().inflate(R.layout.keyboard_android_default, null);
         mKeyboardView.setOnKeyboardActionListener(this);
         mCurrentKeyboard = null;
 

@@ -60,16 +60,6 @@
   <string name="preference_auto_caps_title"> Auto Capitalization </string>
     <string name="preference_auto_caps_summary"> Automatically capitalize the 1st char of a sentence in alphabet mode. </string>
 
-    <string name="preference_keyboard_skin_title">Keyboard Theme</string>
-    <string name="preference_keyboard_skin_summary">Change keyboard theme.</string>
-
-    <string name="preference_keyboard_android_default">Standard</string>
-  <string name="preference_keyboard_white">White</string>
-    <string name="preference_keyboard_dark">Dark</string>
-  <string name="preference_keyboard_flat_dark">Flat Dark</string>
-  <string name="preference_keyboard_flat_light">Flat Light</string>
-    <string name="preference_keyboard_flat_blue">Flat Blue</string>
-
     <string name="preference_conversion_menu">Conversion</string>
 
     <string name="preference_prediction_title">Word Prediction</string>
@@ -545,6 +535,4 @@
     <string name="teogeul_korean_license" translatable="false">Apache License 2.0</string>
   <string name="preference_about_source_code">Source Code</string>
   <string name="teogeul_korean_source_code" translatable="false"><a href="">https://github.com/lens0021/Teogeul</a></string>
-  <string name="preference_keyboard_eink">E-Ink</string>
-
 </resources>
