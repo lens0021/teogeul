@@ -52,6 +52,14 @@ repositories {
     }
 }
 
+configurations.configureEach {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "com.squareup" && requested.name == "javapoet") {
+            useVersion(libs.versions.javapoet.get())
+        }
+    }
+}
+
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.coroutines.android)
