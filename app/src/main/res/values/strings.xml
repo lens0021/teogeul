@@ -155,19 +155,6 @@
 
   <string name="preference_hardware_lang_key_title">Hardware Keyboard Language Key</string>
   <string name="preference_hardware_lang_key_summary">Customize language key storke with shift, alt combinations.</string>
-
-
-
-  <string name="preference_reveal_hidden_msg">%d steps before revealing developer menu.</string>
-
-  <string name="preference_dev_menu">Developer Settings</string>
-
-  <string name="preference_dev_show_dev_settings">Show Developer Settings</string>
-
-  <string name="preference_dev_hardkeyboard">Hard Keyboard</string>
-  <string name="preference_dev_use_hangul_hard">Use Hangul Hard</string>
-  <string name="preference_dev_hangul_hard_title">Hangul Hard Layout</string>
-
   <string name="preference_about_license">License</string>
   <string name="teogeul_korean_license" translatable="false">Apache License 2.0</string>
   <string name="preference_about_source_code">Source Code</string>

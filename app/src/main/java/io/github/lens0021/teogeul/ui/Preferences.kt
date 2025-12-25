@@ -6,14 +6,12 @@ import android.provider.Settings
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.annotation.ArrayRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -436,41 +434,6 @@ fun PickInputMethodPreference(
         onClick = {
             val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showInputMethodPicker()
-        },
-        modifier = modifier
-    )
-}
-
-@Composable
-fun RevealHiddenPreference(
-    title: String,
-    isRevealed: Boolean,
-    onReveal: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val context = LocalContext.current
-    var clickCount by rememberSaveable { mutableStateOf(0) }
-
-    PreferenceItem(
-        title = title,
-        onClick = {
-            if (!isRevealed) {
-                clickCount++
-                when {
-                    clickCount >= 10 -> {
-                        onReveal()
-                        clickCount = 0
-                    }
-                    clickCount >= 7 -> {
-                        val remaining = 10 - clickCount
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.preference_reveal_hidden_msg, remaining),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
         },
         modifier = modifier
     )

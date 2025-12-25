@@ -11,10 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
     private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
-    // Developer settings visibility
-    private val _isDeveloperSettingsRevealed = MutableStateFlow(prefs.getBoolean("reveal_dev_settings", false))
-    val isDeveloperSettingsRevealed: StateFlow<Boolean> = _isDeveloperSettingsRevealed.asStateFlow()
-
     // Hardware keyboard preferences
     private val _hardwareHangulLayout = MutableStateFlow(prefs.getString("hardware_hangul_layout", "keyboard_sebul_391") ?: "keyboard_sebul_391")
     val hardwareHangulLayout: StateFlow<String> = _hardwareHangulLayout.asStateFlow()
@@ -50,13 +46,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     private val _systemHardwareLangKeyStroke = MutableStateFlow(prefs.getString("system_hardware_lang_key_stroke", "---s62") ?: "---s62")
     val systemHardwareLangKeyStroke: StateFlow<String> = _systemHardwareLangKeyStroke.asStateFlow()
 
-    // Developer preferences
-    private val _devUseHangulHard = MutableStateFlow(prefs.getBoolean("keyboard_dev_use_hangul_hard", false))
-    val devUseHangulHard: StateFlow<Boolean> = _devUseHangulHard.asStateFlow()
-
-    private val _devHardLayout = MutableStateFlow(prefs.getString("keyboard_dev_hard_layout", "keyboard_nebul_1969") ?: "keyboard_nebul_1969")
-    val devHardLayout: StateFlow<String> = _devHardLayout.asStateFlow()
-
     fun updatePreference(key: String, value: Any) {
         prefs.edit().apply {
             when (value) {
@@ -67,8 +56,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                         "hardware_full_moachigi" -> _hardwareFullMoachigi.value = value
                         "hardware_alt_direct" -> _hardwareAltDirect.value = value
                         "system_use_standard_jamo" -> _systemUseStandardJamo.value = value
-                        "reveal_dev_settings" -> _isDeveloperSettingsRevealed.value = value
-                        "keyboard_dev_use_hangul_hard" -> _devUseHangulHard.value = value
                     }
                 }
                 is String -> {
@@ -80,7 +67,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                         "system_action_on_lang_key_long_press" -> _systemLangKeyLongPress.value = value
                         "system_action_on_alt_key_long_press" -> _systemAltKeyLongPress.value = value
                         "system_hardware_lang_key_stroke" -> _systemHardwareLangKeyStroke.value = value
-                        "keyboard_dev_hard_layout" -> _devHardLayout.value = value
                     }
                 }
                 is Int -> {
@@ -92,9 +78,5 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             }
             apply()
         }
-    }
-
-    fun revealDeveloperSettings() {
-        updatePreference("reveal_dev_settings", true)
     }
 }

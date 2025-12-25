@@ -60,14 +60,6 @@
         <item>keyboard_sebul_3_2015y</item>
     </string-array>
 
-    <string-array name="keyboard_hangul_layout_dev">
-        <item>@string/preference_keyboard_nebul_1969</item>
-    </string-array>
-
-    <string-array name="keyboard_hangul_layout_dev_id">
-        <item>keyboard_nebul_1969</item>
-    </string-array>
-
     <string-array name="keyboard_alphabet_layout">
     	<item>@string/preference_keyboard_alphabet_qwerty</item>
     	<item>@string/preference_keyboard_alphabet_dvorak</item>

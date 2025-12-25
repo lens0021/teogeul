@@ -47,12 +47,11 @@ class TeogeulSettingsActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = "main"
                     ) {
-                        composable("main") { SettingsMainScreen(navController, viewModel) }
-                        composable("input_method") { InputMethodScreen(navController, viewModel) }
+                        composable("main") { SettingsMainScreen(navController) }
+                        composable("input_method") { InputMethodScreen(navController) }
                         composable("hard_keyboard") { HardKeyboardScreen(navController, viewModel) }
                         composable("system") { SystemScreen(navController, viewModel) }
-                        composable("about") { AboutScreen(navController, viewModel) }
-                        composable("developer") { DeveloperScreen(navController, viewModel) }
+                        composable("about") { AboutScreen(navController) }
                     }
                 }
             }
@@ -70,11 +69,8 @@ class TeogeulSettingsActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsMainScreen(
-    navController: NavController,
-    viewModel: SettingsViewModel
+    navController: NavController
 ) {
-    val isDeveloperRevealed by viewModel.isDeveloperSettingsRevealed.collectAsState()
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -119,15 +115,6 @@ fun SettingsMainScreen(
                 )
             }
 
-            if (isDeveloperRevealed) {
-                item {
-                    SettingSectionItem(
-                        title = stringResource(R.string.preference_dev_menu),
-                        icon = Icons.Default.Code,
-                        onClick = { navController.navigate("developer") }
-                    )
-                }
-            }
         }
     }
 }
@@ -166,8 +153,7 @@ private fun SettingSectionItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InputMethodScreen(
-    navController: NavController,
-    viewModel: SettingsViewModel
+    navController: NavController
 ) {
     Scaffold(
         topBar = {
@@ -411,11 +397,8 @@ fun SystemScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
-    navController: NavController,
-    viewModel: SettingsViewModel
+    navController: NavController
 ) {
-    val isDeveloperRevealed by viewModel.isDeveloperSettingsRevealed.collectAsState()
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -440,10 +423,10 @@ fun AboutScreen(
             }
 
             item {
-                RevealHiddenPreference(
+                PreferenceItem(
                     title = stringResource(R.string.teogeul_korean),
-                    isRevealed = isDeveloperRevealed,
-                    onReveal = { viewModel.revealDeveloperSettings() }
+                    onClick = {},
+                    enabled = false
                 )
             }
 
@@ -460,80 +443,6 @@ fun AboutScreen(
                     title = stringResource(R.string.preference_about_source_code),
                     summary = "https://github.com/lens0021/Teogeul",
                     onClick = { /* TODO: Open URL */ }
-                )
-            }
-        }
-    }
-}
-
-// ===== Developer Screen =====
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DeveloperScreen(
-    navController: NavController,
-    viewModel: SettingsViewModel
-) {
-    val showDevSettings by viewModel.isDeveloperSettingsRevealed.collectAsState()
-    val useHangulHard by viewModel.devUseHangulHard.collectAsState()
-    val hardLayout by viewModel.devHardLayout.collectAsState()
-
-    val devEntries = stringArrayResource(R.array.keyboard_hangul_layout_dev).toList()
-    val devValues = stringArrayResource(R.array.keyboard_hangul_layout_dev_id).toList()
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.preference_dev_menu)) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-        ) {
-            item {
-                PreferenceCategory(
-                    title = stringResource(R.string.preference_dev_menu)
-                )
-            }
-
-            item {
-                CheckboxPreference(
-                    title = stringResource(R.string.preference_dev_show_dev_settings),
-                    checked = showDevSettings,
-                    onCheckedChange = { viewModel.updatePreference("reveal_dev_settings", it) }
-                )
-            }
-
-            item {
-                PreferenceCategory(
-                    title = stringResource(R.string.preference_dev_hardkeyboard)
-                )
-            }
-
-            item {
-                CheckboxPreference(
-                    title = stringResource(R.string.preference_dev_use_hangul_hard),
-                    checked = useHangulHard,
-                    onCheckedChange = { viewModel.updatePreference("keyboard_dev_use_hangul_hard", it) }
-                )
-            }
-
-            item {
-                KeyboardListPreference(
-                    title = stringResource(R.string.preference_dev_hangul_hard_title),
-                    summary = "",
-                    entries = devEntries,
-                    entryValues = devValues,
-                    selectedValue = hardLayout,
-                    onValueChange = { viewModel.updatePreference("keyboard_dev_hard_layout", it) }
                 )
             }
         }
