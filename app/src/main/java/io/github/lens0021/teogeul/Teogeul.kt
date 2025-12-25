@@ -10,9 +10,9 @@ import android.view.inputmethod.InputConnection
 import org.greenrobot.eventbus.EventBus
 import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.KeyUpEvent
-import io.github.lens0021.teogeul.event.OpenWnnEvent
+import io.github.lens0021.teogeul.event.TeogeulEvent
 
-open class OpenWnn : InputMethodService() {
+open class Teogeul : InputMethodService() {
     protected var mPreConverter: LetterConverter? = null
     protected var mComposingText: ComposingText? = null
     protected var mInputConnection: InputConnection? = null
@@ -103,7 +103,7 @@ open class OpenWnn : InputMethodService() {
         return ret
     }
 
-    open fun onEvent(ev: OpenWnnEvent): Boolean {
+    open fun onEvent(ev: TeogeulEvent): Boolean {
         return false
     }
 

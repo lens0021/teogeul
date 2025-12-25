@@ -26,11 +26,11 @@ import io.github.lens0021.teogeul.event.CommitComposingTextEvent
 import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.InputTimeoutEvent
 import io.github.lens0021.teogeul.event.KeyUpEvent
-import io.github.lens0021.teogeul.event.OpenWnnEvent
+import io.github.lens0021.teogeul.event.TeogeulEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class OpenWnnKOKR : OpenWnn, HangulEngineListener {
+class TeogeulKOKR : Teogeul, HangulEngineListener {
     companion object {
         @JvmField
         val SHIFT_CONVERT = arrayOf(
@@ -104,10 +104,10 @@ class OpenWnnKOKR : OpenWnn, HangulEngineListener {
         const val LANGKEY_LIST_METHODS = "list_methods"
         const val LANGKEY_OPEN_SETTINGS = "open_settings"
 
-        private var mSelf: OpenWnnKOKR? = null
+        private var mSelf: TeogeulKOKR? = null
 
         @JvmStatic
-        fun getInstance(): OpenWnnKOKR? {
+        fun getInstance(): TeogeulKOKR? {
             return mSelf
         }
     }
@@ -310,7 +310,7 @@ class OpenWnnKOKR : OpenWnn, HangulEngineListener {
         currentInputConnection.finishComposingText()
     }
 
-    override fun onEvent(ev: OpenWnnEvent): Boolean {
+    override fun onEvent(ev: TeogeulEvent): Boolean {
         return false
     }
 
@@ -411,7 +411,7 @@ class OpenWnnKOKR : OpenWnn, HangulEngineListener {
             }
 
             LANGKEY_OPEN_SETTINGS -> {
-                val intent = Intent(this, OpenWnnControlPanelKOKR::class.java)
+                val intent = Intent(this, TeogeulControlPanelKOKR::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }

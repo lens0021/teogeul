@@ -5,7 +5,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
-import io.github.lens0021.teogeul.OpenWnnKOKR
+import io.github.lens0021.teogeul.TeogeulKOKR
 import io.github.lens0021.teogeul.R
 
 class ListLangKeyActionDialogActivity : Activity() {
@@ -18,10 +18,10 @@ class ListLangKeyActionDialogActivity : Activity() {
             resources.getString(R.string.preference_system_open_settings)
         )
         val actions = arrayOf(
-            OpenWnnKOKR.LANGKEY_SWITCH_KOR_ENG,
-            OpenWnnKOKR.LANGKEY_SWITCH_NEXT_METHOD,
-            OpenWnnKOKR.LANGKEY_LIST_METHODS,
-            OpenWnnKOKR.LANGKEY_OPEN_SETTINGS
+            TeogeulKOKR.LANGKEY_SWITCH_KOR_ENG,
+            TeogeulKOKR.LANGKEY_SWITCH_NEXT_METHOD,
+            TeogeulKOKR.LANGKEY_LIST_METHODS,
+            TeogeulKOKR.LANGKEY_OPEN_SETTINGS
         )
         val builder = when {
             Build.VERSION.SDK_INT >= 21 -> AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog)
@@ -31,7 +31,7 @@ class ListLangKeyActionDialogActivity : Activity() {
         builder
             .setTitle(R.string.preference_system_list_actions_title)
             .setItems(labels) { dialog: DialogInterface, which: Int ->
-                OpenWnnKOKR.getInstance()?.onLangKey(actions[which])
+                TeogeulKOKR.getInstance()?.onLangKey(actions[which])
                 dialog.dismiss()
                 finish()
             }

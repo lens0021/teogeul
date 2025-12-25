@@ -16,13 +16,13 @@ class ComposingText {
 
     fun debugout() {
         for (i in 0 until MAX_LAYER) {
-            Log.d("OpenWnn", "ComposingText[$i]")
-            Log.d("OpenWnn", "  cur = ${mCursor[i]}")
+            Log.d("Teogeul", "ComposingText[$i]")
+            Log.d("Teogeul", "  cur = ${mCursor[i]}")
             var tmp = ""
             for (ss in mStringLayer[i]) {
                 tmp += "(${ss.string},${ss.from},${ss.to})"
             }
-            Log.d("OpenWnn", "  str = $tmp")
+            Log.d("Teogeul", "  str = $tmp")
         }
     }
 

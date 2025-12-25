@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="preference_ime_setting_app">키보드 설정</string>
+    <string name="preference_ime_setting_app">터글 키보드 설정</string>
 
     <!-- Dialog Messages -->
     <string name="dialog_button_ok">확인</string>
@@ -12,7 +12,7 @@
     <string name="preference_method_setting_menu">입력 방식</string>
     
     <string name="preference_method_enabler_title">입력 방식 활성화 창 열기</string>
-    <string name="preference_method_enabler_summary">\'OpenWnn Korean\'을 활성화해 주세요.</string>
+    <string name="preference_method_enabler_summary">\'터글\'을 활성화해 주세요.</string>
     <string name="preference_method_picker_title">입력 방식 선택 창 열기</string>
 
     <string name="preference_keyboard_dubul_standard">두벌식 표준</string>
@@ -91,16 +91,11 @@
 
     <string name="preference_aboutime_menu">IME 정보</string>
 
-    <string name="ime_name">OpenWnn  한국어</string>
+    <string name="ime_name">터글</string>
     <string name="app_name" translatable="false">터글 키보드</string>
     <string name="teogeul_korean">터글</string>
-    <string name="teogeul_korean_r">터글 (버전 2004 이후)</string>
-    <string name="openwnn_korean">터글</string>
-    <string name="openwnn_korean_r">터글 (버전 2004 이후)</string>
-    <string name="openwnn_korean_r_copyright" translatable="false">devrivmt@gmail.com</string>
-    <string name="openwnn_korean_copyright" translatable="false">hgl1002@naver.com</string>
-    <string name="openwnn_korean_license" translatable="false">Apache License 2.0</string>
-    <string name="openwnn_korean_source_code" translatable="false"><a href="">https://github.com/lens0021/Teogeul</a></string>
+    <string name="teogeul_korean_license" translatable="false">Apache License 2.0</string>
+    <string name="teogeul_korean_source_code" translatable="false"><a href="">https://github.com/lens0021/Teogeul</a></string>
     <string name="preference_about_license">라이센스</string>
     <string name="preference_about_source_code">소스코드</string>
 

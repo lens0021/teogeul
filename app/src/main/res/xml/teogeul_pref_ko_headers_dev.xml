@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 	<header
-		android:fragment="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR$InputMethodFragment"
+		android:fragment="io.github.lens0021.teogeul.TeogeulControlPanelKOKR$InputMethodFragment"
 		android:title="@string/preference_method_setting_menu" />
 	<header
-		android:fragment="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR$HardKeyboardFragment"
+		android:fragment="io.github.lens0021.teogeul.TeogeulControlPanelKOKR$HardKeyboardFragment"
 		android:title="@string/preference_hardware_setting_menu" />
 	<header
-		android:fragment="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR$SystemFragment"
+		android:fragment="io.github.lens0021.teogeul.TeogeulControlPanelKOKR$SystemFragment"
 		android:title="@string/preference_system_setting_menu" />
 	<header
-		android:fragment="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR$AboutFragment"
+		android:fragment="io.github.lens0021.teogeul.TeogeulControlPanelKOKR$AboutFragment"
 		android:title="@string/preference_aboutime_menu" />
 	<header
-		android:fragment="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR$DeveloperFragment"
+		android:fragment="io.github.lens0021.teogeul.TeogeulControlPanelKOKR$DeveloperFragment"
 		android:title="@string/preference_dev_menu" />
 
 </preference-headers>

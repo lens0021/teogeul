@@ -15,7 +15,7 @@
         android:fullBackupContent="true">
         <service
             android:id="@+id/teogeul_korean"
-            android:name="io.github.lens0021.teogeul.OpenWnnKOKR"
+            android:name="io.github.lens0021.teogeul.TeogeulKOKR"
             android:label="@string/ime_name"
             android:permission="android.permission.BIND_INPUT_METHOD"
             android:exported="true">
@@ -29,7 +29,7 @@
         </service>
 
         <activity
-            android:name="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR"
+            android:name="io.github.lens0021.teogeul.TeogeulControlPanelKOKR"
             android:label="@string/preference_ime_setting_app"
             android:taskAffinity=""
             android:exported="true">

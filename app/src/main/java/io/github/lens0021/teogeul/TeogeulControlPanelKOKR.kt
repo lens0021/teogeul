@@ -7,7 +7,7 @@ import android.preference.PreferenceActivity
 import android.preference.PreferenceFragment
 import android.preference.PreferenceManager
 
-class OpenWnnControlPanelKOKR : PreferenceActivity() {
+class TeogeulControlPanelKOKR : PreferenceActivity() {
     private val fragmentNames = listOf(
         InputMethodFragment::class.java.name,
         HardKeyboardFragment::class.java.name,
@@ -20,8 +20,8 @@ class OpenWnnControlPanelKOKR : PreferenceActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (OpenWnnKOKR.getInstance() == null) {
-            OpenWnnKOKR(this)
+        if (TeogeulKOKR.getInstance() == null) {
+            TeogeulKOKR(this)
         }
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
