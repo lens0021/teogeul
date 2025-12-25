@@ -73,5 +73,6 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    kapt(libs.javapoet)
     debugImplementation(libs.compose.ui.tooling)
 }
