@@ -17,3 +17,5 @@ Android 앱은 `app/`에 있습니다. 주요 소스 코드는
 - `./gradlew clean`: 빌드 산출물 정리
 Windows에서는 `gradlew.bat`를 사용합니다.
 
+## 커밋 및 PR 가이드
+semantic commit 규칙을 따릅니다. 예: `fix: ...`, `docs: ...`, `chore: ...`
