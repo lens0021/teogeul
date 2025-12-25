@@ -16,8 +16,8 @@
 <resources>
   <!-- common part -->
 
-  <string name="app_name">OpenWnn Korean Keyboard</string>
-  <string name="ime_name">OpenWnn Korean</string>
+  <string name="app_name">Teogeul</string>
+  <string name="ime_name">Teogeul</string>
 
   <!-- Preferences -->
     <string name="preference_ime_setting_app">Keyboard Settings</string>
@@ -25,7 +25,7 @@
     <string name="preference_method_setting_menu">Input Method</string>
 
   <string name="preference_method_enabler_title">Open Input Methods Window</string>
-    <string name="preference_method_enabler_summary">Please activate \'OpenWnn Korean\'.</string>
+    <string name="preference_method_enabler_summary">Please activate \'Teogeul\'.</string>
     <string name="preference_method_picker_title">Show Input Method Picker</string>
 
     <string name="preference_appearance_setting_menu">Keyboard Appearance</string>
@@ -136,32 +136,32 @@
 
   <!-- IME dependency -->
     <!-- OpenWnn English -->
-    <string name="openwnn_english_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
-    <string name="openwnn_english">OpenWnn English</string>
-    <string name="openwnn_english_system_dictionary">/data/data/io.rivmt.keyboard.openwnn/lib/libWnnEngDic.so</string>
-    <string name="openwnn_english_writable_dictionary">/data/data/io.rivmt.keyboard.openwnn/writableEN.dic</string>
+    <string name="teogeul_english_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
+    <string name="teogeul_english">OpenWnn English</string>
+    <string name="teogeul_english_system_dictionary">/data/data/io.github.lens0021.teogeul/lib/libWnnEngDic.so</string>
+    <string name="teogeul_english_writable_dictionary">/data/data/io.github.lens0021.teogeul/writableEN.dic</string>
     <string name="en_word_separators">.,;:!?</string>
 
     <!-- OpenWnn Japanese -->
-    <string name="openwnn_japanese_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
-    <string name="openwnn_japanese">Japanese IME</string>
-    <string name="openwnn_japanese_system_dictionary">/data/data/io.rivmt.keyboard.openwnn/lib/libWnnJpnDic.so</string>
-    <string name="openwnn_japanese_writable_dictionary">/data/data/io.rivmt.keyboard.openwnn/writableJAJP.dic</string>
+    <string name="teogeul_japanese_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
+    <string name="teogeul_japanese">Japanese IME</string>
+    <string name="teogeul_japanese_system_dictionary">/data/data/io.github.lens0021.teogeul/lib/libWnnJpnDic.so</string>
+    <string name="teogeul_japanese_writable_dictionary">/data/data/io.github.lens0021.teogeul/writableJAJP.dic</string>
 
     <!-- OpenWnn Chinese -->
-    <string name="openwnn_china_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
-    <string name="openwnn_china">OpenWnn Chinese</string>
-    <string name="openwnn_china_system_dictionary">/data/data/io.rivmt.keyboard.openwnn/lib/libWnnZHCNDic.so</string>
+    <string name="teogeul_china_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
+    <string name="teogeul_china">OpenWnn Chinese</string>
+    <string name="teogeul_china_system_dictionary">/data/data/io.github.lens0021.teogeul/lib/libWnnZHCNDic.so</string>
 
-  <!-- OpenWnn Korean -->
-    <string name="openwnn_korean_copyright">" hgl1002@naver.com"</string>
-    <string name="openwnn_korean">"OpenWnn Korean "</string>
+  <!-- Teogeul -->
+    <string name="teogeul_korean_copyright">" hgl1002@naver.com"</string>
+    <string name="teogeul_korean">"Teogeul "</string>
 
-    <string name="openwnn_korean_donate_title">앱 후원</string>
-    <string name="openwnn_korean_donate_summary">개발을 계속할 수 있도록 후원해 주시면 정말 감사하겠습니다. 후원 문의는 hgl1002@naver.com으로 부탁드립니다.</string>
+    <string name="teogeul_korean_donate_title">앱 후원</string>
+    <string name="teogeul_korean_donate_summary">개발을 계속할 수 있도록 후원해 주시면 정말 감사하겠습니다. 후원 문의는 hgl1002@naver.com으로 부탁드립니다.</string>
 
   <!-- After Config Change -->
-    <string name="openwnn_china_writable_dictionary">/data/data/io.rivmt.keyboard.openwnn/writableZHCN.dic</string>
+    <string name="teogeul_china_writable_dictionary">/data/data/io.github.lens0021.teogeul/writableZHCN.dic</string>
     <string name="cn_word_separators">.,;:!?</string>
 
   <!-- Candidate Delete -->
@@ -539,12 +539,12 @@
   <string name="preference_dev_hangul_hard_title">Hangul Hard Layout</string>
 
   <string name="initial_launch_help">Long Press ALT Key to open Settings.</string>
-  <string name="openwnn_korean_r">OpenWnn Korean (ver. 2004 and later)</string>
-  <string name="openwnn_korean_r_copyright">devrivmt@gmail.com</string>
+  <string name="teogeul_korean_r">Teogeul (ver. 2004 and later)</string>
+  <string name="teogeul_korean_r_copyright">devrivmt@gmail.com</string>
   <string name="preference_about_license">License</string>
-    <string name="openwnn_korean_license" translatable="false">Apache License 2.0</string>
+    <string name="teogeul_korean_license" translatable="false">Apache License 2.0</string>
   <string name="preference_about_source_code">Source Code</string>
-  <string name="openwnn_korean_source_code" translatable="false"><a href="">https://github.com/RivMt/Openwnn-korean-custom</a></string>
+  <string name="teogeul_korean_source_code" translatable="false"><a href="">https://github.com/lens0021/Teogeul</a></string>
   <string name="preference_keyboard_eink">E-Ink</string>
 
 </resources>

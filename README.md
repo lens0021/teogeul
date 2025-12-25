@@ -1,12 +1,8 @@
-# Openwnn 한국어 키보드
+# Teogeul (터글)
 
-Openwnn Korean Keyboard
+Korean Keyboard for Android
 
-[![Google Play Link](https://lh3.googleusercontent.com/q1k2l5CwMV31JdDXcpN4Ey7O43PxnjAuZBTmcHEwQxVuv_2wCE2gAAQMWxwNUC2FYEOnYgFPOpw6kmHJWuEGeIBLTj9CuxcOEeU8UXyzWJq4NJM3lg=s0)](https://play.google.com/store/apps/details?id=io.rivmt.keyboard.openwnn)
-
-[hyegyulee/openwnn-korean](https://bitbucket.org/hyegyulee/openwnn-korean/src/master/)의 포크로 시작된 프로젝트입니다.
-
-This project is fork of [hyegyulee/openwnn-korean](https://bitbucket.org/hyegyulee/openwnn-korean/src/master/)
+Based on [hyegyulee/openwnn-korean](https://bitbucket.org/hyegyulee/openwnn-korean/src/master/) and [RivMt/Openwnn-korean-custom](https://github.com/RivMt/Openwnn-korean-custom)
 
 ## 기능 Features
 

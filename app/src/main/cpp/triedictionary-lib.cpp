@@ -37,13 +37,13 @@ TrieNode * getRoot(JNIEnv * jenv, jobject obj) {
 }
 
 JNIEXPORT void JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_initNative(JNIEnv * jenv, jobject self) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrie_initNative(JNIEnv * jenv, jobject self) {
     int hashCode = getHashCode(jenv, self);
     dictionaries->insert(std::make_pair(hashCode, new Dictionary(hashCode)));
 }
 
 JNIEXPORT void JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrieDictionary_setKeyMapNative(JNIEnv * jenv, jobject self, jobject keyMap_) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrieDictionary_setKeyMapNative(JNIEnv * jenv, jobject self, jobject keyMap_) {
     Dictionary * dictionary = dictionaries->find(getHashCode(jenv, self))->second;
 
     jclass hashMapClass = jenv->FindClass("java/util/HashMap");
@@ -154,7 +154,7 @@ std::map<std::wstring, int> * searchStroke(TrieNode * p, std::map<wchar_t, std::
 }
 
 JNIEXPORT jobject JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrieDictionary_searchStrokeNative(JNIEnv * jenv, jobject self, jstring word_, jboolean fitLength, jint limit) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrieDictionary_searchStrokeNative(JNIEnv * jenv, jobject self, jstring word_, jboolean fitLength, jint limit) {
     Dictionary * dictionary = dictionaries->find(getHashCode(jenv, self))->second;
     jclass hashMapClass = jenv->FindClass("java/util/HashMap");
     jmethodID hashMapInit = jenv->GetMethodID(hashMapClass, "<init>", "()V");
@@ -206,7 +206,7 @@ TrieNode * searchNode(TrieNode * root, wchar_t * word, size_t length) {
 }
 
 JNIEXPORT jboolean JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_searchNative(JNIEnv * jenv, jobject self, jstring word_, jboolean fitLength) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrie_searchNative(JNIEnv * jenv, jobject self, jstring word_, jboolean fitLength) {
     const char * chars = jenv->GetStringUTFChars(word_, JNI_FALSE);
     size_t length = strlen(chars) + 1;
     wchar_t * word = (wchar_t*) malloc(sizeof(wchar_t) * length);
@@ -246,7 +246,7 @@ std::map<std::wstring, int> * searchStartsWith(TrieNode * p, std::wstring prefix
 }
 
 JNIEXPORT jobject JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_searchStartsWithNative(JNIEnv * jenv, jobject self, jstring word_, jint limit) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrie_searchStartsWithNative(JNIEnv * jenv, jobject self, jstring word_, jint limit) {
     jclass hashMapClass = jenv->FindClass("java/util/HashMap");
     jmethodID hashMapInit = jenv->GetMethodID(hashMapClass, "<init>", "()V");
     jmethodID hashMapPut = jenv->GetMethodID(hashMapClass, "put", "(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;");
@@ -282,7 +282,7 @@ Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_searchStartsWithNative(JNIEnv 
 }
 
 JNIEXPORT jobjectArray JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_getAllWordsNative(JNIEnv * jenv, jobject self) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrie_getAllWordsNative(JNIEnv * jenv, jobject self) {
     std::list<std::wstring> * list = getAllWords(getRoot(jenv, self), new std::list<std::wstring>(), std::wstring(0), 0);
     jobjectArray result = jenv->NewObjectArray((jsize) list->size(), jenv->FindClass("java/lang/String"), jenv->NewStringUTF(""));
     for(auto it = list->begin() ; it != list->end() ; it++) {
@@ -310,7 +310,7 @@ std::list<std::wstring> * getAllWords(TrieNode * p, std::list<std::wstring> * li
 }
 
 JNIEXPORT void JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_insertNative(JNIEnv * jenv, jobject self, jstring word_, jint frequency) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrie_insertNative(JNIEnv * jenv, jobject self, jstring word_, jint frequency) {
     const char * chars = jenv->GetStringUTFChars(word_, JNI_FALSE);
     size_t length = strlen(chars) + 1;
     wchar_t * word = (wchar_t*) malloc(sizeof(wchar_t) * length);
@@ -359,7 +359,7 @@ TrieNode * compress(TrieNode * p) {
 }
 
 JNIEXPORT void JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_compressNative(JNIEnv * jenv, jobject self) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrie_compressNative(JNIEnv * jenv, jobject self) {
     compress(getRoot(jenv, self));
 }
 
@@ -374,7 +374,7 @@ void deinit(TrieNode * p) {
 }
 
 JNIEXPORT void JNICALL
-Java_me_blog_hgl1002_openwnn_KOKR_trie_NativeTrie_deinitNative(JNIEnv * jenv, jobject self) {
+Java_io_github_lens0021_teogeul_KOKR_trie_NativeTrie_deinitNative(JNIEnv * jenv, jobject self) {
     deinit(getRoot(jenv, self));
 }
 

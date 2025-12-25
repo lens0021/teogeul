@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.rivmt.keyboard.openwnn"
+    package="io.github.lens0021.teogeul"
     android:versionCode="23080924"
     android:versionName="23080924">
     <!-- Version Name: yyMM hhmm -->
@@ -14,8 +14,8 @@
         android:allowBackup="true"
         android:fullBackupContent="true">
         <service
-            android:id="@+id/openwnn_korean"
-            android:name="io.rivmt.keyboard.openwnn.OpenWnnKOKR"
+            android:id="@+id/teogeul_korean"
+            android:name="io.github.lens0021.teogeul.OpenWnnKOKR"
             android:label="@string/ime_name"
             android:permission="android.permission.BIND_INPUT_METHOD"
             android:exported="true">
@@ -29,7 +29,7 @@
         </service>
 
         <activity
-            android:name="io.rivmt.keyboard.openwnn.OpenWnnControlPanelKOKR"
+            android:name="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR"
             android:label="@string/preference_ime_setting_app"
             android:taskAffinity=""
             android:exported="true">
@@ -40,20 +40,20 @@
             </intent-filter>
         </activity>
         <activity-alias
-            android:name="io.rivmt.keyboard.openwnn.OpenWnnControlPanelKOKREink"
+            android:name="io.github.lens0021.teogeul.OpenWnnControlPanelKOKREink"
             android:label="@string/preference_ime_setting_app"
             android:taskAffinity=""
             android:exported="true"
             android:enabled="false"
             android:icon="@mipmap/ic_launcher_eink"
-            android:targetActivity="io.rivmt.keyboard.openwnn.OpenWnnControlPanelKOKR">
+            android:targetActivity="io.github.lens0021.teogeul.OpenWnnControlPanelKOKR">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
-        <activity android:name="io.rivmt.keyboard.openwnn.KOKR.ListLangKeyActionDialogActivity"
+        <activity android:name="io.github.lens0021.teogeul.KOKR.ListLangKeyActionDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"
