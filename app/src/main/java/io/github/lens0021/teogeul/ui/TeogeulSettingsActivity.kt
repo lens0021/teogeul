@@ -21,9 +21,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.lens0021.teogeul.R
 import io.github.lens0021.teogeul.TeogeulKOKR
 
+@AndroidEntryPoint
 class TeogeulSettingsActivity : ComponentActivity() {
     private val viewModel: SettingsViewModel by viewModels()
 

@@ -1,19 +1,21 @@
 package io.github.lens0021.teogeul.ui
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.lens0021.teogeul.data.SettingsDefaults
 import io.github.lens0021.teogeul.data.SettingsKeys
 import io.github.lens0021.teogeul.data.SettingsRepository
-import io.github.lens0021.teogeul.data.settingsDataStore
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SettingsViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = SettingsRepository(application.settingsDataStore)
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
+    private val repository: SettingsRepository,
+) : ViewModel() {
 
     // Hardware keyboard preferences
     val hardwareHangulLayout: StateFlow<String> =

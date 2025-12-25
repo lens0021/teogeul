@@ -9,6 +9,7 @@
         android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".TeogeulApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:allowBackup="true"

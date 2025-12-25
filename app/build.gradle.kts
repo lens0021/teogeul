@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -71,5 +73,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.preference.ktx)
     implementation(libs.datastore.preferences)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
     debugImplementation(libs.compose.ui.tooling)
 }
