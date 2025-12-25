@@ -24,7 +24,9 @@ import io.github.lens0021.teogeul.R
 
 // Utility
 @Composable
-fun stringArrayResource(@ArrayRes id: Int): Array<String> {
+fun stringArrayResource(
+    @ArrayRes id: Int,
+): Array<String> {
     val context = LocalContext.current
     return remember(id) { context.resources.getStringArray(id) }
 }
@@ -34,13 +36,13 @@ fun stringArrayResource(@ArrayRes id: Int): Array<String> {
 @Composable
 fun PreferenceCategory(
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleSmall,
         color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        modifier = modifier.padding(horizontal = 16.dp, vertical = 8.dp),
     )
 }
 
@@ -50,28 +52,33 @@ fun PreferenceItem(
     summary: String? = null,
     onClick: () -> Unit,
     enabled: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(enabled = enabled, onClick = onClick)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(enabled = enabled, onClick = onClick),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (enabled) MaterialTheme.colorScheme.onSurface
-                       else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                color =
+                    if (enabled) {
+                        MaterialTheme.colorScheme.onSurface
+                    } else {
+                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                    },
             )
             if (summary != null) {
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = summary,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
@@ -85,37 +92,42 @@ fun CheckboxPreference(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     enabled: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Surface(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable(enabled = enabled) { onCheckedChange(!checked) }
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable(enabled = enabled) { onCheckedChange(!checked) },
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = if (enabled) MaterialTheme.colorScheme.onSurface
-                           else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                    color =
+                        if (enabled) {
+                            MaterialTheme.colorScheme.onSurface
+                        } else {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                        },
                 )
                 if (summary != null) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = summary,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
             Checkbox(
                 checked = checked,
                 onCheckedChange = onCheckedChange,
-                enabled = enabled
+                enabled = enabled,
             )
         }
     }
@@ -130,7 +142,7 @@ fun ListPreference(
     selectedValue: String,
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -141,7 +153,7 @@ fun ListPreference(
         summary = displaySummary,
         onClick = { showDialog = true },
         enabled = enabled,
-        modifier = modifier
+        modifier = modifier,
     )
 
     if (showDialog) {
@@ -152,21 +164,22 @@ fun ListPreference(
                 Column {
                     entries.forEachIndexed { index, entry ->
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    onValueChange(entryValues[index])
-                                    showDialog = false
-                                }
-                                .padding(vertical = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        onValueChange(entryValues[index])
+                                        showDialog = false
+                                    }
+                                    .padding(vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(
                                 selected = selectedValue == entryValues[index],
                                 onClick = {
                                     onValueChange(entryValues[index])
                                     showDialog = false
-                                }
+                                },
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(text = entry)
@@ -178,7 +191,7 @@ fun ListPreference(
                 TextButton(onClick = { showDialog = false }) {
                     Text(stringResource(R.string.dialog_button_cancel))
                 }
-            }
+            },
         )
     }
 }
@@ -193,7 +206,7 @@ fun KeyboardListPreference(
     entryValues: List<String>,
     selectedValue: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     ListPreference(
         title = title,
@@ -202,7 +215,7 @@ fun KeyboardListPreference(
         entryValues = entryValues,
         selectedValue = selectedValue,
         onValueChange = onValueChange,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -213,7 +226,7 @@ fun IntEditTextPreference(
     value: Int,
     onValueChange: (Int) -> Unit,
     enabled: Boolean = true,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -222,7 +235,7 @@ fun IntEditTextPreference(
         summary = summary,
         onClick = { showDialog = true },
         enabled = enabled,
-        modifier = modifier
+        modifier = modifier,
     )
 
     if (showDialog) {
@@ -238,7 +251,7 @@ fun IntEditTextPreference(
                     onValueChange = { textValue = it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     isError = isError,
-                    singleLine = true
+                    singleLine = true,
                 )
             },
             confirmButton = {
@@ -249,7 +262,7 @@ fun IntEditTextPreference(
                             showDialog = false
                         }
                     },
-                    enabled = !isError
+                    enabled = !isError,
                 ) {
                     Text(stringResource(R.string.dialog_button_ok))
                 }
@@ -258,7 +271,7 @@ fun IntEditTextPreference(
                 TextButton(onClick = { showDialog = false }) {
                     Text(stringResource(R.string.dialog_button_cancel))
                 }
-            }
+            },
         )
     }
 }
@@ -269,15 +282,16 @@ data class KeyStroke(
     val alt: Boolean,
     val win: Boolean,
     val shift: Boolean,
-    val keyCode: Int
+    val keyCode: Int,
 ) {
-    fun serialize(): String = buildString {
-        append(if (control) 'c' else '-')
-        append(if (alt) 'a' else '-')
-        append(if (win) 'w' else '-')
-        append(if (shift) 's' else '-')
-        append(keyCode)
-    }
+    fun serialize(): String =
+        buildString {
+            append(if (control) 'c' else '-')
+            append(if (alt) 'a' else '-')
+            append(if (win) 'w' else '-')
+            append(if (shift) 's' else '-')
+            append(keyCode)
+        }
 
     companion object {
         fun parse(keyStrokeStr: String): KeyStroke {
@@ -288,7 +302,7 @@ data class KeyStroke(
                 alt = keyStrokeStr[1] == 'a',
                 win = keyStrokeStr[2] == 'w',
                 shift = keyStrokeStr[3] == 's',
-                keyCode = keyCode
+                keyCode = keyCode,
             )
         }
     }
@@ -300,7 +314,7 @@ fun KeystrokePreference(
     summary: String,
     keystrokeValue: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -308,7 +322,7 @@ fun KeystrokePreference(
         title = title,
         summary = summary,
         onClick = { showDialog = true },
-        modifier = modifier
+        modifier = modifier,
     )
 
     if (showDialog) {
@@ -324,7 +338,7 @@ fun KeystrokePreference(
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.headlineSmall,
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -334,7 +348,7 @@ fun KeystrokePreference(
                         value = KeyEvent.keyCodeToString(keyCode),
                         onValueChange = {},
                         enabled = false,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -374,16 +388,17 @@ fun KeystrokePreference(
                                 requestFocus()
                             }
                         },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(50.dp),
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.End,
                     ) {
                         TextButton(onClick = { showDialog = false }) {
                             Text(stringResource(R.string.dialog_button_cancel))
@@ -393,7 +408,7 @@ fun KeystrokePreference(
                                 val newStroke = KeyStroke(controlChecked, altChecked, winChecked, shiftChecked, keyCode)
                                 onValueChange(newStroke.serialize())
                                 showDialog = false
-                            }
+                            },
                         ) {
                             Text(stringResource(R.string.dialog_button_ok))
                         }
@@ -408,7 +423,7 @@ fun KeystrokePreference(
 fun EnableInputMethodPreference(
     title: String,
     summary: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
@@ -418,14 +433,14 @@ fun EnableInputMethodPreference(
         onClick = {
             context.startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
 @Composable
 fun PickInputMethodPreference(
     title: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
 
@@ -435,6 +450,6 @@ fun PickInputMethodPreference(
             val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showInputMethodPicker()
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

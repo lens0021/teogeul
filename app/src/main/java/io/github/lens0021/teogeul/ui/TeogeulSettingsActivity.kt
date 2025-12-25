@@ -37,16 +37,16 @@ class TeogeulSettingsActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme(
-                colorScheme = dynamicLightColorScheme()
+                colorScheme = dynamicLightColorScheme(),
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = "main"
+                        startDestination = "main",
                     ) {
                         composable("main") { SettingsMainScreen(navController) }
                         composable("input_method") { InputMethodScreen(navController) }
@@ -69,26 +69,25 @@ class TeogeulSettingsActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsMainScreen(
-    navController: NavController
-) {
+fun SettingsMainScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.preference_ime_setting_app)) }
+                title = { Text(stringResource(R.string.preference_ime_setting_app)) },
             )
-        }
+        },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             item {
                 SettingSectionItem(
                     title = stringResource(R.string.preference_method_setting_menu),
                     icon = Icons.Default.Settings,
-                    onClick = { navController.navigate("input_method") }
+                    onClick = { navController.navigate("input_method") },
                 )
             }
 
@@ -96,7 +95,7 @@ fun SettingsMainScreen(
                 SettingSectionItem(
                     title = stringResource(R.string.preference_hardware_setting_menu),
                     icon = Icons.Default.Keyboard,
-                    onClick = { navController.navigate("hard_keyboard") }
+                    onClick = { navController.navigate("hard_keyboard") },
                 )
             }
 
@@ -104,7 +103,7 @@ fun SettingsMainScreen(
                 SettingSectionItem(
                     title = stringResource(R.string.preference_system_setting_menu),
                     icon = Icons.Default.Build,
-                    onClick = { navController.navigate("system") }
+                    onClick = { navController.navigate("system") },
                 )
             }
 
@@ -112,10 +111,9 @@ fun SettingsMainScreen(
                 SettingSectionItem(
                     title = stringResource(R.string.preference_aboutime_menu),
                     icon = Icons.Default.Info,
-                    onClick = { navController.navigate("about") }
+                    onClick = { navController.navigate("about") },
                 )
             }
-
         }
     }
 }
@@ -124,25 +122,26 @@ fun SettingsMainScreen(
 private fun SettingSectionItem(
     title: String,
     icon: ImageVector,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                modifier = Modifier.padding(end = 16.dp)
+                modifier = Modifier.padding(end = 16.dp),
             )
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
         }
     }
@@ -153,9 +152,7 @@ private fun SettingSectionItem(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InputMethodScreen(
-    navController: NavController
-) {
+fun InputMethodScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -164,31 +161,32 @@ fun InputMethodScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             item {
                 PreferenceCategory(
-                    title = stringResource(R.string.preference_method_setting_menu)
+                    title = stringResource(R.string.preference_method_setting_menu),
                 )
             }
 
             item {
                 EnableInputMethodPreference(
                     title = stringResource(R.string.preference_method_enabler_title),
-                    summary = stringResource(R.string.preference_method_enabler_summary)
+                    summary = stringResource(R.string.preference_method_enabler_summary),
                 )
             }
 
             item {
                 PickInputMethodPreference(
-                    title = stringResource(R.string.preference_method_picker_title)
+                    title = stringResource(R.string.preference_method_picker_title),
                 )
             }
         }
@@ -201,7 +199,7 @@ fun InputMethodScreen(
 @Composable
 fun HardKeyboardScreen(
     navController: NavController,
-    viewModel: SettingsViewModel
+    viewModel: SettingsViewModel,
 ) {
     val hangulLayout by viewModel.hardwareHangulLayout.collectAsState()
     val alphabetLayout by viewModel.hardwareAlphabetLayout.collectAsState()
@@ -223,18 +221,19 @@ fun HardKeyboardScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             item {
                 PreferenceCategory(
-                    title = stringResource(R.string.preference_hardware_setting_menu)
+                    title = stringResource(R.string.preference_hardware_setting_menu),
                 )
             }
 
@@ -245,7 +244,7 @@ fun HardKeyboardScreen(
                     entries = hangulEntries,
                     entryValues = hangulValues,
                     selectedValue = hangulLayout,
-                    onValueChange = { viewModel.updatePreference("hardware_hangul_layout", it) }
+                    onValueChange = { viewModel.updatePreference("hardware_hangul_layout", it) },
                 )
             }
 
@@ -256,7 +255,7 @@ fun HardKeyboardScreen(
                     entries = alphabetEntries,
                     entryValues = alphabetValues,
                     selectedValue = alphabetLayout,
-                    onValueChange = { viewModel.updatePreference("hardware_alphabet_layout", it) }
+                    onValueChange = { viewModel.updatePreference("hardware_alphabet_layout", it) },
                 )
             }
 
@@ -265,7 +264,7 @@ fun HardKeyboardScreen(
                     title = stringResource(R.string.preference_hardware_use_moachigi_title),
                     summary = stringResource(R.string.preference_hardware_use_moachigi_summary),
                     checked = useMoachigi,
-                    onCheckedChange = { viewModel.updatePreference("hardware_use_moachigi", it) }
+                    onCheckedChange = { viewModel.updatePreference("hardware_use_moachigi", it) },
                 )
             }
 
@@ -274,7 +273,7 @@ fun HardKeyboardScreen(
                     title = stringResource(R.string.preference_hardware_full_moachigi_title),
                     summary = stringResource(R.string.preference_hardware_full_moachigi_summary),
                     checked = fullMoachigi,
-                    onCheckedChange = { viewModel.updatePreference("hardware_full_moachigi", it) }
+                    onCheckedChange = { viewModel.updatePreference("hardware_full_moachigi", it) },
                 )
             }
 
@@ -283,7 +282,7 @@ fun HardKeyboardScreen(
                     title = stringResource(R.string.preference_hardware_full_moachigi_delay_title),
                     summary = stringResource(R.string.preference_hardware_full_moachigi_delay_summary),
                     value = moachingiDelay,
-                    onValueChange = { viewModel.updatePreference("hardware_full_moachigi_delay", it) }
+                    onValueChange = { viewModel.updatePreference("hardware_full_moachigi_delay", it) },
                 )
             }
 
@@ -292,7 +291,7 @@ fun HardKeyboardScreen(
                     title = stringResource(R.string.preference_hardware_alt_direct_title),
                     summary = stringResource(R.string.preference_hardware_alt_direct_summary),
                     checked = altDirect,
-                    onCheckedChange = { viewModel.updatePreference("hardware_alt_direct", it) }
+                    onCheckedChange = { viewModel.updatePreference("hardware_alt_direct", it) },
                 )
             }
         }
@@ -305,7 +304,7 @@ fun HardKeyboardScreen(
 @Composable
 fun SystemScreen(
     navController: NavController,
-    viewModel: SettingsViewModel
+    viewModel: SettingsViewModel,
 ) {
     val useStandardJamo by viewModel.systemUseStandardJamo.collectAsState()
     val langKeyPress by viewModel.systemLangKeyPress.collectAsState()
@@ -324,18 +323,19 @@ fun SystemScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             item {
                 PreferenceCategory(
-                    title = stringResource(R.string.preference_system_setting_menu)
+                    title = stringResource(R.string.preference_system_setting_menu),
                 )
             }
 
@@ -344,7 +344,7 @@ fun SystemScreen(
                     title = stringResource(R.string.preference_system_use_standard_jamo_title),
                     summary = stringResource(R.string.preference_system_use_standard_jamo_summary),
                     checked = useStandardJamo,
-                    onCheckedChange = { viewModel.updatePreference("system_use_standard_jamo", it) }
+                    onCheckedChange = { viewModel.updatePreference("system_use_standard_jamo", it) },
                 )
             }
 
@@ -355,7 +355,7 @@ fun SystemScreen(
                     entries = langKeyActions,
                     entryValues = langKeyActionsId,
                     selectedValue = langKeyPress,
-                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_press", it) }
+                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_press", it) },
                 )
             }
 
@@ -366,7 +366,7 @@ fun SystemScreen(
                     entries = langKeyActions,
                     entryValues = langKeyActionsId,
                     selectedValue = langKeyLongPress,
-                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_long_press", it) }
+                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_long_press", it) },
                 )
             }
 
@@ -377,7 +377,7 @@ fun SystemScreen(
                     entries = langKeyActions,
                     entryValues = langKeyActionsId,
                     selectedValue = altKeyLongPress,
-                    onValueChange = { viewModel.updatePreference("system_action_on_alt_key_long_press", it) }
+                    onValueChange = { viewModel.updatePreference("system_action_on_alt_key_long_press", it) },
                 )
             }
 
@@ -386,7 +386,7 @@ fun SystemScreen(
                     title = stringResource(R.string.preference_hardware_lang_key_title),
                     summary = stringResource(R.string.preference_hardware_lang_key_summary),
                     keystrokeValue = hardwareLangKeyStroke,
-                    onValueChange = { viewModel.updatePreference("system_hardware_lang_key_stroke", it) }
+                    onValueChange = { viewModel.updatePreference("system_hardware_lang_key_stroke", it) },
                 )
             }
         }
@@ -397,9 +397,7 @@ fun SystemScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AboutScreen(
-    navController: NavController
-) {
+fun AboutScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -408,18 +406,19 @@ fun AboutScreen(
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
             )
-        }
+        },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
         ) {
             item {
                 PreferenceCategory(
-                    title = stringResource(R.string.preference_aboutime_menu)
+                    title = stringResource(R.string.preference_aboutime_menu),
                 )
             }
 
@@ -427,7 +426,7 @@ fun AboutScreen(
                 PreferenceItem(
                     title = stringResource(R.string.teogeul_korean),
                     onClick = {},
-                    enabled = false
+                    enabled = false,
                 )
             }
 
@@ -435,7 +434,7 @@ fun AboutScreen(
                 PreferenceItem(
                     title = stringResource(R.string.preference_about_license),
                     summary = stringResource(R.string.teogeul_korean_license),
-                    onClick = { /* TODO: Open license */ }
+                    onClick = { /* TODO: Open license */ },
                 )
             }
 
@@ -443,7 +442,7 @@ fun AboutScreen(
                 PreferenceItem(
                     title = stringResource(R.string.preference_about_source_code),
                     summary = "https://github.com/lens0021/Teogeul",
-                    onClick = { /* TODO: Open URL */ }
+                    onClick = { /* TODO: Open URL */ },
                 )
             }
         }

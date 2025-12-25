@@ -1,4 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0" apply false
+}
+
 buildscript {
     repositories {
         google()

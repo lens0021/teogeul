@@ -51,39 +51,46 @@ class KeystrokePreference : Preference {
             display.setText(stroke.keyCode.toString())
         }
 
-        val dialog = AlertDialog.Builder(context)
-            .setTitle(title)
-            .setView(view)
-            .setOnKeyListener { _: DialogInterface, keyCode: Int, _: KeyEvent ->
-                code.set(keyCode)
-                if (Build.VERSION.SDK_INT >= 12) {
-                    display.setText(KeyEvent.keyCodeToString(keyCode))
-                } else {
-                    display.setText(keyCode.toString())
+        val dialog =
+            AlertDialog.Builder(context)
+                .setTitle(title)
+                .setView(view)
+                .setOnKeyListener { _: DialogInterface, keyCode: Int, _: KeyEvent ->
+                    code.set(keyCode)
+                    if (Build.VERSION.SDK_INT >= 12) {
+                        display.setText(KeyEvent.keyCodeToString(keyCode))
+                    } else {
+                        display.setText(keyCode.toString())
+                    }
+                    false
                 }
-                false
-            }
-            .setPositiveButton(R.string.dialog_button_ok) { _: DialogInterface, _: Int ->
-                val builder = StringBuilder()
-                builder.append(if (control.isChecked) 'c' else '-')
-                builder.append(if (alt.isChecked) 'a' else '-')
-                builder.append(if (win.isChecked) 'w' else '-')
-                builder.append(if (shift.isChecked) 's' else '-')
-                builder.append(code.get().toString())
-                persistString(builder.toString())
-            }
-            .setNegativeButton(R.string.dialog_button_cancel) { _: DialogInterface, _: Int ->
-            }
-            .create()
+                .setPositiveButton(R.string.dialog_button_ok) { _: DialogInterface, _: Int ->
+                    val builder = StringBuilder()
+                    builder.append(if (control.isChecked) 'c' else '-')
+                    builder.append(if (alt.isChecked) 'a' else '-')
+                    builder.append(if (win.isChecked) 'w' else '-')
+                    builder.append(if (shift.isChecked) 's' else '-')
+                    builder.append(code.get().toString())
+                    persistString(builder.toString())
+                }
+                .setNegativeButton(R.string.dialog_button_cancel) { _: DialogInterface, _: Int ->
+                }
+                .create()
         dialog.show()
         super.onClick()
     }
 
-    override fun onGetDefaultValue(a: TypedArray, index: Int): Any? {
+    override fun onGetDefaultValue(
+        a: TypedArray,
+        index: Int,
+    ): Any? {
         return a.getString(index)
     }
 
-    override fun onSetInitialValue(restorePersistedValue: Boolean, defaultValue: Any?) {
+    override fun onSetInitialValue(
+        restorePersistedValue: Boolean,
+        defaultValue: Any?,
+    ) {
         super.onSetInitialValue(restorePersistedValue, defaultValue)
         if (!restorePersistedValue) {
             this.defaultValue = defaultValue as? String
@@ -95,7 +102,7 @@ class KeystrokePreference : Preference {
         val alt: Boolean,
         val win: Boolean,
         val shift: Boolean,
-        val keyCode: Int
+        val keyCode: Int,
     )
 
     companion object {

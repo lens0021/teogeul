@@ -39,7 +39,10 @@ open class Teogeul : InputMethodService() {
         close()
     }
 
-    override fun onStartInput(attribute: EditorInfo, restarting: Boolean) {
+    override fun onStartInput(
+        attribute: EditorInfo,
+        restarting: Boolean,
+    ) {
         super.onStartInput(attribute, restarting)
         mInputConnection = currentInputConnection
         if (!restarting) {
@@ -47,7 +50,10 @@ open class Teogeul : InputMethodService() {
         }
     }
 
-    override fun onStartInputView(attribute: EditorInfo, restarting: Boolean) {
+    override fun onStartInputView(
+        attribute: EditorInfo,
+        restarting: Boolean,
+    ) {
         super.onStartInputView(attribute, restarting)
         mInputConnection = currentInputConnection
 
@@ -82,7 +88,10 @@ open class Teogeul : InputMethodService() {
         outInsets.contentTopInsets = outInsets.visibleTopInsets
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         val inputKeyEvent = InputKeyEvent(event)
         TeogeulEventFlow.emitBlocking(inputKeyEvent)
         mConsumeDownEvent = inputKeyEvent.isCancelled
@@ -92,14 +101,18 @@ open class Teogeul : InputMethodService() {
         return mConsumeDownEvent
     }
 
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyUp(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         var ret = mConsumeDownEvent
-        ret = if (!ret) {
-            super.onKeyUp(keyCode, event)
-        } else {
-            TeogeulEventFlow.emitBlocking(KeyUpEvent(event))
-            ret
-        }
+        ret =
+            if (!ret) {
+                super.onKeyUp(keyCode, event)
+            } else {
+                TeogeulEventFlow.emitBlocking(KeyUpEvent(event))
+                ret
+            }
         return ret
     }
 
@@ -107,7 +120,11 @@ open class Teogeul : InputMethodService() {
         return false
     }
 
-    protected fun searchToggleCharacter(prevChar: String, toggleTable: Array<String>, reverse: Boolean): String? {
+    protected fun searchToggleCharacter(
+        prevChar: String,
+        toggleTable: Array<String>,
+        reverse: Boolean,
+    ): String? {
         for (i in toggleTable.indices) {
             if (prevChar == toggleTable[i]) {
                 return if (reverse) {

@@ -26,7 +26,10 @@ class ComposingText {
         }
     }
 
-    fun getStrSegment(layer: Int, pos: Int): StrSegment? {
+    fun getStrSegment(
+        layer: Int,
+        pos: Int,
+    ): StrSegment? {
         return try {
             val strLayer = mStringLayer[layer]
             var position = pos
@@ -43,7 +46,11 @@ class ComposingText {
         }
     }
 
-    fun toString(layer: Int, from: Int, to: Int): String? {
+    fun toString(
+        layer: Int,
+        from: Int,
+        to: Int,
+    ): String? {
         return try {
             val buf = StringBuilder()
             val strLayer = mStringLayer[layer]
@@ -61,7 +68,12 @@ class ComposingText {
         return toString(layer, 0, mStringLayer[layer].size - 1)
     }
 
-    private fun modifyUpper(layer: Int, modFrom: Int, modLen: Int, orgLen: Int) {
+    private fun modifyUpper(
+        layer: Int,
+        modFrom: Int,
+        modLen: Int,
+        orgLen: Int,
+    ) {
         if (layer >= MAX_LAYER - 1) {
             return
         }
@@ -145,14 +157,21 @@ class ComposingText {
         }
     }
 
-    fun insertStrSegment(layer: Int, str: StrSegment) {
+    fun insertStrSegment(
+        layer: Int,
+        str: StrSegment,
+    ) {
         val cursor = mCursor[layer]
         mStringLayer[layer].add(cursor, str)
         modifyUpper(layer, cursor, 1, 0)
         setCursor(layer, cursor + 1)
     }
 
-    fun insertStrSegment(layer1: Int, layer2: Int, str: StrSegment) {
+    fun insertStrSegment(
+        layer1: Int,
+        layer2: Int,
+        str: StrSegment,
+    ) {
         mStringLayer[layer1].add(mCursor[layer1], str)
         mCursor[layer1]++
 
@@ -173,7 +192,12 @@ class ComposingText {
         setCursor(layer2, cursor)
     }
 
-    protected fun replaceStrSegment0(layer: Int, str: Array<StrSegment>, from: Int, to: Int) {
+    protected fun replaceStrSegment0(
+        layer: Int,
+        str: Array<StrSegment>,
+        from: Int,
+        to: Int,
+    ) {
         val strLayer = mStringLayer[layer]
 
         var fromPos = from
@@ -194,19 +218,30 @@ class ComposingText {
         modifyUpper(layer, fromPos, str.size, toPos - fromPos + 1)
     }
 
-    fun replaceStrSegment(layer: Int, str: Array<StrSegment>, num: Int) {
+    fun replaceStrSegment(
+        layer: Int,
+        str: Array<StrSegment>,
+        num: Int,
+    ) {
         val cursor = mCursor[layer]
         replaceStrSegment0(layer, str, cursor - num, cursor - 1)
         setCursor(layer, cursor + str.size - num)
     }
 
-    fun replaceStrSegment(layer: Int, str: Array<StrSegment>) {
+    fun replaceStrSegment(
+        layer: Int,
+        str: Array<StrSegment>,
+    ) {
         val cursor = mCursor[layer]
         replaceStrSegment0(layer, str, cursor - 1, cursor - 1)
         setCursor(layer, cursor + str.size - 1)
     }
 
-    fun deleteStrSegment(layer: Int, from: Int, to: Int) {
+    fun deleteStrSegment(
+        layer: Int,
+        from: Int,
+        to: Int,
+    ) {
         val fromL = intArrayOf(-1, -1, -1)
         val toL = intArrayOf(-1, -1, -1)
 
@@ -241,7 +276,8 @@ class ComposingText {
                 for (i in strLayer.indices) {
                     val ss = strLayer[i]
                     if ((ss.from >= fromL[lv - 1] && ss.from <= toL[lv - 1]) ||
-                        (ss.to >= fromL[lv - 1] && ss.to <= toL[lv - 1])) {
+                        (ss.to >= fromL[lv - 1] && ss.to <= toL[lv - 1])
+                    ) {
                         if (fromL[lv] < 0) {
                             fromL[lv] = i
                             boundaryFrom = ss.from
@@ -272,7 +308,12 @@ class ComposingText {
         }
     }
 
-    private fun deleteStrSegment0(layer: Int, from: Int, to: Int, diff: Int) {
+    private fun deleteStrSegment0(
+        layer: Int,
+        from: Int,
+        to: Int,
+        diff: Int,
+    ) {
         val strLayer = mStringLayer[layer]
         if (diff != 0) {
             for (i in to + 1 until strLayer.size) {
@@ -286,7 +327,10 @@ class ComposingText {
         }
     }
 
-    fun delete(layer: Int, rightside: Boolean): Int {
+    fun delete(
+        layer: Int,
+        rightside: Boolean,
+    ): Int {
         val cursor = mCursor[layer]
         val strLayer = mStringLayer[layer]
 
@@ -308,7 +352,10 @@ class ComposingText {
         }
     }
 
-    private fun included(layer: Int, pos: Int): Int {
+    private fun included(
+        layer: Int,
+        pos: Int,
+    ): Int {
         if (pos == 0) {
             return 0
         }
@@ -323,7 +370,10 @@ class ComposingText {
         return strLayer.size
     }
 
-    fun setCursor(layer: Int, pos: Int): Int {
+    fun setCursor(
+        layer: Int,
+        pos: Int,
+    ): Int {
         var position = pos
         if (position > mStringLayer[layer].size) {
             position = mStringLayer[layer].size
@@ -347,7 +397,10 @@ class ComposingText {
         return position
     }
 
-    fun moveCursor(layer: Int, diff: Int): Int {
+    fun moveCursor(
+        layer: Int,
+        diff: Int,
+    ): Int {
         val c = mCursor[layer] + diff
         return setCursor(layer, c)
     }

@@ -3,7 +3,6 @@ package io.github.lens0021.teogeul
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Handler
@@ -40,70 +39,72 @@ import kotlinx.coroutines.launch
 class TeogeulKOKR : Teogeul, HangulEngineListener {
     companion object {
         @JvmField
-        val SHIFT_CONVERT = arrayOf(
-            intArrayOf(0x60, 0x7e),
-            intArrayOf(0x31, 0x21),
-            intArrayOf(0x32, 0x40),
-            intArrayOf(0x33, 0x23),
-            intArrayOf(0x34, 0x24),
-            intArrayOf(0x35, 0x25),
-            intArrayOf(0x36, 0x5e),
-            intArrayOf(0x37, 0x26),
-            intArrayOf(0x38, 0x2a),
-            intArrayOf(0x39, 0x28),
-            intArrayOf(0x30, 0x29),
-            intArrayOf(0x2d, 0x5f),
-            intArrayOf(0x3d, 0x2b),
-            intArrayOf(0x5b, 0x7b),
-            intArrayOf(0x5d, 0x7d),
-            intArrayOf(0x5c, 0x7c),
-            intArrayOf(0x3b, 0x3a),
-            intArrayOf(0x27, 0x22),
-            intArrayOf(0x2c, 0x3c),
-            intArrayOf(0x2e, 0x3e),
-            intArrayOf(0x2f, 0x3f)
-        )
+        val SHIFT_CONVERT =
+            arrayOf(
+                intArrayOf(0x60, 0x7e),
+                intArrayOf(0x31, 0x21),
+                intArrayOf(0x32, 0x40),
+                intArrayOf(0x33, 0x23),
+                intArrayOf(0x34, 0x24),
+                intArrayOf(0x35, 0x25),
+                intArrayOf(0x36, 0x5e),
+                intArrayOf(0x37, 0x26),
+                intArrayOf(0x38, 0x2a),
+                intArrayOf(0x39, 0x28),
+                intArrayOf(0x30, 0x29),
+                intArrayOf(0x2d, 0x5f),
+                intArrayOf(0x3d, 0x2b),
+                intArrayOf(0x5b, 0x7b),
+                intArrayOf(0x5d, 0x7d),
+                intArrayOf(0x5c, 0x7c),
+                intArrayOf(0x3b, 0x3a),
+                intArrayOf(0x27, 0x22),
+                intArrayOf(0x2c, 0x3c),
+                intArrayOf(0x2e, 0x3e),
+                intArrayOf(0x2f, 0x3f),
+            )
 
-        private val QWERTY_TO_DVORAK: MutableMap<Int, Int> = HashMap<Int, Int>().apply {
-            put(KeyEvent.KEYCODE_Q, KeyEvent.KEYCODE_APOSTROPHE)
-            put(KeyEvent.KEYCODE_W, KeyEvent.KEYCODE_COMMA)
-            put(KeyEvent.KEYCODE_E, KeyEvent.KEYCODE_PERIOD)
-            put(KeyEvent.KEYCODE_R, KeyEvent.KEYCODE_P)
-            put(KeyEvent.KEYCODE_T, KeyEvent.KEYCODE_Y)
-            put(KeyEvent.KEYCODE_Y, KeyEvent.KEYCODE_F)
-            put(KeyEvent.KEYCODE_U, KeyEvent.KEYCODE_G)
-            put(KeyEvent.KEYCODE_I, KeyEvent.KEYCODE_C)
-            put(KeyEvent.KEYCODE_O, KeyEvent.KEYCODE_R)
-            put(KeyEvent.KEYCODE_P, KeyEvent.KEYCODE_L)
-            put(KeyEvent.KEYCODE_LEFT_BRACKET, KeyEvent.KEYCODE_SLASH)
-            put(KeyEvent.KEYCODE_RIGHT_BRACKET, KeyEvent.KEYCODE_EQUALS)
+        private val QWERTY_TO_DVORAK: MutableMap<Int, Int> =
+            HashMap<Int, Int>().apply {
+                put(KeyEvent.KEYCODE_Q, KeyEvent.KEYCODE_APOSTROPHE)
+                put(KeyEvent.KEYCODE_W, KeyEvent.KEYCODE_COMMA)
+                put(KeyEvent.KEYCODE_E, KeyEvent.KEYCODE_PERIOD)
+                put(KeyEvent.KEYCODE_R, KeyEvent.KEYCODE_P)
+                put(KeyEvent.KEYCODE_T, KeyEvent.KEYCODE_Y)
+                put(KeyEvent.KEYCODE_Y, KeyEvent.KEYCODE_F)
+                put(KeyEvent.KEYCODE_U, KeyEvent.KEYCODE_G)
+                put(KeyEvent.KEYCODE_I, KeyEvent.KEYCODE_C)
+                put(KeyEvent.KEYCODE_O, KeyEvent.KEYCODE_R)
+                put(KeyEvent.KEYCODE_P, KeyEvent.KEYCODE_L)
+                put(KeyEvent.KEYCODE_LEFT_BRACKET, KeyEvent.KEYCODE_SLASH)
+                put(KeyEvent.KEYCODE_RIGHT_BRACKET, KeyEvent.KEYCODE_EQUALS)
 
-            put(KeyEvent.KEYCODE_A, KeyEvent.KEYCODE_A)
-            put(KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_O)
-            put(KeyEvent.KEYCODE_D, KeyEvent.KEYCODE_E)
-            put(KeyEvent.KEYCODE_F, KeyEvent.KEYCODE_U)
-            put(KeyEvent.KEYCODE_G, KeyEvent.KEYCODE_I)
-            put(KeyEvent.KEYCODE_H, KeyEvent.KEYCODE_D)
-            put(KeyEvent.KEYCODE_J, KeyEvent.KEYCODE_H)
-            put(KeyEvent.KEYCODE_K, KeyEvent.KEYCODE_T)
-            put(KeyEvent.KEYCODE_L, KeyEvent.KEYCODE_N)
-            put(KeyEvent.KEYCODE_SEMICOLON, KeyEvent.KEYCODE_S)
-            put(KeyEvent.KEYCODE_APOSTROPHE, KeyEvent.KEYCODE_MINUS)
+                put(KeyEvent.KEYCODE_A, KeyEvent.KEYCODE_A)
+                put(KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_O)
+                put(KeyEvent.KEYCODE_D, KeyEvent.KEYCODE_E)
+                put(KeyEvent.KEYCODE_F, KeyEvent.KEYCODE_U)
+                put(KeyEvent.KEYCODE_G, KeyEvent.KEYCODE_I)
+                put(KeyEvent.KEYCODE_H, KeyEvent.KEYCODE_D)
+                put(KeyEvent.KEYCODE_J, KeyEvent.KEYCODE_H)
+                put(KeyEvent.KEYCODE_K, KeyEvent.KEYCODE_T)
+                put(KeyEvent.KEYCODE_L, KeyEvent.KEYCODE_N)
+                put(KeyEvent.KEYCODE_SEMICOLON, KeyEvent.KEYCODE_S)
+                put(KeyEvent.KEYCODE_APOSTROPHE, KeyEvent.KEYCODE_MINUS)
 
-            put(KeyEvent.KEYCODE_Z, KeyEvent.KEYCODE_SEMICOLON)
-            put(KeyEvent.KEYCODE_X, KeyEvent.KEYCODE_Q)
-            put(KeyEvent.KEYCODE_C, KeyEvent.KEYCODE_J)
-            put(KeyEvent.KEYCODE_V, KeyEvent.KEYCODE_K)
-            put(KeyEvent.KEYCODE_B, KeyEvent.KEYCODE_X)
-            put(KeyEvent.KEYCODE_N, KeyEvent.KEYCODE_B)
-            put(KeyEvent.KEYCODE_M, KeyEvent.KEYCODE_M)
-            put(KeyEvent.KEYCODE_COMMA, KeyEvent.KEYCODE_W)
-            put(KeyEvent.KEYCODE_PERIOD, KeyEvent.KEYCODE_V)
-            put(KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_Z)
+                put(KeyEvent.KEYCODE_Z, KeyEvent.KEYCODE_SEMICOLON)
+                put(KeyEvent.KEYCODE_X, KeyEvent.KEYCODE_Q)
+                put(KeyEvent.KEYCODE_C, KeyEvent.KEYCODE_J)
+                put(KeyEvent.KEYCODE_V, KeyEvent.KEYCODE_K)
+                put(KeyEvent.KEYCODE_B, KeyEvent.KEYCODE_X)
+                put(KeyEvent.KEYCODE_N, KeyEvent.KEYCODE_B)
+                put(KeyEvent.KEYCODE_M, KeyEvent.KEYCODE_M)
+                put(KeyEvent.KEYCODE_COMMA, KeyEvent.KEYCODE_W)
+                put(KeyEvent.KEYCODE_PERIOD, KeyEvent.KEYCODE_V)
+                put(KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_Z)
 
-            put(KeyEvent.KEYCODE_MINUS, KeyEvent.KEYCODE_LEFT_BRACKET)
-            put(KeyEvent.KEYCODE_EQUALS, KeyEvent.KEYCODE_RIGHT_BRACKET)
-        }
+                put(KeyEvent.KEYCODE_MINUS, KeyEvent.KEYCODE_LEFT_BRACKET)
+                put(KeyEvent.KEYCODE_EQUALS, KeyEvent.KEYCODE_RIGHT_BRACKET)
+            }
 
         const val LANGKEY_LIST_ACTIONS = "list_actions"
         const val LANGKEY_SWITCH_KOR_ENG = "switch_kor_eng"
@@ -180,29 +181,36 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     override fun onCreate() {
         super.onCreate()
-        eventJob = eventScope.launch {
-            TeogeulEventFlow.events.collect { event ->
-                when (event) {
-                    is InputKeyEvent -> handleInputKey(event)
-                    is KeyUpEvent -> handleKeyUp(event)
-                    is InputTimeoutEvent -> handleInputTimeout(event)
-                    is CommitComposingTextEvent -> handleCommitComposingText(event)
+        eventJob =
+            eventScope.launch {
+                TeogeulEventFlow.events.collect { event ->
+                    when (event) {
+                        is InputKeyEvent -> handleInputKey(event)
+                        is KeyUpEvent -> handleKeyUp(event)
+                        is InputTimeoutEvent -> handleInputTimeout(event)
+                        is CommitComposingTextEvent -> handleCommitComposingText(event)
+                    }
                 }
             }
-        }
     }
 
     override fun onCreateInputView(): View? {
         return super.onCreateInputView()
     }
 
-    override fun onStartInputView(attribute: EditorInfo, restarting: Boolean) {
+    override fun onStartInputView(
+        attribute: EditorInfo,
+        restarting: Boolean,
+    ) {
         resetCharComposition()
         super.onStartInputView(attribute, restarting)
         applyPreferences()
     }
 
-    override fun onStartInput(attribute: EditorInfo, restarting: Boolean) {
+    override fun onStartInput(
+        attribute: EditorInfo,
+        restarting: Boolean,
+    ) {
         super.onStartInput(attribute, restarting)
         applyPreferences()
     }
@@ -328,7 +336,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         return false
     }
 
-    private fun inputChar(code: Char, direct: Boolean) {
+    private fun inputChar(
+        code: Char,
+        direct: Boolean,
+    ) {
         var shift = mHardShift
         var mutableCode = code
         var isDirect = direct
@@ -380,7 +391,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    private fun directInput(code: Char, shift: Boolean) {
+    private fun directInput(
+        code: Char,
+        shift: Boolean,
+    ) {
         var mutableCode = code
         if (shift) {
             mutableCode = mutableCode.uppercaseChar()
@@ -450,7 +464,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             ev.deviceId,
             ev.scanCode,
             ev.flags,
-            ev.source
+            ev.source,
         )
     }
 
@@ -464,7 +478,8 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 KeyEvent.KEYCODE_DPAD_UP,
                 KeyEvent.KEYCODE_DPAD_DOWN,
                 KeyEvent.KEYCODE_DPAD_LEFT,
-                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                KeyEvent.KEYCODE_DPAD_RIGHT,
+                -> {
                     if (!mSelectionMode) {
                         val beforeAll = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0)
                         mSelectionEnd = beforeAll?.length ?: 0
@@ -563,7 +578,8 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             if ((mHardShift == 1) == hardLangKey.shift &&
                 (mHardAlt == 1) == hardLangKey.alt &&
                 ev.isCtrlPressed == hardLangKey.control &&
-                ev.isMetaPressed == hardLangKey.win) {
+                ev.isMetaPressed == hardLangKey.win
+            ) {
                 resetCharComposition()
                 toggleLanguage()
                 mHardShift = 0
@@ -655,17 +671,19 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         mMoachigiDelay = pref.getInt("hardware_full_moachigi_delay", 100)
         mStandardJamo = pref.getBoolean("system_use_standard_jamo", mStandardJamo)
         mLangKeyAction = pref.getString("system_action_on_lang_key_press", LANGKEY_SWITCH_KOR_ENG)
-        mHardLangKey = KeystrokePreference.parseKeyStroke(
-            pref.getString("system_hardware_lang_key_stroke", "---s62") ?: "---s62"
-        )
+        mHardLangKey =
+            KeystrokePreference.parseKeyStroke(
+                pref.getString("system_hardware_lang_key_stroke", "---s62") ?: "---s62",
+            )
         mAltDirect = pref.getBoolean("hardware_alt_direct", true)
         mEnableDvorakLayout = pref.getBoolean("hardware_enable_dvorak", true)
 
-        val modeKey = if (mCurrentLanguage == EngineMode.LANG_EN) {
-            pref.getString("hardware_alphabet_layout", "keyboard_alphabet_qwerty")
-        } else {
-            pref.getString("hardware_hangul_layout", "keyboard_sebul_391")
-        }
+        val modeKey =
+            if (mCurrentLanguage == EngineMode.LANG_EN) {
+                pref.getString("hardware_alphabet_layout", "keyboard_alphabet_qwerty")
+            } else {
+                pref.getString("hardware_hangul_layout", "keyboard_sebul_391")
+            }
         applyEngineMode(EngineMode.get(modeKey ?: ""))
     }
 
@@ -705,11 +723,12 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     }
 
     private fun toggleLanguage() {
-        mCurrentLanguage = if (mCurrentLanguage == EngineMode.LANG_EN) {
-            EngineMode.LANG_KO
-        } else {
-            EngineMode.LANG_EN
-        }
+        mCurrentLanguage =
+            if (mCurrentLanguage == EngineMode.LANG_EN) {
+                EngineMode.LANG_KO
+            } else {
+                EngineMode.LANG_EN
+            }
         applyPreferences()
     }
 
@@ -731,7 +750,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         eventScope.cancel()
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+    override fun onKeyDown(
+        keyCode: Int,
+        event: KeyEvent,
+    ): Boolean {
         if (mTimeOutHandler == null) {
             mTimeOutHandler = Handler()
             mTimeOutHandler?.postDelayed({

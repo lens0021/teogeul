@@ -21,66 +21,79 @@ class HangulEngine {
         const val VIRTUAL_JONG = 3
 
         @JvmField
-        val CHO_TABLE = intArrayOf(
-            'ㄱ'.code, 'ㄲ'.code, 'ㄴ'.code, 'ㄷ'.code, 'ㄸ'.code,
-            'ㄹ'.code, 'ㅁ'.code, 'ㅂ'.code, 'ㅃ'.code, 'ㅅ'.code,
-            'ㅆ'.code, 'ㅇ'.code, 'ㅈ'.code, 'ㅉ'.code, 'ㅊ'.code,
-            'ㅋ'.code, 'ㅌ'.code, 'ㅍ'.code, 'ㅎ'.code
-        )
+        val CHO_TABLE =
+            intArrayOf(
+                'ㄱ'.code, 'ㄲ'.code, 'ㄴ'.code, 'ㄷ'.code, 'ㄸ'.code,
+                'ㄹ'.code, 'ㅁ'.code, 'ㅂ'.code, 'ㅃ'.code, 'ㅅ'.code,
+                'ㅆ'.code, 'ㅇ'.code, 'ㅈ'.code, 'ㅉ'.code, 'ㅊ'.code,
+                'ㅋ'.code, 'ㅌ'.code, 'ㅍ'.code, 'ㅎ'.code,
+            )
 
         @JvmField
-        val JUNG_TABLE = intArrayOf(
-            'ㅏ'.code, 'ㅐ'.code, 'ㅑ'.code, 'ㅒ'.code, 'ㅓ'.code,
-            'ㅔ'.code, 'ㅕ'.code, 'ㅖ'.code, 'ㅗ'.code, 'ㅘ'.code,
-            'ㅙ'.code, 'ㅚ'.code, 'ㅛ'.code, 'ㅜ'.code, 'ㅝ'.code,
-            'ㅞ'.code, 'ㅟ'.code, 'ㅠ'.code, 'ㅡ'.code, 'ㅢ'.code,
-            'ㅣ'.code, 'ㆍ'.code, 'ㆎ'.code, 'ᆢ'.code
-        )
+        val JUNG_TABLE =
+            intArrayOf(
+                'ㅏ'.code, 'ㅐ'.code, 'ㅑ'.code, 'ㅒ'.code, 'ㅓ'.code,
+                'ㅔ'.code, 'ㅕ'.code, 'ㅖ'.code, 'ㅗ'.code, 'ㅘ'.code,
+                'ㅙ'.code, 'ㅚ'.code, 'ㅛ'.code, 'ㅜ'.code, 'ㅝ'.code,
+                'ㅞ'.code, 'ㅟ'.code, 'ㅠ'.code, 'ㅡ'.code, 'ㅢ'.code,
+                'ㅣ'.code, 'ㆍ'.code, 'ㆎ'.code, 'ᆢ'.code,
+            )
 
         @JvmField
-        val JONG_TABLE = intArrayOf(
-            ' '.code, 'ㄱ'.code, 'ㄲ'.code, 'ㄳ'.code, 'ㄴ'.code,
-            'ㄵ'.code, 'ㄶ'.code, 'ㄷ'.code, 'ㄹ'.code, 'ㄺ'.code,
-            'ㄻ'.code, 'ㄼ'.code, 'ㄽ'.code, 'ㄾ'.code, 'ㄿ'.code,
-            'ㅀ'.code, 'ㅁ'.code, 'ㅂ'.code, 'ㅄ'.code, 'ㅅ'.code,
-            'ㅆ'.code, 'ㅇ'.code, 'ㅈ'.code, 'ㅊ'.code, 'ㅋ'.code,
-            'ㅌ'.code, 'ㅍ'.code, 'ㅎ'.code
-        )
+        val JONG_TABLE =
+            intArrayOf(
+                ' '.code, 'ㄱ'.code, 'ㄲ'.code, 'ㄳ'.code, 'ㄴ'.code,
+                'ㄵ'.code, 'ㄶ'.code, 'ㄷ'.code, 'ㄹ'.code, 'ㄺ'.code,
+                'ㄻ'.code, 'ㄼ'.code, 'ㄽ'.code, 'ㄾ'.code, 'ㄿ'.code,
+                'ㅀ'.code, 'ㅁ'.code, 'ㅂ'.code, 'ㅄ'.code, 'ㅅ'.code,
+                'ㅆ'.code, 'ㅇ'.code, 'ㅈ'.code, 'ㅊ'.code, 'ㅋ'.code,
+                'ㅌ'.code, 'ㅍ'.code, 'ㅎ'.code,
+            )
 
         @JvmField
-        val CHO_CONVERT = intArrayOf(
-            0x1100, 0x1101, 0x0000, 0x1102, 0x0000, 0x115d, 0x1103,
-            0x1104, 0x1105, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-            0x111a, 0x1106, 0x1107, 0x1108, 0x0000, 0x1109, 0x110a, 0x110b,
-            0x110c, 0x110d, 0x110e, 0x110f, 0x1110, 0x1111, 0x1112, 0x0000,
-            0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-            0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-            0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x1114, 0x1115, 0x0000,
-            0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x111c, 0x0000,
-            0x0000, 0x111d, 0x111e, 0x1120, 0x1122, 0x1123, 0x1127, 0x1129,
-            0x112b, 0x112c, 0x112d, 0x112e, 0x112f, 0x1132, 0x1136, 0x1140,
-            0x1147, 0x114c, 0x0000, 0x0000, 0x1157, 0x1158, 0x1159
-        )
+        val CHO_CONVERT =
+            intArrayOf(
+                0x1100, 0x1101, 0x0000, 0x1102, 0x0000, 0x115d, 0x1103,
+                0x1104, 0x1105, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                0x111a, 0x1106, 0x1107, 0x1108, 0x0000, 0x1109, 0x110a, 0x110b,
+                0x110c, 0x110d, 0x110e, 0x110f, 0x1110, 0x1111, 0x1112, 0x0000,
+                0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x1114, 0x1115, 0x0000,
+                0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x111c, 0x0000,
+                0x0000, 0x111d, 0x111e, 0x1120, 0x1122, 0x1123, 0x1127, 0x1129,
+                0x112b, 0x112c, 0x112d, 0x112e, 0x112f, 0x1132, 0x1136, 0x1140,
+                0x1147, 0x114c, 0x0000, 0x0000, 0x1157, 0x1158, 0x1159,
+            )
 
         @JvmField
-        val JONG_CONVERT = intArrayOf(
-            0x11a8, 0x11a9, 0x11aa, 0x11ab, 0x11ac, 0x11ad, 0x11ae,
-            0x0000, 0x11af, 0x11b0, 0x11b1, 0x11b2, 0x11b3, 0x11b4, 0x11b5,
-            0x11b6, 0x11b7, 0x11b8, 0x0000, 0x11b9, 0x11ba, 0x11bb, 0x11bc,
-            0x11bd, 0x0000, 0x11be, 0x11bf, 0x11c0, 0x11c1, 0x11c2, 0x0000,
-            0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-            0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-            0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x11c6, 0x11c7,
-            0x11c8, 0x11cc, 0x11ce, 0x11d3, 0x11d7, 0x11d9, 0x11dc, 0x11dd,
-            0x11df, 0x11e2, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-            0x11e6, 0x0000, 0x11e7, 0x0000, 0x11e8, 0x11ea, 0x0000, 0x11eb,
-            0x0000, 0x11f0, 0x11f1, 0x11f2, 0x11f4, 0x0000, 0x11f9
-        )
+        val JONG_CONVERT =
+            intArrayOf(
+                0x11a8, 0x11a9, 0x11aa, 0x11ab, 0x11ac, 0x11ad, 0x11ae,
+                0x0000, 0x11af, 0x11b0, 0x11b1, 0x11b2, 0x11b3, 0x11b4, 0x11b5,
+                0x11b6, 0x11b7, 0x11b8, 0x0000, 0x11b9, 0x11ba, 0x11bb, 0x11bc,
+                0x11bd, 0x0000, 0x11be, 0x11bf, 0x11c0, 0x11c1, 0x11c2, 0x0000,
+                0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x11c6, 0x11c7,
+                0x11c8, 0x11cc, 0x11ce, 0x11d3, 0x11d7, 0x11d9, 0x11dc, 0x11dd,
+                0x11df, 0x11e2, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+                0x11e6, 0x0000, 0x11e7, 0x0000, 0x11e8, 0x11ea, 0x0000, 0x11eb,
+                0x0000, 0x11f0, 0x11f1, 0x11f2, 0x11f4, 0x0000, 0x11f9,
+            )
 
         @JvmField
-        val TRAD_JUNG_CONVERT = intArrayOf(
-            0x1184, 0x1185, 0x1188, 0x1191, 0x1192, 0x1194, 0x119e, 0x11a1
-        )
+        val TRAD_JUNG_CONVERT =
+            intArrayOf(
+                0x1184,
+                0x1185,
+                0x1188,
+                0x1191,
+                0x1192,
+                0x1194,
+                0x119e,
+                0x11a1,
+            )
     }
 
     var moachigi: Boolean = false
@@ -105,7 +118,7 @@ class HangulEngine {
         val last: Int,
         val beforeJong: Int,
         val composing: String,
-        val lastInputType: Int
+        val lastInputType: Int,
     )
 
     private val histories: Stack<History> = Stack()
@@ -162,12 +175,16 @@ class HangulEngine {
         return true
     }
 
-    fun inputCode(code: Int, shift: Int): Int {
-        val table = when {
-            jamoTableData != null -> jamoTableData
-            jamoSetData != null -> currentJamoTable
-            else -> null
-        } ?: return -1
+    fun inputCode(
+        code: Int,
+        shift: Int,
+    ): Int {
+        val table =
+            when {
+                jamoTableData != null -> jamoTableData
+                jamoSetData != null -> currentJamoTable
+                else -> null
+            } ?: return -1
         for (item in table) {
             if (item[0] == code) {
                 return if (shift == 0) item[1] else item[2]
@@ -203,13 +220,14 @@ class HangulEngine {
                 resetComposition()
             }
             this.cho = choCode
-            result = if (lastInputType == 0) {
-                INPUT_CHO3
-            } else if (preserveState) {
-                lastInputType
-            } else {
-                INPUT_CHO3
-            }
+            result =
+                if (lastInputType == 0) {
+                    INPUT_CHO3
+                } else if (preserveState) {
+                    lastInputType
+                } else {
+                    INPUT_CHO3
+                }
             last = code
         } else if (filteredCode >= 0x1161 && filteredCode <= 0x11a7) {
             var jungCode = code - 0x1161
@@ -232,13 +250,14 @@ class HangulEngine {
                 }
                 this.jung = jungCode
             }
-            result = if (lastInputType == 0) {
-                INPUT_JUNG3
-            } else if (preserveState) {
-                lastInputType
-            } else {
-                INPUT_JUNG3
-            }
+            result =
+                if (lastInputType == 0) {
+                    INPUT_JUNG3
+                } else if (preserveState) {
+                    lastInputType
+                } else {
+                    INPUT_JUNG3
+                }
             last = code
         } else if (filteredCode >= 0x11a8 && filteredCode <= 0x11ff) {
             var jongCode = code - 0x11a7
@@ -262,13 +281,14 @@ class HangulEngine {
                 }
                 this.jong = jongCode
             }
-            result = if (lastInputType == 0) {
-                INPUT_JONG3
-            } else if (preserveState) {
-                lastInputType
-            } else {
-                INPUT_JONG3
-            }
+            result =
+                if (lastInputType == 0) {
+                    INPUT_JONG3
+                } else if (preserveState) {
+                    lastInputType
+                } else {
+                    INPUT_JONG3
+                }
             last = code
         } else if (filteredCode in 0x3131..0x314e || filteredCode in 0x3165..0x3186) {
             if (this.cho != -1 && this.jung != -1) {
@@ -423,7 +443,10 @@ class HangulEngine {
         histories.clear()
     }
 
-    private fun getCombination(a: Int, b: Int): Int {
+    private fun getCombination(
+        a: Int,
+        b: Int,
+    ): Int {
         val table = combinationTableData ?: return -1
         for (item in table) {
             if (item[0] == a && item[1] == b) {
@@ -460,64 +483,77 @@ class HangulEngine {
         return -1
     }
 
-    fun combineHangul(cho: Int, jung: Int, jong: Int): Int {
+    fun combineHangul(
+        cho: Int,
+        jung: Int,
+        jong: Int,
+    ): Int {
         return 0xac00 + cho * 588 + jung * 28 + jong
     }
 
-    fun getVisible(cho: Int, jung: Int, jong: Int): String {
+    fun getVisible(
+        cho: Int,
+        jung: Int,
+        jong: Int,
+    ): String {
         var localCho = cho
         var visible: String
         if (localCho > 0x12 || jung > 0x14 || jong > 0x1b) {
-            visible = when {
-                localCho != -1 && jung == -1 && jong == -1 -> {
-                    String(charArrayOf((localCho + 0x1100).toChar()))
-                }
-                localCho == -1 && jung != -1 && jong == -1 -> {
-                    String(charArrayOf((jung + 0x1161).toChar()))
-                }
-                localCho == -1 && jung == -1 && jong != -1 -> {
-                    String(charArrayOf((jong + 0x11a8 - 1).toChar()))
-                }
-                else -> {
-                    if (localCho == -1) {
-                        localCho = 0x5f
+            visible =
+                when {
+                    localCho != -1 && jung == -1 && jong == -1 -> {
+                        String(charArrayOf((localCho + 0x1100).toChar()))
                     }
-                    var result = String(charArrayOf((localCho + 0x1100).toChar())) +
+                    localCho == -1 && jung != -1 && jong == -1 -> {
                         String(charArrayOf((jung + 0x1161).toChar()))
-                    if (jong != -1) {
-                        result += String(charArrayOf((jong + 0x11a8 - 1).toChar()))
                     }
-                    result
+                    localCho == -1 && jung == -1 && jong != -1 -> {
+                        String(charArrayOf((jong + 0x11a8 - 1).toChar()))
+                    }
+                    else -> {
+                        if (localCho == -1) {
+                            localCho = 0x5f
+                        }
+                        var result =
+                            String(charArrayOf((localCho + 0x1100).toChar())) +
+                                String(charArrayOf((jung + 0x1161).toChar()))
+                        if (jong != -1) {
+                            result += String(charArrayOf((jong + 0x11a8 - 1).toChar()))
+                        }
+                        result
+                    }
                 }
-            }
         } else if (localCho != -1 && jung != -1 && jong != -1) {
             visible = combineHangul(localCho, jung, jong).toChar().toString()
         } else if (localCho != -1 && jung != -1) {
             visible = combineHangul(localCho, jung, 0).toChar().toString()
         } else if (firstMidEnd) {
-            visible = when {
-                localCho != -1 && jung == -1 && jong == -1 -> CHO_TABLE[localCho].toChar().toString()
-                localCho == -1 && jung != -1 && jong == -1 -> JUNG_TABLE[jung].toChar().toString()
-                localCho == -1 && jung == -1 && jong != -1 -> JONG_TABLE[jong].toChar().toString()
-                else -> {
-                    if (localCho == -1) {
-                        localCho = 0x5f
+            visible =
+                when {
+                    localCho != -1 && jung == -1 && jong == -1 -> CHO_TABLE[localCho].toChar().toString()
+                    localCho == -1 && jung != -1 && jong == -1 -> JUNG_TABLE[jung].toChar().toString()
+                    localCho == -1 && jung == -1 && jong != -1 -> JONG_TABLE[jong].toChar().toString()
+                    else -> {
+                        if (localCho == -1) {
+                            localCho = 0x5f
+                        }
+                        var result =
+                            String(charArrayOf((localCho + 0x1100).toChar())) +
+                                String(charArrayOf((jung + 0x1161).toChar()))
+                        if (jong != -1) {
+                            result += String(charArrayOf((jong + 0x11a8 - 1).toChar()))
+                        }
+                        result
                     }
-                    var result = String(charArrayOf((localCho + 0x1100).toChar())) +
-                        String(charArrayOf((jung + 0x1161).toChar()))
-                    if (jong != -1) {
-                        result += String(charArrayOf((jong + 0x11a8 - 1).toChar()))
-                    }
-                    result
                 }
-            }
         } else {
-            visible = when {
-                localCho != -1 -> CHO_TABLE[localCho].toChar().toString()
-                jung != -1 -> JUNG_TABLE[jung].toChar().toString()
-                jong != -1 -> JONG_TABLE[jong].toChar().toString()
-                else -> ""
-            }
+            visible =
+                when {
+                    localCho != -1 -> CHO_TABLE[localCho].toChar().toString()
+                    jung != -1 -> JUNG_TABLE[jung].toChar().toString()
+                    jong != -1 -> JONG_TABLE[jong].toChar().toString()
+                    else -> ""
+                }
         }
         return visible
     }
@@ -559,5 +595,4 @@ class HangulEngine {
     class FinishComposingEvent : HangulEngineEvent()
 
     class SetComposingEvent(val composing: String) : HangulEngineEvent()
-
 }
