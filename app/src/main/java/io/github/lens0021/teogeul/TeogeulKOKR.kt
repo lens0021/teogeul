@@ -27,6 +27,7 @@ import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.InputTimeoutEvent
 import io.github.lens0021.teogeul.event.KeyUpEvent
 import io.github.lens0021.teogeul.event.TeogeulEvent
+import io.github.lens0021.teogeul.ui.TeogeulSettingsActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
@@ -411,7 +412,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             }
 
             LANGKEY_OPEN_SETTINGS -> {
-                val intent = Intent(this, TeogeulControlPanelKOKR::class.java)
+                val intent = Intent(this, TeogeulSettingsActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }

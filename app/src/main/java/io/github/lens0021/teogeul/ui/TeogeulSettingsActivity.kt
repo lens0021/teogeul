@@ -1,0 +1,541 @@
+package io.github.lens0021.teogeul.ui
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import io.github.lens0021.teogeul.R
+import io.github.lens0021.teogeul.TeogeulKOKR
+
+class TeogeulSettingsActivity : ComponentActivity() {
+    private val viewModel: SettingsViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Initialize IME instance if needed
+        if (TeogeulKOKR.getInstance() == null) {
+            TeogeulKOKR(this)
+        }
+
+        setContent {
+            MaterialTheme(
+                colorScheme = dynamicLightColorScheme()
+            ) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = "main"
+                    ) {
+                        composable("main") { SettingsMainScreen(navController, viewModel) }
+                        composable("input_method") { InputMethodScreen(navController, viewModel) }
+                        composable("hard_keyboard") { HardKeyboardScreen(navController, viewModel) }
+                        composable("system") { SystemScreen(navController, viewModel) }
+                        composable("about") { AboutScreen(navController, viewModel) }
+                        composable("developer") { DeveloperScreen(navController, viewModel) }
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun dynamicLightColorScheme(): ColorScheme {
+        return lightColorScheme()
+    }
+}
+
+// ===== Main Screen =====
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SettingsMainScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel
+) {
+    val isDeveloperRevealed by viewModel.isDeveloperSettingsRevealed.collectAsState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.preference_ime_setting_app)) }
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                SettingSectionItem(
+                    title = stringResource(R.string.preference_method_setting_menu),
+                    icon = Icons.Default.Settings,
+                    onClick = { navController.navigate("input_method") }
+                )
+            }
+
+            item {
+                SettingSectionItem(
+                    title = stringResource(R.string.preference_hardware_setting_menu),
+                    icon = Icons.Default.Keyboard,
+                    onClick = { navController.navigate("hard_keyboard") }
+                )
+            }
+
+            item {
+                SettingSectionItem(
+                    title = stringResource(R.string.preference_system_setting_menu),
+                    icon = Icons.Default.Build,
+                    onClick = { navController.navigate("system") }
+                )
+            }
+
+            item {
+                SettingSectionItem(
+                    title = stringResource(R.string.preference_aboutime_menu),
+                    icon = Icons.Default.Info,
+                    onClick = { navController.navigate("about") }
+                )
+            }
+
+            if (isDeveloperRevealed) {
+                item {
+                    SettingSectionItem(
+                        title = stringResource(R.string.preference_dev_menu),
+                        icon = Icons.Default.Code,
+                        onClick = { navController.navigate("developer") }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun SettingSectionItem(
+    title: String,
+    icon: ImageVector,
+    onClick: () -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 16.dp)
+            )
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+    HorizontalDivider()
+}
+
+// ===== Input Method Screen =====
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InputMethodScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel
+) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.preference_method_setting_menu)) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                PreferenceCategory(
+                    title = stringResource(R.string.preference_method_setting_menu)
+                )
+            }
+
+            item {
+                EnableInputMethodPreference(
+                    title = stringResource(R.string.preference_method_enabler_title),
+                    summary = stringResource(R.string.preference_method_enabler_summary)
+                )
+            }
+
+            item {
+                PickInputMethodPreference(
+                    title = stringResource(R.string.preference_method_picker_title)
+                )
+            }
+        }
+    }
+}
+
+// ===== Hardware Keyboard Screen =====
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HardKeyboardScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel
+) {
+    val hangulLayout by viewModel.hardwareHangulLayout.collectAsState()
+    val alphabetLayout by viewModel.hardwareAlphabetLayout.collectAsState()
+    val useMoachigi by viewModel.hardwareUseMoachigi.collectAsState()
+    val fullMoachigi by viewModel.hardwareFullMoachigi.collectAsState()
+    val moachingiDelay by viewModel.hardwareFullMoachingiDelay.collectAsState()
+    val altDirect by viewModel.hardwareAltDirect.collectAsState()
+
+    val hangulEntries = stringArrayResource(R.array.keyboard_hangul_layout).toList()
+    val hangulValues = stringArrayResource(R.array.keyboard_hangul_layout_id).toList()
+    val alphabetEntries = stringArrayResource(R.array.keyboard_alphabet_layout).toList()
+    val alphabetValues = stringArrayResource(R.array.keyboard_alphabet_layout_id).toList()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.preference_hardware_setting_menu)) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                PreferenceCategory(
+                    title = stringResource(R.string.preference_hardware_setting_menu)
+                )
+            }
+
+            item {
+                KeyboardListPreference(
+                    title = stringResource(R.string.preference_hardware_hangul_title),
+                    summary = stringResource(R.string.preference_hardware_hangul_summary),
+                    entries = hangulEntries,
+                    entryValues = hangulValues,
+                    selectedValue = hangulLayout,
+                    onValueChange = { viewModel.updatePreference("hardware_hangul_layout", it) }
+                )
+            }
+
+            item {
+                KeyboardListPreference(
+                    title = stringResource(R.string.preference_hardware_alphabet_title),
+                    summary = stringResource(R.string.preference_hardware_alphabet_summary),
+                    entries = alphabetEntries,
+                    entryValues = alphabetValues,
+                    selectedValue = alphabetLayout,
+                    onValueChange = { viewModel.updatePreference("hardware_alphabet_layout", it) }
+                )
+            }
+
+            item {
+                CheckboxPreference(
+                    title = stringResource(R.string.preference_hardware_use_moachigi_title),
+                    summary = stringResource(R.string.preference_hardware_use_moachigi_summary),
+                    checked = useMoachigi,
+                    onCheckedChange = { viewModel.updatePreference("hardware_use_moachigi", it) }
+                )
+            }
+
+            item {
+                CheckboxPreference(
+                    title = stringResource(R.string.preference_hardware_full_moachigi_title),
+                    summary = stringResource(R.string.preference_hardware_full_moachigi_summary),
+                    checked = fullMoachigi,
+                    onCheckedChange = { viewModel.updatePreference("hardware_full_moachigi", it) }
+                )
+            }
+
+            item {
+                IntEditTextPreference(
+                    title = stringResource(R.string.preference_hardware_full_moachigi_delay_title),
+                    summary = stringResource(R.string.preference_hardware_full_moachigi_delay_summary),
+                    value = moachingiDelay,
+                    onValueChange = { viewModel.updatePreference("hardware_full_moachigi_delay", it) }
+                )
+            }
+
+            item {
+                CheckboxPreference(
+                    title = stringResource(R.string.preference_hardware_alt_direct_title),
+                    summary = stringResource(R.string.preference_hardware_alt_direct_summary),
+                    checked = altDirect,
+                    onCheckedChange = { viewModel.updatePreference("hardware_alt_direct", it) }
+                )
+            }
+        }
+    }
+}
+
+// ===== System Screen =====
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SystemScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel
+) {
+    val useStandardJamo by viewModel.systemUseStandardJamo.collectAsState()
+    val langKeyPress by viewModel.systemLangKeyPress.collectAsState()
+    val langKeyLongPress by viewModel.systemLangKeyLongPress.collectAsState()
+    val altKeyLongPress by viewModel.systemAltKeyLongPress.collectAsState()
+    val hardwareLangKeyStroke by viewModel.systemHardwareLangKeyStroke.collectAsState()
+
+    val langKeyActions = stringArrayResource(R.array.lang_key_actions).toList()
+    val langKeyActionsId = stringArrayResource(R.array.lang_key_actions_id).toList()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.preference_system_setting_menu)) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                PreferenceCategory(
+                    title = stringResource(R.string.preference_system_setting_menu)
+                )
+            }
+
+            item {
+                CheckboxPreference(
+                    title = stringResource(R.string.preference_system_use_standard_jamo_title),
+                    summary = stringResource(R.string.preference_system_use_standard_jamo_summary),
+                    checked = useStandardJamo,
+                    onCheckedChange = { viewModel.updatePreference("system_use_standard_jamo", it) }
+                )
+            }
+
+            item {
+                ListPreference(
+                    title = stringResource(R.string.preference_system_lang_key_press_title),
+                    summary = stringResource(R.string.preference_system_lang_key_press_summary),
+                    entries = langKeyActions,
+                    entryValues = langKeyActionsId,
+                    selectedValue = langKeyPress,
+                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_press", it) }
+                )
+            }
+
+            item {
+                ListPreference(
+                    title = stringResource(R.string.preference_system_lang_key_long_press_title),
+                    summary = stringResource(R.string.preference_system_lang_key_long_press_summary),
+                    entries = langKeyActions,
+                    entryValues = langKeyActionsId,
+                    selectedValue = langKeyLongPress,
+                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_long_press", it) }
+                )
+            }
+
+            item {
+                ListPreference(
+                    title = stringResource(R.string.preference_system_alt_key_long_press_title),
+                    summary = stringResource(R.string.preference_system_alt_key_long_press_summary),
+                    entries = langKeyActions,
+                    entryValues = langKeyActionsId,
+                    selectedValue = altKeyLongPress,
+                    onValueChange = { viewModel.updatePreference("system_action_on_alt_key_long_press", it) }
+                )
+            }
+
+            item {
+                KeystrokePreference(
+                    title = stringResource(R.string.preference_hardware_lang_key_title),
+                    summary = stringResource(R.string.preference_hardware_lang_key_summary),
+                    keystrokeValue = hardwareLangKeyStroke,
+                    onValueChange = { viewModel.updatePreference("system_hardware_lang_key_stroke", it) }
+                )
+            }
+        }
+    }
+}
+
+// ===== About Screen =====
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AboutScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel
+) {
+    val isDeveloperRevealed by viewModel.isDeveloperSettingsRevealed.collectAsState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.preference_aboutime_menu)) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                PreferenceCategory(
+                    title = stringResource(R.string.preference_aboutime_menu)
+                )
+            }
+
+            item {
+                RevealHiddenPreference(
+                    title = stringResource(R.string.teogeul_korean),
+                    isRevealed = isDeveloperRevealed,
+                    onReveal = { viewModel.revealDeveloperSettings() }
+                )
+            }
+
+            item {
+                PreferenceItem(
+                    title = stringResource(R.string.preference_about_license),
+                    summary = stringResource(R.string.teogeul_korean_license),
+                    onClick = { /* TODO: Open license */ }
+                )
+            }
+
+            item {
+                PreferenceItem(
+                    title = stringResource(R.string.preference_about_source_code),
+                    summary = "https://github.com/lens0021/Teogeul",
+                    onClick = { /* TODO: Open URL */ }
+                )
+            }
+        }
+    }
+}
+
+// ===== Developer Screen =====
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DeveloperScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel
+) {
+    val showDevSettings by viewModel.isDeveloperSettingsRevealed.collectAsState()
+    val useHangulHard by viewModel.devUseHangulHard.collectAsState()
+    val hardLayout by viewModel.devHardLayout.collectAsState()
+
+    val devEntries = stringArrayResource(R.array.keyboard_hangul_layout_dev).toList()
+    val devValues = stringArrayResource(R.array.keyboard_hangul_layout_dev_id).toList()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.preference_dev_menu)) },
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                PreferenceCategory(
+                    title = stringResource(R.string.preference_dev_menu)
+                )
+            }
+
+            item {
+                CheckboxPreference(
+                    title = stringResource(R.string.preference_dev_show_dev_settings),
+                    checked = showDevSettings,
+                    onCheckedChange = { viewModel.updatePreference("reveal_dev_settings", it) }
+                )
+            }
+
+            item {
+                PreferenceCategory(
+                    title = stringResource(R.string.preference_dev_hardkeyboard)
+                )
+            }
+
+            item {
+                CheckboxPreference(
+                    title = stringResource(R.string.preference_dev_use_hangul_hard),
+                    checked = useHangulHard,
+                    onCheckedChange = { viewModel.updatePreference("keyboard_dev_use_hangul_hard", it) }
+                )
+            }
+
+            item {
+                KeyboardListPreference(
+                    title = stringResource(R.string.preference_dev_hangul_hard_title),
+                    summary = "",
+                    entries = devEntries,
+                    entryValues = devValues,
+                    selectedValue = hardLayout,
+                    onValueChange = { viewModel.updatePreference("keyboard_dev_hard_layout", it) }
+                )
+            }
+        }
+    }
+}

@@ -29,7 +29,7 @@
         </service>
 
         <activity
-            android:name="io.github.lens0021.teogeul.TeogeulControlPanelKOKR"
+            android:name="io.github.lens0021.teogeul.ui.TeogeulSettingsActivity"
             android:label="@string/preference_ime_setting_app"
             android:taskAffinity=""
             android:exported="true">

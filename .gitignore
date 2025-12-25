@@ -43,4 +43,4 @@ captures/
 .externalNativeBuild
 
 # Release
-app/release/*
+app/release/**.hprof

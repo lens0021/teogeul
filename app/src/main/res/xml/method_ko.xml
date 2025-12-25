@@ -18,6 +18,6 @@
 <!-- for the Search Manager. -->
 
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
-              android:settingsActivity="io.github.lens0021.teogeul.TeogeulControlPanelKOKR"
+              android:settingsActivity="io.github.lens0021.teogeul.ui.TeogeulSettingsActivity"
 			  android:supportsSwitchingToNextInputMethod="true"
 />
