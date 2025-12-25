@@ -7,7 +7,6 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
-import android.preference.PreferenceManager
 import android.text.method.MetaKeyKeyListener
 import android.view.KeyEvent
 import android.view.View
@@ -28,6 +27,8 @@ import io.github.lens0021.teogeul.event.KeyUpEvent
 import io.github.lens0021.teogeul.event.TeogeulEvent
 import io.github.lens0021.teogeul.event.TeogeulEventFlow
 import io.github.lens0021.teogeul.ui.TeogeulSettingsActivity
+import io.github.lens0021.teogeul.data.SettingsRepository
+import io.github.lens0021.teogeul.data.settingsDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,6 +36,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class TeogeulKOKR : Teogeul, HangulEngineListener {
     companion object {
@@ -164,6 +166,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     private val mAltLayout: Array<IntArray> = emptyArray()
     private val eventScope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
     private var eventJob: Job? = null
+    private val settingsRepository by lazy { SettingsRepository(applicationContext.settingsDataStore) }
 
     constructor() : super() {
         mSelf = this
@@ -665,26 +668,26 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     }
 
     private fun applyPreferences() {
-        val pref = PreferenceManager.getDefaultSharedPreferences(this)
-        mHardwareMoachigi = pref.getBoolean("hardware_use_moachigi", mHardwareMoachigi)
-        mFullMoachigi = pref.getBoolean("hardware_full_moachigi", mFullMoachigi)
-        mMoachigiDelay = pref.getInt("hardware_full_moachigi_delay", 100)
-        mStandardJamo = pref.getBoolean("system_use_standard_jamo", mStandardJamo)
-        mLangKeyAction = pref.getString("system_action_on_lang_key_press", LANGKEY_SWITCH_KOR_ENG)
+        val snapshot = runBlocking { settingsRepository.snapshot() }
+        mHardwareMoachigi = snapshot.hardwareUseMoachigi
+        mFullMoachigi = snapshot.hardwareFullMoachigi
+        mMoachigiDelay = snapshot.hardwareFullMoachigiDelay
+        mStandardJamo = snapshot.systemUseStandardJamo
+        mLangKeyAction = snapshot.systemLangKeyPress
         mHardLangKey =
             KeystrokePreference.parseKeyStroke(
-                pref.getString("system_hardware_lang_key_stroke", "---s62") ?: "---s62",
+                snapshot.systemHardwareLangKeyStroke,
             )
-        mAltDirect = pref.getBoolean("hardware_alt_direct", true)
-        mEnableDvorakLayout = pref.getBoolean("hardware_enable_dvorak", true)
+        mAltDirect = snapshot.hardwareAltDirect
+        mEnableDvorakLayout = snapshot.hardwareEnableDvorak
 
         val modeKey =
             if (mCurrentLanguage == EngineMode.LANG_EN) {
-                pref.getString("hardware_alphabet_layout", "keyboard_alphabet_qwerty")
+                snapshot.hardwareAlphabetLayout
             } else {
-                pref.getString("hardware_hangul_layout", "keyboard_sebul_391")
+                snapshot.hardwareHangulLayout
             }
-        applyEngineMode(EngineMode.get(modeKey ?: ""))
+        applyEngineMode(EngineMode.get(modeKey))
     }
 
     private fun applyEngineMode(mode: EngineMode) {

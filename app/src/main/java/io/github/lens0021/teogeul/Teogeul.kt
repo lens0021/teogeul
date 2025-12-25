@@ -1,16 +1,17 @@
 package io.github.lens0021.teogeul
 
-import android.content.SharedPreferences
 import android.inputmethodservice.InputMethodService
-import android.preference.PreferenceManager
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import io.github.lens0021.teogeul.data.SettingsRepository
+import io.github.lens0021.teogeul.data.settingsDataStore
 import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.KeyUpEvent
 import io.github.lens0021.teogeul.event.TeogeulEvent
 import io.github.lens0021.teogeul.event.TeogeulEventFlow
+import kotlinx.coroutines.runBlocking
 
 open class Teogeul : InputMethodService() {
     protected var mPreConverter: LetterConverter? = null
@@ -20,6 +21,7 @@ open class Teogeul : InputMethodService() {
     protected var mDirectInputMode: Boolean = true
 
     private var mConsumeDownEvent: Boolean = false
+    private val settingsRepository by lazy { SettingsRepository(applicationContext.settingsDataStore) }
 
     override fun onCreate() {
         super.onCreate()
@@ -59,8 +61,10 @@ open class Teogeul : InputMethodService() {
 
         setCandidatesViewShown(false)
         mDirectInputMode = mInputConnection == null
-        val pref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        mPreConverter?.setPreferences(pref)
+        if (mPreConverter != null) {
+            val snapshot = runBlocking { settingsRepository.snapshot() }
+            mPreConverter?.setPreferences(snapshot)
+        }
     }
 
     override fun requestHideSelf(flag: Int) {

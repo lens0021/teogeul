@@ -1,95 +1,134 @@
 package io.github.lens0021.teogeul.ui
 
 import android.app.Application
-import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
-import androidx.preference.PreferenceManager
-import kotlinx.coroutines.flow.MutableStateFlow
+import androidx.lifecycle.viewModelScope
+import io.github.lens0021.teogeul.data.SettingsDefaults
+import io.github.lens0021.teogeul.data.SettingsKeys
+import io.github.lens0021.teogeul.data.SettingsRepository
+import io.github.lens0021.teogeul.data.settingsDataStore
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
-    private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
+    private val repository = SettingsRepository(application.settingsDataStore)
 
     // Hardware keyboard preferences
-    private val _hardwareHangulLayout =
-        MutableStateFlow(prefs.getString("hardware_hangul_layout", "keyboard_sebul_391") ?: "keyboard_sebul_391")
-    val hardwareHangulLayout: StateFlow<String> = _hardwareHangulLayout.asStateFlow()
-
-    private val _hardwareAlphabetLayout =
-        MutableStateFlow(
-            prefs.getString("hardware_alphabet_layout", "keyboard_alphabet_qwerty") ?: "keyboard_alphabet_qwerty",
+    val hardwareHangulLayout: StateFlow<String> =
+        repository.hardwareHangulLayout.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.hardwareHangulLayout,
         )
-    val hardwareAlphabetLayout: StateFlow<String> = _hardwareAlphabetLayout.asStateFlow()
 
-    private val _hardwareUseMoachigi = MutableStateFlow(prefs.getBoolean("hardware_use_moachigi", true))
-    val hardwareUseMoachigi: StateFlow<Boolean> = _hardwareUseMoachigi.asStateFlow()
+    val hardwareAlphabetLayout: StateFlow<String> =
+        repository.hardwareAlphabetLayout.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.hardwareAlphabetLayout,
+        )
 
-    private val _hardwareFullMoachigi = MutableStateFlow(prefs.getBoolean("hardware_full_moachigi", true))
-    val hardwareFullMoachigi: StateFlow<Boolean> = _hardwareFullMoachigi.asStateFlow()
+    val hardwareUseMoachigi: StateFlow<Boolean> =
+        repository.hardwareUseMoachigi.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.hardwareUseMoachigi,
+        )
 
-    private val _hardwareFullMoachingiDelay = MutableStateFlow(prefs.getInt("hardware_full_moachigi_delay", 100))
-    val hardwareFullMoachingiDelay: StateFlow<Int> = _hardwareFullMoachingiDelay.asStateFlow()
+    val hardwareFullMoachigi: StateFlow<Boolean> =
+        repository.hardwareFullMoachigi.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.hardwareFullMoachigi,
+        )
 
-    private val _hardwareAltDirect = MutableStateFlow(prefs.getBoolean("hardware_alt_direct", true))
-    val hardwareAltDirect: StateFlow<Boolean> = _hardwareAltDirect.asStateFlow()
+    val hardwareFullMoachingiDelay: StateFlow<Int> =
+        repository.hardwareFullMoachigiDelay.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.hardwareFullMoachigiDelay,
+        )
+
+    val hardwareAltDirect: StateFlow<Boolean> =
+        repository.hardwareAltDirect.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.hardwareAltDirect,
+        )
 
     // System preferences
-    private val _systemUseStandardJamo = MutableStateFlow(prefs.getBoolean("system_use_standard_jamo", false))
-    val systemUseStandardJamo: StateFlow<Boolean> = _systemUseStandardJamo.asStateFlow()
-
-    private val _systemLangKeyPress =
-        MutableStateFlow(
-            prefs.getString("system_action_on_lang_key_press", "switch_next_method") ?: "switch_next_method",
+    val systemUseStandardJamo: StateFlow<Boolean> =
+        repository.systemUseStandardJamo.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.systemUseStandardJamo,
         )
-    val systemLangKeyPress: StateFlow<String> = _systemLangKeyPress.asStateFlow()
 
-    private val _systemLangKeyLongPress =
-        MutableStateFlow(prefs.getString("system_action_on_lang_key_long_press", "list_methods") ?: "list_methods")
-    val systemLangKeyLongPress: StateFlow<String> = _systemLangKeyLongPress.asStateFlow()
+    val systemLangKeyPress: StateFlow<String> =
+        repository.systemLangKeyPress.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.systemLangKeyPress,
+        )
 
-    private val _systemAltKeyLongPress =
-        MutableStateFlow(prefs.getString("system_action_on_alt_key_long_press", "list_actions") ?: "list_actions")
-    val systemAltKeyLongPress: StateFlow<String> = _systemAltKeyLongPress.asStateFlow()
+    val systemLangKeyLongPress: StateFlow<String> =
+        repository.systemLangKeyLongPress.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.systemLangKeyLongPress,
+        )
 
-    private val _systemHardwareLangKeyStroke =
-        MutableStateFlow(prefs.getString("system_hardware_lang_key_stroke", "---s62") ?: "---s62")
-    val systemHardwareLangKeyStroke: StateFlow<String> = _systemHardwareLangKeyStroke.asStateFlow()
+    val systemAltKeyLongPress: StateFlow<String> =
+        repository.systemAltKeyLongPress.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.systemAltKeyLongPress,
+        )
+
+    val systemHardwareLangKeyStroke: StateFlow<String> =
+        repository.systemHardwareLangKeyStroke.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.systemHardwareLangKeyStroke,
+        )
 
     fun updatePreference(
         key: String,
         value: Any,
     ) {
-        prefs.edit().apply {
+        viewModelScope.launch {
             when (value) {
-                is Boolean -> {
-                    putBoolean(key, value)
+                is Boolean ->
                     when (key) {
-                        "hardware_use_moachigi" -> _hardwareUseMoachigi.value = value
-                        "hardware_full_moachigi" -> _hardwareFullMoachigi.value = value
-                        "hardware_alt_direct" -> _hardwareAltDirect.value = value
-                        "system_use_standard_jamo" -> _systemUseStandardJamo.value = value
+                        "hardware_use_moachigi" -> repository.updateBoolean(SettingsKeys.hardwareUseMoachigi, value)
+                        "hardware_full_moachigi" -> repository.updateBoolean(SettingsKeys.hardwareFullMoachigi, value)
+                        "hardware_alt_direct" -> repository.updateBoolean(SettingsKeys.hardwareAltDirect, value)
+                        "system_use_standard_jamo" -> repository.updateBoolean(SettingsKeys.systemUseStandardJamo, value)
+                        else -> Unit
                     }
-                }
-                is String -> {
-                    putString(key, value)
+                is String ->
                     when (key) {
-                        "hardware_hangul_layout" -> _hardwareHangulLayout.value = value
-                        "hardware_alphabet_layout" -> _hardwareAlphabetLayout.value = value
-                        "system_action_on_lang_key_press" -> _systemLangKeyPress.value = value
-                        "system_action_on_lang_key_long_press" -> _systemLangKeyLongPress.value = value
-                        "system_action_on_alt_key_long_press" -> _systemAltKeyLongPress.value = value
-                        "system_hardware_lang_key_stroke" -> _systemHardwareLangKeyStroke.value = value
+                        "hardware_hangul_layout" -> repository.updateString(SettingsKeys.hardwareHangulLayout, value)
+                        "hardware_alphabet_layout" -> repository.updateString(SettingsKeys.hardwareAlphabetLayout, value)
+                        "system_action_on_lang_key_press" -> repository.updateString(SettingsKeys.systemLangKeyPress, value)
+                        "system_action_on_lang_key_long_press" ->
+                            repository.updateString(SettingsKeys.systemLangKeyLongPress, value)
+                        "system_action_on_alt_key_long_press" ->
+                            repository.updateString(SettingsKeys.systemAltKeyLongPress, value)
+                        "system_hardware_lang_key_stroke" ->
+                            repository.updateString(SettingsKeys.systemHardwareLangKeyStroke, value)
+                        else -> Unit
                     }
-                }
-                is Int -> {
-                    putInt(key, value)
+                is Int ->
                     when (key) {
-                        "hardware_full_moachigi_delay" -> _hardwareFullMoachingiDelay.value = value
+                        "hardware_full_moachigi_delay" ->
+                            repository.updateInt(SettingsKeys.hardwareFullMoachigiDelay, value)
+                        else -> Unit
                     }
-                }
+                else -> Unit
             }
-            apply()
         }
     }
 }

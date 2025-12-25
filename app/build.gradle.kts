@@ -67,7 +67,9 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.activity.compose)
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.compose)
     implementation(libs.preference.ktx)
+    implementation(libs.datastore.preferences)
     debugImplementation(libs.compose.ui.tooling)
 }
