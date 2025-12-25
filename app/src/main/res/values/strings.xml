@@ -60,37 +60,7 @@
   <string name="preference_auto_caps_title"> Auto Capitalization </string>
     <string name="preference_auto_caps_summary"> Automatically capitalize the 1st char of a sentence in alphabet mode. </string>
 
-    <string name="preference_conversion_menu">Conversion</string>
-
-    <string name="preference_prediction_title">Word Prediction</string>
-    <string name="preference_prediction_summary">Display predicted words as conversion candidates.</string>
-
-    <string name="preference_correct_spell_title">Typing Error Correction</string>
-    <string name="preference_correct_spell_summary">Display predicted words for correcting typing error.</string>
-
-    <string name="preference_input_learning_title">Input Word Learning</string>
-    <string name="preference_input_learning_summary">Learn input words.</string>
-
     <string name="preference_aboutime_menu"> About IME </string>
-
-    <string name="preference_dictionary_menu"> Dictionary </string>
-    <string name="preference_dictionary_menu_ja"> Japanese User Dictionary </string>
-    <string name="preference_dictionary_menu_en"> English User Dictionary </string>
-    <string name="preference_dictionary_menu_zhcn"> Chinese User Dictionary </string>
-
-    <string name="preference_user_dictionary">User Dictionary</string>
-
-    <string name="preference_user_dictionary_edit_words_title">User Dictionary</string>
-    <string name="preference_user_dictionary_edit_words_summary">List/add/edit/delete words in user dictionary.</string>
-    <string name="preference_user_dictionary_edit_words_summary_ja">List/add/edit/delete words in Japanese user dictionary.</string>
-    <string name="preference_user_dictionary_edit_words_summary_en">List/add/edit/delete words in English user dictionary.</string>
-    <string name="preference_user_dictionary_edit_words_summary_zhcn">List/add/edit/delete words in Chinese user dictionary.</string>
-
-    <string name="preference_user_dictionary_clear_learning_title">Clear Learning Dictionary</string>
-    <string name="preference_user_dictionary_clear_learning_summary">Remove all words from learning dictionary.</string>
-
-    <string name="preference_user_dictionary_clear_user_title">Clear User Dictionary</string>
-    <string name="preference_user_dictionary_clear_user_summary">Remove all words from user dictionary.</string>
 
     <!-- Dialog Messages -->
     <string name="dialog_button_ok">OK</string>
@@ -98,50 +68,16 @@
     <string name="dialog_button_close">Close</string>
     <string name="dialog_button_add">Add</string>
 
-    <string name="dialog_clear_user_dictionary_message">Clear user dictionary?</string>
-    <string name="dialog_clear_learning_dictionary_message">Clear learning dictionary?</string>
-    <string name="dialog_clear_user_dictionary_done">Cleared.</string>
-    <string name="dialog_clear_learning_dictionary_done">Cleared.</string>
-
-    <!-- user dictionary -->
-    <string name="user_dictionary_list_words">Registered words</string>
-    <string name="user_dictionary_list_words_en">Registered words in English User Dic</string>
-    <string name="user_dictionary_list_words_ja">Registered words in Japanese User Dic</string>
-    <string name="user_dictionary_list_words_zhcn">Registered words in Chinese User Dic</string>
-    <string name="user_dictionary_edit_words">Edit</string>
-    <string name="user_dictionary_title_read">Reading</string>
-    <string name="user_dictionary_title_candidate">Word</string>
-    <string name="user_dictionary_add">Add</string>
-    <string name="user_dictionary_edit">Edit</string>
-    <string name="user_dictionary_delete">Delete</string>
-    <string name="user_dictionary_delete_confirm">Delete the selected word?</string>
-    <string name="user_dictionary_delete_complete">Deleted.</string>
-    <string name="user_dictionary_delete_fail">Fail to delete it</string>
-    <string name="user_dictionary_words_duplication_message">Already registered.</string>
-    <string name="user_dictionary_over_max_text_size_message">Length of the string exceeds the limit.</string>
-    <string name="user_dictionary_creating_wordlist">Loading</string>
-    <string name="user_dictionary_init">Initialize?</string>
-    <string name="user_dictionary_prev_button">　≪　</string>
-    <string name="user_dictionary_next_button">　≫　</string>
 
   <!-- IME dependency -->
     <!-- OpenWnn English -->
-    <string name="teogeul_english_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
-    <string name="teogeul_english">OpenWnn English</string>
-    <string name="teogeul_english_system_dictionary">/data/data/io.github.lens0021.teogeul/lib/libWnnEngDic.so</string>
-    <string name="teogeul_english_writable_dictionary">/data/data/io.github.lens0021.teogeul/writableEN.dic</string>
     <string name="en_word_separators">.,;:!?</string>
 
     <!-- OpenWnn Japanese -->
-    <string name="teogeul_japanese_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
     <string name="teogeul_japanese">Japanese IME</string>
-    <string name="teogeul_japanese_system_dictionary">/data/data/io.github.lens0021.teogeul/lib/libWnnJpnDic.so</string>
-    <string name="teogeul_japanese_writable_dictionary">/data/data/io.github.lens0021.teogeul/writableJAJP.dic</string>
 
     <!-- OpenWnn Chinese -->
-    <string name="teogeul_china_copyright">Ver.1.3.5\nOMRON SOFTWARE Co., Ltd.</string>
     <string name="teogeul_china">OpenWnn Chinese</string>
-    <string name="teogeul_china_system_dictionary">/data/data/io.github.lens0021.teogeul/lib/libWnnZHCNDic.so</string>
 
   <!-- Teogeul -->
     <string name="teogeul_korean_copyright">" hgl1002@naver.com"</string>
@@ -151,13 +87,7 @@
     <string name="teogeul_korean_donate_summary">개발을 계속할 수 있도록 후원해 주시면 정말 감사하겠습니다. 후원 문의는 hgl1002@naver.com으로 부탁드립니다.</string>
 
   <!-- After Config Change -->
-    <string name="teogeul_china_writable_dictionary">/data/data/io.github.lens0021.teogeul/writableZHCN.dic</string>
     <string name="cn_word_separators">.,;:!?</string>
-
-  <!-- Candidate Delete -->
-  <string name="button_candidate_select">Select</string>
-  <string name="button_candidate_delete">Delete learning?</string>
-  <string name="button_candidate_cancel">Close</string>
 
 
   <!-- Key top -->
@@ -351,13 +281,9 @@
 
 
     <string name="preference_keyboard_12key_dubul_cheonjiin">12-Key Dubeolsik Cheonjiin</string>
-    <string name="preference_keyboard_12key_dubul_cheonjiin_predictive">12-Key Dubeolsik Cheonjiin Predictive</string>
     <string name="preference_keyboard_12key_dubul_naratgeul">12-Key Dubeolsik Naratgeul</string>
-    <string name="preference_keyboard_12key_dubul_naratgeul_predictive">12-Key Dubeolsik Naratgeul Predictive</string>
     <string name="preference_keyboard_12key_dubul_sky2">12-Key Dubeolsik SKY 2</string>
-    <string name="preference_keyboard_12key_dubul_sky2_predictive">12-Key Dubeolsik SKY 2 Predictive</string>
     <string name="preference_keyboard_12key_sebul_munhwa">12-Key Sebeolsik by Hangul Munhwawon</string>
-    <string name="preference_keyboard_12key_sebul_munhwa_predictive">12-Key Sebeolsik by Hangul Munhwawon Predictive</string>
     <string name="preference_keyboard_12key_sebul_hanson">One-hand Sebeolsik (ZanNavi)</string>
     <string name="preference_keyboard_12key_sebul_sena">One-hand Sebeolsik (Sena)</string>
 
@@ -383,12 +309,6 @@
     <string name="preference_keyboard_12key_alphabet_narrow_a">Narrow A</string>
     <string name="preference_keyboard_12key_alphabet_narrow_b">Narrow B</string>
     <string name="preference_keyboard_12key_alphabet_smallqwerty">smallQWERTY</string>
-
-    <string name="preference_keyboard_12key_alphabet_wide_a_predictive">Wide A Predictive</string>
-    <string name="preference_keyboard_12key_alphabet_wide_b_predictive">Wide B Predictive</string>
-    <string name="preference_keyboard_12key_alphabet_narrow_a_predictive">Narrow A Predictive</string>
-    <string name="preference_keyboard_12key_alphabet_narrow_b_predictive">Narrow B Predictive</string>
-    <string name="preference_keyboard_12key_alphabet_smallqwerty_predictive">smallQWERTY Predictive</string>
 
     <string name="preference_keyboard_symbols_title">Symbols keyboard type</string>
     <string name="preference_keyboard_symbols_summary">Type of Symbols keyboard.</string>
@@ -461,26 +381,6 @@
 
     <string name="preference_hardware_alt_direct_title">Alt Direct input</string>
     <string name="preference_hardware_alt_direct_summary">Always input literal chars on hard Alt combination.</string>
-
-
-    <string name="preference_conversion_setting_menu">Conversion &amp; Prediction</string>
-
-    <string name="preference_conversion_show_candidates_title">Show candidates window</string>
-    <string name="preference_conversion_show_candidates_summary">Show candidates window to use conversion and prediction features.</string>
-
-    <string name="preference_conversion_use_word_completion_title">Word completion</string>
-    <string name="preference_conversion_use_word_completion_summary">Use automatic word completion.</string>
-
-    <string name="preference_conversion_use_hanja_title">Hanja conversion</string>
-    <string name="preference_conversion_use_hanja_summary">Use Hangeul to Hanja (Chinese characters) conversion.</string>
-
-    <string name="preference_conversion_use_autotext_title">Autotext conversion</string>
-    <string name="preference_conversion_use_autotext_summary">Use Autotext conversion.</string>
-
-    <string name="preference_conversion_autotext_edit_title">Edit Autotexts</string>
-
-    <string name="preference_conversion_autotext_dialog_title">Autotext List</string>
-    <string name="preference_conversion_autotext_edit_dialog_title">Edit new Autotext</string>
 
 
     <string name="preference_system_setting_menu">System Settings</string>

@@ -27,11 +27,6 @@ android {
         testImplementation 'junit:junit:4.13.2'
     }
 
-    externalNativeBuild {
-        ndkBuild {
-            path 'Android.mk'
-        }
-    }
     lint {
         disable 'MissingTranslation'
     }

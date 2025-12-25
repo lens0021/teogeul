@@ -33,8 +33,6 @@ import io.github.lens0021.teogeul.KOKR.HangulEngine.SetComposingEvent;
 import io.github.lens0021.teogeul.KOKR.preference.KeystrokePreference;
 import io.github.lens0021.teogeul.KOKR.ListLangKeyActionDialogActivity;
 import io.github.lens0021.teogeul.KOKR.TwelveHangulEngine;
-import io.github.lens0021.teogeul.KOKR.converter.HanjaConverter;
-
 import io.github.lens0021.teogeul.event.CommitComposingTextEvent;
 import io.github.lens0021.teogeul.event.EngineModeChangeEvent;
 import io.github.lens0021.teogeul.event.InputCharEvent;
@@ -244,9 +242,6 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 	public void onCreate() {
 		super.onCreate();
 		EventBus.getDefault().register(this);
-
-		HanjaConverter.copyDatabase(this);
-
 	}
 
 	@Override
@@ -290,8 +285,6 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 		String altLayout = pref.getString("keyboard_symbols_layout", "keyboard_symbols_a");
 		mAltLayout = EngineMode.get(altLayout).layout;
 
-		setCandidatesViewShown(pref.getBoolean("conversion_show_candidates", false));
-
 		mMoachigi = pref.getBoolean("keyboard_use_moachigi", mMoachigi);
 		mHardwareMoachigi = pref.getBoolean("hardware_use_moachigi", mHardwareMoachigi);
 		mFullMoachigi = pref.getBoolean("hardware_full_moachigi", mFullMoachigi);
@@ -333,19 +326,6 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 	@Override
 	public void onStartInput(EditorInfo attribute, boolean restarting) {
 		super.onStartInput(attribute, restarting);
-	}
-
-	@Override
-	public View onCreateCandidatesView() {
-		if (mCandidatesViewManager != null) {
-			WindowManager wm = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
-			assert wm != null;
-			return mCandidatesViewManager.initView(this,
-					wm.getDefaultDisplay().getWidth(),
-					wm.getDefaultDisplay().getHeight());
-		}
-
-		return super.onCreateCandidatesView();
 	}
 
 	@Override
@@ -455,7 +435,6 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 	@Subscribe
 	public void onInputViewChange(InputViewChangeEvent event) {
 		setInputView(onCreateInputView());
-		setCandidatesView(onCreateCandidatesView());
 		onStartInputView(getCurrentInputEditorInfo(), false);
 	}
 

@@ -22,7 +22,7 @@ import android.content.SharedPreferences;
  * The interface of pre-converter for input string used by OpenWnn.
  * <br>
  * This is a simple converter for Romaji-to-Kana input, Hangul input, etc.
- * Before converting the input string by {@link WnnEngine}, {@link OpenWnn} invokes this converter.
+ * Before committing the input string, {@link OpenWnn} invokes this converter.
  *
  * @author Copyright (C) 2009 OMRON SOFTWARE CO., LTD.  All Rights Reserved.
  */

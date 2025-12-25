@@ -26,8 +26,7 @@ import android.util.Log;
  *
  * This interface is for the class includes information about the
  * input string, the converted string and its decoration.
- * {@link LetterConverter} and {@link WnnEngine} get the input string from it, and
- * store the converted string into it.
+ * {@link LetterConverter} gets the input string from it and stores the converted string into it.
  *
  * @author Copyright (C) 2009 OMRON SOFTWARE CO., LTD.  All Rights Reserved.
  */
@@ -49,9 +48,7 @@ public class ComposingText {
     /**
      * Text layer 2.
      * <br>
-     * This text layer holds the result of the consecutive clause converter.<br>
-     * (ex) the result of Kana-to-Kanji conversion in Japanese,
-     *      Pinyin-to-Kanji conversion in Chinese, Hangul-to-Hanja conversion in Korean language.
+     * This text layer is reserved for conversion results.
      */
     public static final int LAYER2  = 2;
     /** Maximum number of layers */
