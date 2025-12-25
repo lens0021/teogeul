@@ -227,6 +227,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         super.onFinishInput()
     }
 
+    @Suppress("DEPRECATION")
     override fun onViewClicked(focusChanged: Boolean) {
         resetCharComposition()
         super.onViewClicked(focusChanged)
@@ -264,7 +265,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    private fun handleInputTimeout(event: InputTimeoutEvent) {
+    private fun handleInputTimeout(_: InputTimeoutEvent) {
         if (mEnableTimeout) {
             resetCharComposition()
         }
@@ -331,7 +332,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         shinShift()
     }
 
-    private fun handleCommitComposingText(event: CommitComposingTextEvent) {
+    private fun handleCommitComposingText(_: CommitComposingTextEvent) {
         currentInputConnection.finishComposingText()
     }
 
@@ -430,8 +431,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                     if (mInput) {
                         mInput = false
+                        @Suppress("DEPRECATION")
                         imm?.switchToLastInputMethod(token)
                     } else {
+                        @Suppress("DEPRECATION")
                         imm?.switchToNextInputMethod(token, false)
                     }
                 }
