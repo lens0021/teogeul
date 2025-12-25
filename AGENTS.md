@@ -20,7 +20,14 @@ Java 소스는 4스페이스 들여쓰기, 같은 줄 여는 중괄호를 사용
 
 ## AI 에이전트 지침
 - 커밋 제목은 짧게 유지하고, 상세 내용은 PR 본문에 작성합니다.
-- AI가 생성한 커밋에는 아래와 메시지를 반드시 포함합니다.
+- AI가 생성한 커밋에는 사용한 도구/모델에 맞는 메시지를 반드시 포함합니다.
+
+예시:
+```
+🤖 Generated with [Codex CLI](https://platform.openai.com/docs/codex)
+
+Co-Authored-By: GPT-5 <noreply@openai.com>
+```
 
 ```
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
