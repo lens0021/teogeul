@@ -50,8 +50,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.greenrobot:eventbus:3.1.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     testImplementation("junit:junit:4.13.2")
 

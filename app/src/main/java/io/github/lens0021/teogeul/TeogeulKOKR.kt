@@ -27,9 +27,15 @@ import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.InputTimeoutEvent
 import io.github.lens0021.teogeul.event.KeyUpEvent
 import io.github.lens0021.teogeul.event.TeogeulEvent
+import io.github.lens0021.teogeul.event.TeogeulEventFlow
 import io.github.lens0021.teogeul.ui.TeogeulSettingsActivity
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class TeogeulKOKR : Teogeul, HangulEngineListener {
     companion object {
@@ -155,6 +161,8 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     var mHardLangKey: KeystrokePreference.KeyStroke? = null
 
     private val mAltLayout: Array<IntArray> = emptyArray()
+    private val eventScope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
+    private var eventJob: Job? = null
 
     constructor() : super() {
         mSelf = this
@@ -172,7 +180,16 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     override fun onCreate() {
         super.onCreate()
-        EventBus.getDefault().register(this)
+        eventJob = eventScope.launch {
+            TeogeulEventFlow.events.collect { event ->
+                when (event) {
+                    is InputKeyEvent -> handleInputKey(event)
+                    is KeyUpEvent -> handleKeyUp(event)
+                    is InputTimeoutEvent -> handleInputTimeout(event)
+                    is CommitComposingTextEvent -> handleCommitComposingText(event)
+                }
+            }
+        }
     }
 
     override fun onCreateInputView(): View? {
@@ -213,8 +230,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    @Subscribe
-    fun onKeyUp(event: KeyUpEvent) {
+    private fun handleKeyUp(event: KeyUpEvent) {
         val key = event.keyEvent.keyCode
         if (!mShiftPressing) {
             if (key == KeyEvent.KEYCODE_SHIFT_LEFT || key == KeyEvent.KEYCODE_SHIFT_RIGHT) {
@@ -237,15 +253,13 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    @Subscribe
-    fun onInputTimeout(event: InputTimeoutEvent) {
+    private fun handleInputTimeout(event: InputTimeoutEvent) {
         if (mEnableTimeout) {
             resetCharComposition()
         }
     }
 
-    @Subscribe
-    fun onInputKey(event: InputKeyEvent) {
+    private fun handleInputKey(event: InputKeyEvent) {
         val keyEvent = event.keyEvent
         when (keyEvent.keyCode) {
             KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.KEYCODE_ALT_RIGHT -> {
@@ -306,8 +320,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         shinShift()
     }
 
-    @Subscribe
-    fun onCommitComposingText(event: CommitComposingTextEvent) {
+    private fun handleCommitComposingText(event: CommitComposingTextEvent) {
         currentInputConnection.finishComposingText()
     }
 
@@ -714,14 +727,15 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.getDefault().unregister(this)
+        eventJob?.cancel()
+        eventScope.cancel()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (mTimeOutHandler == null) {
             mTimeOutHandler = Handler()
             mTimeOutHandler?.postDelayed({
-                EventBus.getDefault().post(InputTimeoutEvent())
+                TeogeulEventFlow.emitBlocking(InputTimeoutEvent())
                 mTimeOutHandler = null
             }, mMoachigiDelay.toLong())
         }

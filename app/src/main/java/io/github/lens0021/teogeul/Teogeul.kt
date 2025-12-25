@@ -7,10 +7,10 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
-import org.greenrobot.eventbus.EventBus
 import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.KeyUpEvent
 import io.github.lens0021.teogeul.event.TeogeulEvent
+import io.github.lens0021.teogeul.event.TeogeulEventFlow
 
 open class Teogeul : InputMethodService() {
     protected var mPreConverter: LetterConverter? = null
@@ -84,7 +84,7 @@ open class Teogeul : InputMethodService() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         val inputKeyEvent = InputKeyEvent(event)
-        EventBus.getDefault().post(inputKeyEvent)
+        TeogeulEventFlow.emitBlocking(inputKeyEvent)
         mConsumeDownEvent = inputKeyEvent.isCancelled
         if (!mConsumeDownEvent) {
             return super.onKeyDown(keyCode, event)
@@ -97,7 +97,7 @@ open class Teogeul : InputMethodService() {
         ret = if (!ret) {
             super.onKeyUp(keyCode, event)
         } else {
-            EventBus.getDefault().post(KeyUpEvent(event))
+            TeogeulEventFlow.emitBlocking(KeyUpEvent(event))
             ret
         }
         return ret
