@@ -7,28 +7,17 @@
 
 ## 기능 Features
 
-하드웨어 키보드와 다양한 배열을 지원합니다.
+물리 키보드 중심의 한글 입력 기능을 제공합니다.
 
-Supports hardware keyboard and multiple layouts.
+### 기능 목록 Feature List
 
-### 배열 Layouts
-
-휴대전화와 컴퓨터에서 사용되는 다양한 배열을 지원합니다.
-
-* 두벌식
-* 세벌식
-* 단모음
-* 천지인
-* 나랏글
-
-Support below korean keyboard layouts.
-
-* Dubeolsik
-* Sebeolsik
-* Danmoeum
-* Cheonjiin
-* Naratgeul
+- 하드웨어 키보드용 한글 입력기
+- 한글 배열: 두벌식(표준/NK), 세벌식(390/391, 신세벌식, 3-2015, 순아래 2014, 단모음, 모아치기 세벌식 등)
+- 영문 배열: QWERTY, Dvorak, Colemak
+- 모아주기/한 번에 모아치기 옵션 및 대기 시간 설정
+- 표준 한글 자모 조합 옵션
+- 언어 키/Alt 키 동작 및 한영 키 조합 커스터마이즈
 
 ## Contributing
 
-See `CONTRIBUTE.md`.
+`CONTRIBUTE.md` 참고.
