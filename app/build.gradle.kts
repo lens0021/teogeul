@@ -55,7 +55,6 @@ repositories {
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.coroutines.android)
-    implementation(libs.recyclerview)
     testImplementation(libs.junit)
 
     // Compose BOM
@@ -71,7 +70,6 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.compose)
-    implementation(libs.preference.ktx)
     implementation(libs.datastore.preferences)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

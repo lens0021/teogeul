@@ -19,7 +19,7 @@ import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineEvent
 import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineListener
 import io.github.lens0021.teogeul.KOKR.HangulEngine.SetComposingEvent
 import io.github.lens0021.teogeul.KOKR.ListLangKeyActionDialogActivity
-import io.github.lens0021.teogeul.KOKR.preference.KeystrokePreference
+import io.github.lens0021.teogeul.KeyStroke
 import io.github.lens0021.teogeul.event.CommitComposingTextEvent
 import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.InputTimeoutEvent
@@ -161,7 +161,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     var mTimeOutHandler: Handler? = null
 
-    var mHardLangKey: KeystrokePreference.KeyStroke? = null
+    var mHardLangKey: KeyStroke? = null
 
     private val mAltLayout: Array<IntArray> = emptyArray()
     private val eventScope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
@@ -674,10 +674,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         mMoachigiDelay = snapshot.hardwareFullMoachigiDelay
         mStandardJamo = snapshot.systemUseStandardJamo
         mLangKeyAction = snapshot.systemLangKeyPress
-        mHardLangKey =
-            KeystrokePreference.parseKeyStroke(
-                snapshot.systemHardwareLangKeyStroke,
-            )
+        mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
         mAltDirect = snapshot.hardwareAltDirect
         mEnableDvorakLayout = snapshot.hardwareEnableDvorak
 
