@@ -537,6 +537,13 @@ class OpenWnnKOKR : OpenWnn, HangulEngineListener {
             return false
         }
 
+        // Handle dedicated language switch key (한/영 key)
+        if (key == KeyEvent.KEYCODE_LANGUAGE_SWITCH) {
+            resetCharComposition()
+            toggleLanguage()
+            return true
+        }
+
         val hardLangKey = mHardLangKey
         if (hardLangKey != null && key == hardLangKey.keyCode) {
             if ((mHardShift == 1) == hardLangKey.shift &&
