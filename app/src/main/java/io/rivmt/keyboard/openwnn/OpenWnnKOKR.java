@@ -78,6 +78,57 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 			{0x2f, 0x3f},
 	};
 
+	// QWERTY to DVORAK hardware keyboard layout mapping
+	// Maps QWERTY KeyEvent.KEYCODE to DVORAK KeyEvent.KEYCODE
+	private static final Map<Integer, Integer> QWERTY_TO_DVORAK = new HashMap<>();
+	static {
+		// Top row (QWERTY: q w e r t y u i o p [ ])
+		// DVORAK:  ' , . p y f g c r l / =
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_Q, KeyEvent.KEYCODE_APOSTROPHE);  // q → '
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_W, KeyEvent.KEYCODE_COMMA);       // w → ,
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_E, KeyEvent.KEYCODE_PERIOD);      // e → .
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_R, KeyEvent.KEYCODE_P);           // r → p
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_T, KeyEvent.KEYCODE_Y);           // t → y
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_Y, KeyEvent.KEYCODE_F);           // y → f
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_U, KeyEvent.KEYCODE_G);           // u → g
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_I, KeyEvent.KEYCODE_C);           // i → c
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_O, KeyEvent.KEYCODE_R);           // o → r
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_P, KeyEvent.KEYCODE_L);           // p → l
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_LEFT_BRACKET, KeyEvent.KEYCODE_SLASH);       // [ → /
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_RIGHT_BRACKET, KeyEvent.KEYCODE_EQUALS);     // ] → =
+
+		// Middle row (QWERTY: a s d f g h j k l ; ')
+		// DVORAK:   a o e u i d h t n s -
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_A, KeyEvent.KEYCODE_A);           // a → a (same)
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_O);           // s → o
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_D, KeyEvent.KEYCODE_E);           // d → e
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_F, KeyEvent.KEYCODE_U);           // f → u
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_G, KeyEvent.KEYCODE_I);           // g → i
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_H, KeyEvent.KEYCODE_D);           // h → d
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_J, KeyEvent.KEYCODE_H);           // j → h
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_K, KeyEvent.KEYCODE_T);           // k → t
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_L, KeyEvent.KEYCODE_N);           // l → n
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_SEMICOLON, KeyEvent.KEYCODE_S);   // ; → s
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_APOSTROPHE, KeyEvent.KEYCODE_MINUS);  // ' → -
+
+		// Bottom row (QWERTY: z x c v b n m , . /)
+		// DVORAK:   ; q j k x b m w v z
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_Z, KeyEvent.KEYCODE_SEMICOLON);   // z → ;
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_X, KeyEvent.KEYCODE_Q);           // x → q
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_C, KeyEvent.KEYCODE_J);           // c → j
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_V, KeyEvent.KEYCODE_K);           // v → k
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_B, KeyEvent.KEYCODE_X);           // b → x
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_N, KeyEvent.KEYCODE_B);           // n → b
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_M, KeyEvent.KEYCODE_M);           // m → m (same)
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_COMMA, KeyEvent.KEYCODE_W);       // , → w
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_PERIOD, KeyEvent.KEYCODE_V);      // . → v
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_Z);       // / → z
+
+		// Reverse mappings (for inverse conversion)
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_MINUS, KeyEvent.KEYCODE_LEFT_BRACKET);   // - → [
+		QWERTY_TO_DVORAK.put(KeyEvent.KEYCODE_EQUALS, KeyEvent.KEYCODE_RIGHT_BRACKET); // = → ]
+	}
+
 	public static final int[][] FLICK_TABLE_12KEY = {
 			{-201, 0x31},
 			{-202, 0x32},
@@ -140,6 +191,9 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 	String mLangKeyAction;
 	String mLangKeyLongAction;
 	String mAltKeyLongAction;
+
+	// Hardware keyboard layout setting
+	boolean mEnableDvorakLayout;
 
 	private final Map<SoftKeyFlickEvent.Direction, String> flickAction;
 	String mLongPressAction;
@@ -267,6 +321,11 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 		m12keyEngine.setFirstMidEnd(mStandardJamo);
 
 		mAltDirect = pref.getBoolean("hardware_alt_direct", true);
+
+		// Hardware keyboard layout setting
+		// TODO: Add UI preference for this setting
+		// For now, enable DVORAK by default for testing
+		mEnableDvorakLayout = pref.getBoolean("hardware_enable_dvorak", true);
 
 		mCharInput = false;
 	}
@@ -778,6 +837,39 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 		}
 	}
 
+	/**
+	 * Convert hardware keyboard key event from QWERTY to DVORAK layout
+	 * @param ev Original KeyEvent from hardware keyboard (QWERTY layout)
+	 * @return Converted KeyEvent for DVORAK layout, or null if no conversion needed
+	 */
+	private KeyEvent convertQwertyToDvorak(KeyEvent ev) {
+		if (!mEnableDvorakLayout) {
+			return null;
+		}
+
+		int originalKeyCode = ev.getKeyCode();
+		Integer convertedKeyCode = QWERTY_TO_DVORAK.get(originalKeyCode);
+
+		if (convertedKeyCode == null) {
+			// No mapping found - keys like numbers, space, enter, etc.
+			return null;
+		}
+
+		// Create new KeyEvent with converted key code
+		return new KeyEvent(
+			ev.getDownTime(),
+			ev.getEventTime(),
+			ev.getAction(),
+			convertedKeyCode,        // Converted key code
+			ev.getRepeatCount(),
+			ev.getMetaState(),       // Preserve Ctrl, Shift, Alt states
+			ev.getDeviceId(),
+			ev.getScanCode(),
+			ev.getFlags(),
+			ev.getSource()
+		);
+	}
+
 	@SuppressLint("NewApi")
 	private boolean processKeyEvent(KeyEvent ev) {
 		if(mInputConnection == null) return false;
@@ -833,7 +925,16 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			if (ev.isCtrlPressed()) return false;
+			if (ev.isCtrlPressed()) {
+				// Convert hardware keyboard layout if DVORAK is enabled
+				KeyEvent convertedEvent = convertQwertyToDvorak(ev);
+				if (convertedEvent != null && mInputConnection != null) {
+					// Send converted key event to the app
+					mInputConnection.sendKeyEvent(convertedEvent);
+					return true;  // Handled by IME
+				}
+				return false;  // Pass through for QWERTY or unmapped keys
+			}
 		}
 
 		if ((key <= -200 && key > -300) || (key <= -2000 && key > -3000)) {
@@ -883,8 +984,14 @@ public class OpenWnnKOKR extends OpenWnn implements HangulEngineListener {
 		}
 
 		if (ev.isPrintingKey()) {
+			// Convert hardware keyboard layout if DVORAK is enabled
+			KeyEvent processedEvent = ev;
+			KeyEvent convertedEvent = convertQwertyToDvorak(ev);
+			if (convertedEvent != null) {
+				processedEvent = convertedEvent;
+			}
 
-			int code = ev.getUnicodeChar(mShiftKeyToggle[mHardShift] | mAltKeyToggle[mHardAlt]);
+			int code = processedEvent.getUnicodeChar(mShiftKeyToggle[mHardShift] | mAltKeyToggle[mHardAlt]);
 			this.inputChar((char) code, mHardAlt != 0 && mAltDirect);
 
 			if (mHardShift == 1) {
