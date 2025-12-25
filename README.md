@@ -1,15 +1,15 @@
 # Teogeul (터글)
 
-터치형 기기를 위한 한글 키보드.
+물리 키보드를 위한 한글 입력기.
 
 > [!WARNING]
 > 이 리포지토리는 개인 목적을 위해 운영되며 AI Agent가 작성한 커밋이 다수 포함됩니다. 이를 원치 않는 분은 참고하시기 바랍니다.
 
 ## 기능 Features
 
-하드웨어 키보드와 다양한 배열, 테마를 지원합니다.
+하드웨어 키보드와 다양한 배열을 지원합니다.
 
-Supports hardware keyboard, multiple layouts, and themes. 
+Supports hardware keyboard and multiple layouts.
 
 ### 배열 Layouts
 
@@ -28,17 +28,6 @@ Support below korean keyboard layouts.
 * Danmoeum
 * Cheonjiin
 * Naratgeul
-
-### 테마 Themes
-
-머티리얼 디자인에 기반한 3종과 전자책 리더기를 위한 E-Ink 테마가 제공됩니다.
-
-This app provide 3 themes based on material design and 1 theme for E-Ink devices.
-
-* White
-* Dark
-* Flat Dark
-* E-Ink
 
 ## Contributing
 

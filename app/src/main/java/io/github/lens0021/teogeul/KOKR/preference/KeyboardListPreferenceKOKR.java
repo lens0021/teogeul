@@ -17,13 +17,8 @@
 package io.github.lens0021.teogeul.KOKR.preference;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.ListPreference;
 import android.util.AttributeSet;
-
-import org.greenrobot.eventbus.EventBus;
-
-import io.github.lens0021.teogeul.event.InputViewChangeEvent;
 
 /**
  * The preference class of keyboard image list for Japanese IME.
@@ -33,31 +28,11 @@ import io.github.lens0021.teogeul.event.InputViewChangeEvent;
  */
 public class KeyboardListPreferenceKOKR extends ListPreference {
 
-	String[] keys;
-
 	public KeyboardListPreferenceKOKR(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        String key = attrs.getAttributeValue(null, "softLayoutKey");
-        if(key != null) keys = key.split(",");
-    }
-    
-    public KeyboardListPreferenceKOKR(Context context) {
-        this(context, null);
-    }
+		super(context, attrs);
+	}
 
-    /** @see android.preference.DialogPreference#onDialogClosed */
-    @Override protected void onDialogClosed(boolean positiveResult) {
-    	super.onDialogClosed(positiveResult);
-    	
-    	if (positiveResult) {
-			if(keys != null) {
-				SharedPreferences pref = getPreferenceManager().getSharedPreferences();
-				SharedPreferences.Editor editor = pref.edit();
-				String value = getContext().getResources().getStringArray(SoftLayoutPreference.getEntryValues(pref.getString(this.getKey(), "")))[0];
-				for(String key : keys) editor.putString(key, value);
-				editor.commit();
-			}
-			EventBus.getDefault().post(new InputViewChangeEvent());
-    	}
-    }
+	public KeyboardListPreferenceKOKR(Context context) {
+		this(context, null);
+	}
 }

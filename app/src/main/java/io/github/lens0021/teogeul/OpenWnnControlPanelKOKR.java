@@ -15,8 +15,6 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 
 	private List<String> fragmentNames = new ArrayList<String>() {{
 		add(InputMethodFragment.class.getName());
-		add(KeyboardAppearanceFragment.class.getName());
-		add(SoftKeyboardFragment.class.getName());
 		add(HardKeyboardFragment.class.getName());
 		add(SystemFragment.class.getName());
 		add(AboutFragment.class.getName());
@@ -35,14 +33,12 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_method);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_appearance);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_softkeyboard);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_hardkeyboard);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_system);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_about);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_method);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_hardkeyboard);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_system);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_about);
 			if(prefs.getBoolean("hidden_settings_revealed", false)) {
-				addPreferencesFromResource(R.xml.openwnn_pref_ko_developer);
+				addPreferencesFromResource(R.xml.teogeul_pref_ko_developer);
 			}
 		}
 
@@ -52,9 +48,9 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 	@Override
 	public void onBuildHeaders(List<Header> target) {
 		if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("reveal_dev_settings", false)) {
-			loadHeadersFromResource(R.xml.openwnn_pref_ko_headers_dev, target);
+			loadHeadersFromResource(R.xml.teogeul_pref_ko_headers_dev, target);
 		} else {
-			loadHeadersFromResource(R.xml.openwnn_pref_ko_headers, target);
+			loadHeadersFromResource(R.xml.teogeul_pref_ko_headers, target);
 		}
 	}
 
@@ -69,25 +65,7 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_method);
-		}
-	}
-
-	@TargetApi(11)
-	public static class KeyboardAppearanceFragment extends PreferenceFragment {
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_appearance);
-		}
-	}
-
-	@TargetApi(11)
-	public static class SoftKeyboardFragment extends PreferenceFragment {
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_softkeyboard);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_method);
 		}
 	}
 
@@ -96,7 +74,7 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_hardkeyboard);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_hardkeyboard);
 		}
 	}
 
@@ -105,7 +83,7 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_system);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_system);
 		}
 	}
 
@@ -114,7 +92,7 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_about);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_about);
 		}
 	}
 
@@ -123,7 +101,7 @@ public class OpenWnnControlPanelKOKR extends PreferenceActivity {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.openwnn_pref_ko_developer);
+			addPreferencesFromResource(R.xml.teogeul_pref_ko_developer);
 		}
 	}
 

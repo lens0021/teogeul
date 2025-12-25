@@ -1,33 +1,10 @@
 package io.github.lens0021.teogeul.KOKR;
 
-import io.github.lens0021.teogeul.KOKR.layout.LayoutSymbol;
-
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeyDubul.COMB_DUBUL_12KEY_CHEONJIIN;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeyDubul.COMB_DUBUL_12KEY_NARATGEUL;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeyDubul.COMB_DUBUL_12KEY_SKY2;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeyDubul.CYCLE_DUBUL_12KEY_CHEONJIIN;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeyDubul.CYCLE_DUBUL_12KEY_NARATGEUL;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeyDubul.CYCLE_DUBUL_12KEY_SKY2;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeyDubul.STROKE_DUBUL_12KEY_NARATGEUL;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.COMB_SEBUL_12KEY_HANSON;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.COMB_SEBUL_12KEY_MUNHWA;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.COMB_SEBUL_12KEY_SENA;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.CYCLE_SEBUL_12KEY_HANSON;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.CYCLE_SEBUL_12KEY_MUNHWA;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.CYCLE_SEBUL_12KEY_SENA;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.STROKE_SEBUL_12KEY_HANSON;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.STROKE_SEBUL_12KEY_MUNHWA;
-import static io.github.lens0021.teogeul.KOKR.layout.Layout12KeySebul.STROKE_SEBUL_12KEY_SENA;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutAlphabet.CONVERT_ENGLISH_COLEMAK;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutAlphabet.CONVERT_ENGLISH_DVORAK;
-import static io.github.lens0021.teogeul.KOKR.layout.LayoutAlphabet.CYCLE_12KEY_ALPHABET_A;
-import static io.github.lens0021.teogeul.KOKR.layout.LayoutAlphabet.CYCLE_12KEY_ALPHABET_B;
-import static io.github.lens0021.teogeul.KOKR.layout.LayoutAlphabet.CYCLE_12KEY_ALPHABET_SMALLQWERTY;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutDev.COMB_NEBUL_1969;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutDev.JAMO_NEBUL_1969;
-import static io.github.lens0021.teogeul.KOKR.layout.LayoutDubul.COMB_DUBUL_DANMOEUM_GOOGLE;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutDubul.COMB_DUBUL_STANDARD;
-import static io.github.lens0021.teogeul.KOKR.layout.LayoutDubul.JAMO_DUBUL_DANMOEUM_GOOGLE;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutDubul.JAMO_DUBUL_NK;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutDubul.JAMO_DUBUL_STANDARD;
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutDubul.JAMO_DUBUL_YET;
@@ -57,7 +34,6 @@ import static io.github.lens0021.teogeul.KOKR.layout.LayoutShinSebul.JAMOSET_SHI
 import static io.github.lens0021.teogeul.KOKR.layout.LayoutShinSebul.JAMO_SEBUL_3_2015Y;
 
 public enum EngineMode {
-
 	DIRECT(null, null, null, null, null, null),
 
 	SEBUL_390		(new Properties(), JAMO_SEBUL_390, null, COMB_SEBULSIK, null, "keyboard_sebul_390"),
@@ -88,39 +64,15 @@ public enum EngineMode {
 	SEBUL_393Y		(new Properties(), JAMO_SEBUL_393Y, null, COMB_FULL, null, "keyboard_sebul_393y"),
 	SEBUL_3_2015Y		(new Properties(), JAMO_SEBUL_3_2015Y, null, COMB_FULL, null, "keyboard_sebul_3_2015y"),
 
-	TWELVE_ALPHABET_A			(new Properties(DefaultSoftKeyboardKOKR.LANG_EN, false, false, false, false, true, true),
-			CYCLE_12KEY_ALPHABET_A, null, null, null, "keyboard_12key_alphabet_wide_a", "keyboard_12key_alphabet_narrow_a"),
-	TWELVE_ALPHABET_B			(new Properties(DefaultSoftKeyboardKOKR.LANG_EN, false, false, false, false, true, true),
-			CYCLE_12KEY_ALPHABET_B, null, null, null, "keyboard_12key_alphabet_wide_b", "keyboard_12key_alphabet_narrow_b"),
-	TWELVE_ALPHABET_SMALLQWERTY	(new Properties(DefaultSoftKeyboardKOKR.LANG_EN, false, false, false, false, true, true),
-			CYCLE_12KEY_ALPHABET_SMALLQWERTY, null, null, null, "keyboard_12key_alphabet_smallqwerty"),
-
-	TWELVE_SEBUL_MUNHWA					(new Properties(true, false, false),
-			CYCLE_SEBUL_12KEY_MUNHWA, null, COMB_SEBUL_12KEY_MUNHWA, STROKE_SEBUL_12KEY_MUNHWA, "keyboard_12key_sebul_munhwa"),
-	TWELVE_SEBUL_HANSON					(new Properties(true, false, false),
-			CYCLE_SEBUL_12KEY_HANSON, null, COMB_SEBUL_12KEY_HANSON, STROKE_SEBUL_12KEY_HANSON, "keyboard_12key_sebul_hanson"),
-	TWELVE_SEBUL_SENA					(new Properties(true, false, false),
-			CYCLE_SEBUL_12KEY_SENA, null, COMB_SEBUL_12KEY_SENA, STROKE_SEBUL_12KEY_SENA, "keyboard_12key_sebul_sena"),
-	TWELVE_DUBUL_CHEONJIIN				(new Properties(true, false, true),
-			CYCLE_DUBUL_12KEY_CHEONJIIN, null, COMB_DUBUL_12KEY_CHEONJIIN, null, "keyboard_12key_dubul_cheonjiin"),
-	TWELVE_DUBUL_NARATGEUL				(new Properties(true, false, false),
-			CYCLE_DUBUL_12KEY_NARATGEUL, null, COMB_DUBUL_12KEY_NARATGEUL, STROKE_DUBUL_12KEY_NARATGEUL, "keyboard_12key_dubul_naratgeul"),
-	TWELVE_DUBUL_SKY2					(new Properties(true, false, true),
-			CYCLE_DUBUL_12KEY_SKY2, null, COMB_DUBUL_12KEY_SKY2, null, "keyboard_12key_dubul_sky2"),
-	TWELVE_DUBUL_DANMOEUM				(new Properties(true, false, true),
-			JAMO_DUBUL_DANMOEUM_GOOGLE, null, COMB_DUBUL_DANMOEUM_GOOGLE, null, "keyboard_dubul_danmoeum_google"),
-
-	ENGLISH_QWERTY	(new Properties(DefaultSoftKeyboardKOKR.LANG_EN, false, false, false, false, false, false),
+	ENGLISH_QWERTY	(new Properties(LANG_EN, false, false, false, false, false, false),
 			null, null, null, null, "keyboard_alphabet_qwerty"),
-	ENGLISH_DVORAK	(new Properties(DefaultSoftKeyboardKOKR.LANG_EN, false, false, false, false, false, false),
+	ENGLISH_DVORAK	(new Properties(LANG_EN, false, false, false, false, false, false),
 			CONVERT_ENGLISH_DVORAK, null, null, null, "keyboard_alphabet_dvorak"),
-	ENGLISH_COLEMAK	(new Properties(DefaultSoftKeyboardKOKR.LANG_EN, false, false, false, false, false, false),
-			CONVERT_ENGLISH_COLEMAK, null, null, null, "keyboard_alphabet_colemak"),
+	ENGLISH_COLEMAK	(new Properties(LANG_EN, false, false, false, false, false, false),
+			CONVERT_ENGLISH_COLEMAK, null, null, null, "keyboard_alphabet_colemak");
 
-	SYMBOLS_A(new Properties(true, false, false, false, false, false),
-			LayoutSymbol.SYMBOL_A, null, null, null, "keyboard_symbols_a"),
-	SYMBOLS_B(new Properties(true, false, false, false, false, false),
-			LayoutSymbol.SYMBOL_B, null, null, null, "keyboard_symbols_b");
+	public static final int LANG_EN = 0;
+	public static final int LANG_KO = 3;
 
 	public Properties properties;
 	public int[][] layout, combination, addStroke;
@@ -168,7 +120,7 @@ public enum EngineMode {
 		}
 
 		public Properties(boolean altMode, boolean direct, boolean predictive, boolean fullMoachigi, boolean twelveEngine, boolean timeout) {
-			this(DefaultSoftKeyboardKOKR.LANG_KO, altMode, direct, predictive, fullMoachigi, twelveEngine, timeout);
+			this(LANG_KO, altMode, direct, predictive, fullMoachigi, twelveEngine, timeout);
 		}
 
 		public Properties(boolean direct, boolean predictive, boolean fullMoachigi, boolean twelveEngine, boolean timeout) {

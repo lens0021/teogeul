@@ -17,8 +17,6 @@
 package io.github.lens0021.teogeul;
 
 import android.inputmethodservice.InputMethodService;
-import android.view.WindowManager;
-import android.content.Context;
 import android.view.View;
 import android.view.KeyEvent;
 import android.content.SharedPreferences;
@@ -39,8 +37,6 @@ import io.github.lens0021.teogeul.event.OpenWnnEvent;
  */
 public class OpenWnn extends InputMethodService {
 
-    /** Input view (software keyboard) */
-    protected InputViewManager  mInputViewManager = null;
     /** Pre-converter (for Romaji-to-Kana input, Hangul input, etc.) */
     protected LetterConverter  mPreConverter = null;
     /** The inputing/editing string */
@@ -78,17 +74,7 @@ public class OpenWnn extends InputMethodService {
 
     /** @see android.inputmethodservice.InputMethodService#onCreateInputView */
     @Override public View onCreateInputView() {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-
-
-        if (mInputViewManager != null) {
-            WindowManager wm = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
-            return mInputViewManager.initView(this,
-                                              wm.getDefaultDisplay().getWidth(),
-                                              wm.getDefaultDisplay().getHeight());
-        } else {
-            return super.onCreateInputView();
-        }
+        return super.onCreateInputView();
     }
 
     /** @see android.inputmethodservice.InputMethodService#onDestroy */
@@ -119,16 +105,13 @@ public class OpenWnn extends InputMethodService {
             mDirectInputMode = true;
         }
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        if (mInputViewManager != null) { mInputViewManager.setPreferences(pref, attribute);  }
         if (mPreConverter != null) { mPreConverter.setPreferences(pref);  }
     }
 
     /** @see android.inputmethodservice.InputMethodService#requestHideSelf */
     @Override public void requestHideSelf(int flag) {
         super.requestHideSelf(flag);
-        if (mInputViewManager == null) {
-            hideWindow();
-        }
+        hideWindow();
     }
 
     /** @see android.inputmethodservice.InputMethodService#setCandidatesViewShown */
@@ -137,7 +120,7 @@ public class OpenWnn extends InputMethodService {
         if (shown) {
             showWindow(true);
         } else {
-            if (mAutoHideMode && mInputViewManager == null) {
+            if (mAutoHideMode) {
                 hideWindow();
             }
         }

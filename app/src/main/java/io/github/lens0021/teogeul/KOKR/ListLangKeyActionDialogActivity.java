@@ -17,15 +17,15 @@ public class ListLangKeyActionDialogActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final String[] labels = new String[] {
+				getResources().getString(R.string.preference_system_switch_kor_eng),
+				getResources().getString(R.string.preference_system_switch_next_method),
 				getResources().getString(R.string.preference_system_list_methods),
-				getResources().getString(R.string.preference_system_toggle_12key_mode),
-				getResources().getString(R.string.preference_system_toggle_one_handed_mode),
 				getResources().getString(R.string.preference_system_open_settings)
 		};
 		final String[] actions = new String[] {
+				LANGKEY_SWITCH_KOR_ENG,
+				LANGKEY_SWITCH_NEXT_METHOD,
 				LANGKEY_LIST_METHODS,
-				LANGKEY_TOGGLE_12KEY_MODE,
-				LANGKEY_TOGGLE_ONE_HAND_MODE,
 				LANGKEY_OPEN_SETTINGS
 		};
 		AlertDialog.Builder builder;
