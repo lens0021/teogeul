@@ -1,13 +1,11 @@
 package io.github.lens0021.teogeul
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Handler
-import android.os.Looper
 import android.os.IBinder
+import android.os.Looper
 import android.text.method.MetaKeyKeyListener
 import android.view.KeyEvent
 import android.view.View
@@ -20,7 +18,9 @@ import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineEvent
 import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineListener
 import io.github.lens0021.teogeul.KOKR.HangulEngine.SetComposingEvent
 import io.github.lens0021.teogeul.KOKR.ListLangKeyActionDialogActivity
-import io.github.lens0021.teogeul.KeyStroke
+import io.github.lens0021.teogeul.data.SettingsRepository
+import io.github.lens0021.teogeul.data.SettingsValues
+import io.github.lens0021.teogeul.data.settingsDataStore
 import io.github.lens0021.teogeul.event.CommitComposingTextEvent
 import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.InputTimeoutEvent
@@ -28,9 +28,6 @@ import io.github.lens0021.teogeul.event.KeyUpEvent
 import io.github.lens0021.teogeul.event.TeogeulEvent
 import io.github.lens0021.teogeul.event.TeogeulEventFlow
 import io.github.lens0021.teogeul.ui.TeogeulSettingsActivity
-import io.github.lens0021.teogeul.data.SettingsRepository
-import io.github.lens0021.teogeul.data.SettingsValues
-import io.github.lens0021.teogeul.data.settingsDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -281,7 +278,9 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         // Alt key is not handled by IME - let system handle it
     }
 
-    private fun handleInputTimeout(@Suppress("UNUSED_PARAMETER") event: InputTimeoutEvent) {
+    private fun handleInputTimeout(
+        @Suppress("UNUSED_PARAMETER") event: InputTimeoutEvent,
+    ) {
         if (mEnableTimeout) {
             resetCharComposition()
         }
@@ -339,7 +338,9 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         shinShift()
     }
 
-    private fun handleCommitComposingText(@Suppress("UNUSED_PARAMETER") event: CommitComposingTextEvent) {
+    private fun handleCommitComposingText(
+        @Suppress("UNUSED_PARAMETER") event: CommitComposingTextEvent,
+    ) {
         currentInputConnection.finishComposingText()
     }
 
@@ -350,9 +351,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    private fun inputChar(
-        code: Char,
-    ) {
+    private fun inputChar(code: Char) {
         var shift = mHardShift
         var mutableCode = code
         var isDirect = false
@@ -460,11 +459,12 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     }
 
     private fun convertQwertyToLayout(ev: KeyEvent): KeyEvent? {
-        val conversionMap = when (mAlphabetLayout) {
-            "keyboard_alphabet_dvorak" -> QWERTY_TO_DVORAK
-            "keyboard_alphabet_colemak" -> QWERTY_TO_COLEMAK
-            else -> return null // QWERTY or unknown - no conversion needed
-        }
+        val conversionMap =
+            when (mAlphabetLayout) {
+                "keyboard_alphabet_dvorak" -> QWERTY_TO_DVORAK
+                "keyboard_alphabet_colemak" -> QWERTY_TO_COLEMAK
+                else -> return null // QWERTY or unknown - no conversion needed
+            }
 
         val originalKeyCode = ev.keyCode
         val convertedKeyCode = conversionMap[originalKeyCode] ?: return null
@@ -709,8 +709,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     private fun applyStartLanguage(mode: String) {
         when (mode) {
-            SettingsValues.startHangulModeStartHangul -> mCurrentLanguage = EngineMode.LANG_KO
-            SettingsValues.startHangulModeStartEnglish -> mCurrentLanguage = EngineMode.LANG_EN
+            SettingsValues.START_HANGUL_MODE_START_HANGUL ->
+                mCurrentLanguage = EngineMode.LANG_KO
+            SettingsValues.START_HANGUL_MODE_START_ENGLISH ->
+                mCurrentLanguage = EngineMode.LANG_EN
             "new_input",
             "always",
             -> mCurrentLanguage = EngineMode.LANG_KO

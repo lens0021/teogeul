@@ -3,7 +3,6 @@ package io.github.lens0021.teogeul.KOKR
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
 import io.github.lens0021.teogeul.R
 import io.github.lens0021.teogeul.TeogeulKOKR

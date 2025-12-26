@@ -54,7 +54,7 @@ android {
             val outputImpl = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
             val buildType = buildType.name
             val version = versionName
-            outputImpl.outputFileName = "teogeul-${buildType}-${version}.apk"
+            outputImpl.outputFileName = "teogeul-$buildType-$version.apk"
         }
     }
 
