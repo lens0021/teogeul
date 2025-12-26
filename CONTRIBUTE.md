@@ -10,6 +10,16 @@ Android 앱은 `app/`에 있습니다. 주요 소스 코드는
 `app/src/main/cpp/`를 확인하세요. 단위 테스트는 `app/src/test/java/`에 있고,
 빌드 산출물은 `app/build/`에 생성되므로 커밋하지 않습니다.
 
+### 주요 패키지 요약
+
+- `config/`: 설정 키/기본값/레포지토리
+- `input/`: 입력 이벤트, 레이아웃 변환, 키 처리
+- `korean/`: 한글 엔진 및 레이아웃 레지스트리
+- `layout/`: 모든 레이아웃 데이터 집합
+- `compose/`: 조합 문자열 모델
+- `model/`: 키/키스트로크 모델
+- `ui/`: 설정 UI
+
 ## 빌드, 테스트, 개발 명령어
 
 - `./gradlew assembleDebug`: 디버그 APK 빌드
