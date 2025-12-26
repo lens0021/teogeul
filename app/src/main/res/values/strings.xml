@@ -86,10 +86,6 @@
   <string name="preference_hardware_full_moachigi_delay_title">Full Moachigi Timeout</string>
   <string name="preference_hardware_full_moachigi_delay_summary">Set the timeout in milliseconds (ms) for Full Moachigi. If there\'s no additional input during this time, the entered characters will be combined into one character. Default value is 100ms.</string>
 
-    <string name="preference_hardware_alt_direct_title">Alt Direct input</string>
-    <string name="preference_hardware_alt_direct_summary">Always input literal symbols on hardware Alt key combination.\nExample: Alt+1 inputs the symbol (such as !) shown on the key.\nWhen this option is off, Alt key combinations in Korean mode may be interpreted as Korean characters.</string>
-
-
     <string name="preference_system_setting_menu">System Settings</string>
 
     <string name="preference_system_use_standard_jamo_title">Use standard Hangul jamo</string>

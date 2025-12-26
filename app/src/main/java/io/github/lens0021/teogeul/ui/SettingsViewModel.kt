@@ -53,13 +53,6 @@ class SettingsViewModel @Inject constructor(
             SettingsDefaults.hardwareFullMoachigiDelay,
         )
 
-    val hardwareAltDirect: StateFlow<Boolean> =
-        repository.hardwareAltDirect.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            SettingsDefaults.hardwareAltDirect,
-        )
-
     // System preferences
     val systemUseStandardJamo: StateFlow<Boolean> =
         repository.systemUseStandardJamo.stateIn(
@@ -106,7 +99,6 @@ class SettingsViewModel @Inject constructor(
                     when (key) {
                         "hardware_use_moachigi" -> repository.updateBoolean(SettingsKeys.hardwareUseMoachigi, value)
                         "hardware_full_moachigi" -> repository.updateBoolean(SettingsKeys.hardwareFullMoachigi, value)
-                        "hardware_alt_direct" -> repository.updateBoolean(SettingsKeys.hardwareAltDirect, value)
                         "system_use_standard_jamo" -> repository.updateBoolean(SettingsKeys.systemUseStandardJamo, value)
                         else -> Unit
                     }
