@@ -14,6 +14,13 @@ android {
         applicationId = "io.github.lens0021.teogeul"
         minSdk = 26
         targetSdk = 34
+
+        val versionString = "0.1.0" // x-release-please-version
+        versionName = versionString
+
+        // Auto-calculate versionCode from versionName (e.g., 1.2.3 -> 10203)
+        val parts = versionString.split(".")
+        versionCode = parts[0].toInt() * 10000 + parts[1].toInt() * 100 + parts[2].toInt()
     }
 
     compileOptions {
@@ -37,6 +44,15 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt")
+        }
+    }
+
+    applicationVariants.all {
+        outputs.all {
+            val outputImpl = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
+            val buildType = buildType.name
+            val version = versionName
+            outputImpl.outputFileName = "teogeul-${buildType}-${version}.apk"
         }
     }
 

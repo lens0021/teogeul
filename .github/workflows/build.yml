@@ -36,10 +36,11 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: teogeul-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/teogeul-debug-*.apk
         retention-days: 30
 
     - name: Get APK info
       run: |
-        echo "APK Size: $(du -h app/build/outputs/apk/debug/app-debug.apk | cut -f1)"
-        echo "APK Location: app/build/outputs/apk/debug/app-debug.apk"
+        APK_FILE=$(ls app/build/outputs/apk/debug/teogeul-debug-*.apk)
+        echo "APK Size: $(du -h $APK_FILE | cut -f1)"
+        echo "APK Location: $APK_FILE"

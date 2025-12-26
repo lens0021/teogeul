@@ -13,3 +13,35 @@ jobs:
       pull-requests: write
     steps:
       - uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4.4.0
+        id: release
+
+      - name: Checkout code
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        if: ${{ steps.release.outputs.release_created }}
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Grant execute permission for gradlew
+        if: ${{ steps.release.outputs.release_created }}
+        run: chmod +x gradlew
+
+      - name: Build Release APK
+        if: ${{ steps.release.outputs.release_created }}
+        run: ./gradlew assembleRelease --no-daemon --build-cache
+
+      - name: Upload Release APK
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ steps.release.outputs.tag_name }} \
+            app/build/outputs/apk/release/teogeul-release-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.apk
