@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/lens0021/teogeul/compare/v0.2.2...v0.3.0) (2025-12-26)
+
+
+### Features
+
+* Start language mode options for input start ([#12](https://github.com/lens0021/teogeul/issues/12)) ([3891f8a](https://github.com/lens0021/teogeul/commit/3891f8aaeb50e9f9dbb68c03dd22f30e3a68b730))
+
+
+### Performance Improvements
+
+* Optimize build speed by migrating to KSP and improving Gradle config ([#10](https://github.com/lens0021/teogeul/issues/10)) ([99592fc](https://github.com/lens0021/teogeul/commit/99592fcbf85237a6b3ac48cf7a718431e77a51e7))
+
 ## [0.2.2](https://github.com/lens0021/teogeul/compare/v0.2.1...v0.2.2) (2025-12-26)
 
 

@@ -15,7 +15,7 @@ android {
         minSdk = 26
         targetSdk = 34
 
-        val versionString = "0.2.2" // x-release-please-version
+        val versionString = "0.3.0" // x-release-please-version
         versionName = versionString
 
         // Auto-calculate versionCode from versionName (e.g., 1.2.3 -> 10203)
