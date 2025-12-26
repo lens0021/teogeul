@@ -65,10 +65,10 @@
 	<string name="preference_hardware_setting_menu">하드웨어 키보드</string>
 
 	<string name="preference_hardware_hangul_title">하드웨어 한글 키보드 종류</string>
-	<string name="preference_hardware_hangul_summary">하드웨어 키보드 사용시 한글 키보드 레이아웃을 설정합니다.</string>
+	<string name="preference_hardware_hangul_summary">하드웨어 키보드 사용 시 사용할 한글 레이아웃을 설정합니다. 키캡 각인과 달라도 설정한 레이아웃 기준으로 입력됩니다.</string>
 
 	<string name="preference_hardware_alphabet_title">하드웨어 영문 키보드 종류</string>
-	<string name="preference_hardware_alphabet_summary">하드웨어 키보드 사용시 영문 키보드 레이아웃을 설정합니다.</string>
+	<string name="preference_hardware_alphabet_summary">하드웨어 키보드 사용 시 사용할 영문 레이아웃을 설정합니다. 키캡 각인과 달라도 설정한 레이아웃 기준으로 입력됩니다.</string>
 
 	<string name="preference_hardware_use_moachigi_title">모아주기 사용</string>
 	<string name="preference_hardware_use_moachigi_summary">하드웨어 키보드 사용시 모아주기를 사용합니다.\n모아주기: 세벌식 자판에서 자음과 모음을
