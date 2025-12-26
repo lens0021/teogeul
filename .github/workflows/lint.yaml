@@ -14,4 +14,13 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Spotless XML check
+        run: ./gradlew spotlessCheck
       - uses: rvben/rumdl@2c8cb017490f9bc5dc969f3b9de1da81385985de # v0.0.203

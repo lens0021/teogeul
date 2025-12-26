@@ -18,6 +18,7 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.spotless)
 }
 
 val jsonFileTree = fileTree(projectDir) {
@@ -68,4 +69,12 @@ tasks.register("checkJsonFormat") {
 tasks.register("lintJson") {
     group = "verification"
     dependsOn("validateJson", "checkJsonFormat")
+}
+
+spotless {
+    format("xml") {
+        target("**/*.xml")
+        targetExclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")
+        eclipseWtp("xml")
+    }
 }
