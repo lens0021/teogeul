@@ -26,5 +26,9 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork }}
       - name: Spotless XML check
         run: ./gradlew spotlessCheck
