@@ -38,9 +38,14 @@ jobs:
 
       - name: Build Release APK
         if: ${{ steps.release.outputs.release_created }}
-        run: ./gradlew assembleRelease --build-cache --configuration-cache --parallel
-        env:
-          GRADLE_OPTS: -Xmx4g -XX:MaxMetaspaceSize=1g -XX:+UseParallelGC
+        run: |
+          # Calculate 60% of available memory for Gradle
+          TOTAL_MEM=$(free -m | awk '/^Mem:/{print $2}')
+          GRADLE_MEM=$(( TOTAL_MEM * 60 / 100 ))
+          METASPACE_MEM=$(( TOTAL_MEM * 15 / 100 ))
+          echo "Total memory: ${TOTAL_MEM}MB, Gradle: ${GRADLE_MEM}MB, Metaspace: ${METASPACE_MEM}MB"
+          export GRADLE_OPTS="-Xmx${GRADLE_MEM}m -XX:MaxMetaspaceSize=${METASPACE_MEM}m -Dfile.encoding=UTF-8 -XX:+UseParallelGC"
+          ./gradlew assembleRelease --build-cache --configuration-cache --parallel
 
       - name: Upload Release APK
         if: ${{ steps.release.outputs.release_created }}
