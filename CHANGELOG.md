@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/lens0021/teogeul/compare/v0.4.2...v0.5.0) (2025-12-26)
+
+
+### Features
+
+* refactor ime structure ([#42](https://github.com/lens0021/teogeul/issues/42)) ([9c4cb85](https://github.com/lens0021/teogeul/commit/9c4cb85f3d343e406078f9ac68229c75f36b2982))
+
+
+### Bug Fixes
+
+* normalize hardware layout conversion ([#46](https://github.com/lens0021/teogeul/issues/46)) ([b502e48](https://github.com/lens0021/teogeul/commit/b502e48cd5b241ba52891d715ebba01662a3ea7e))
+* Simplify language key toggle ([#45](https://github.com/lens0021/teogeul/issues/45)) ([d8c3a47](https://github.com/lens0021/teogeul/commit/d8c3a47f29bedb7441431a80e00bc5942e8deb17))
+
 ## [0.4.2](https://github.com/lens0021/teogeul/compare/v0.4.1...v0.4.2) (2025-12-26)
 
 
