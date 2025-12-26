@@ -41,49 +41,25 @@ android {
     }
 
     lint {
-        disable += "MissingTranslation"
+        // 기본 설정
+        checkAllWarnings = true
+        abortOnError = false
 
-        // XML 검증 규칙
-        enable += setOf(
-            "MissingPrefix",
-            "UnusedResources",
-            "UnusedIds",
-            "ExtraText",
-            "Typos",
-            "StringFormatInvalid",
-            "StringFormatMatches",
-            "PluralsCandidate",
-            "TypographyDashes",
-            "TypographyQuotes",
-            "TypographyEllipsis",
-            "IconMissingDensityFolder",
-            "IconDuplicates",
-            "IconExpectedSize",
-            "WebViewLayout",
-            "ScrollViewSize",
-            "TextViewEdits",
-            "InefficientWeight",
-            "NestedWeights",
-            "DisableBaselineAlignment",
-            "Overdraw",
-            "UselessParent",
-            "UselessLeaf",
-            "TooManyViews",
-            "TooDeepLayout",
-            "HardcodedText",
-            "ContentDescription",
-            "SmallSp",
-            "TextFields"
+        // 리포트 생성
+        htmlReport = true
+        xmlReport = true
+
+        // 비활성화할 규칙들
+        disable += setOf(
+            "MissingTranslation",
+            "ObsoleteLintCustomCheck"  // Compose 린트 호환성 경고 무시
         )
 
-        // 경고를 에러로 처리 (선택사항)
-        warningsAsErrors = false
-
-        // HTML 리포트 생성
-        htmlReport = true
-
-        // XML 리포트 생성
-        xmlReport = true
+        // 경고 대신 에러로 처리할 중요 규칙들
+        error += setOf(
+            "MissingPrefix",
+            "StringFormatInvalid"
+        )
     }
 }
 
