@@ -77,6 +77,6 @@ spotless {
     format("xml") {
         target("**/*.xml")
         targetExclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")
-        eclipseWtp(EclipseWtpFormatterStep.XML)
+        eclipseWtp(EclipseWtpFormatterStep.XML).configFile(".spotless-xml-style.prefs")
     }
 }
