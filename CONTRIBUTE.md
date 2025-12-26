@@ -28,6 +28,15 @@ Windows에서는 `gradlew.bat`를 사용합니다.
 - Android SDK 경로를 설정합니다.
   - 환경 변수: `ANDROID_HOME=/path/to/Android/Sdk`
   - 또는 `local.properties`에 `sdk.dir=/path/to/Android/Sdk`
+  - CI와 로컬 빌드는 위 설정 중 하나가 필수입니다.
+  - 예시 `local.properties`:
+
+    ```properties
+    sdk.dir=/path/to/Android/Sdk
+    ```
+  - SDK 설치 요약:
+    - Android Studio 설치 후 SDK Manager에서 필요한 SDK를 설치합니다.
+    - 기본 설치 경로는 macOS `~/Library/Android/sdk`, Linux `~/Android/Sdk`, Windows `C:\\Users\\<User>\\AppData\\Local\\Android\\Sdk` 입니다.
 
 ## 커밋 및 PR 가이드
 
