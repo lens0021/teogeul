@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
-    <!-- 경로별 제외 설정: 특정 경로에서 규칙 무시 -->
+	<!-- 경로별 제외 설정: 특정 경로에서 규칙 무시 -->
 
-    <issue id="UnusedResources">
-        <ignore path="**/build/**" />
-    </issue>
+	<issue id="UnusedResources">
+		<ignore path="**/build/**" />
+	</issue>
 
-    <issue id="ExtraText">
-        <ignore path="**/values/**" />
-    </issue>
+	<issue id="ExtraText">
+		<ignore path="**/values/**" />
+	</issue>
 
-    <issue id="ContentDescription">
-        <ignore path="**/drawable/**" />
-    </issue>
+	<issue id="ContentDescription">
+		<ignore path="**/drawable/**" />
+	</issue>
 
-    <issue id="HardcodedText">
-        <ignore path="**/debug/**" />
-    </issue>
+	<issue id="HardcodedText">
+		<ignore path="**/debug/**" />
+	</issue>
 </lint>
