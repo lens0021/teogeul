@@ -28,7 +28,7 @@ jobs:
 
       - name: Set up Gradle
         if: ${{ steps.release.outputs.release_created }}
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v5
         with:
           cache-read-only: false
 
