@@ -112,7 +112,6 @@ class SettingsViewModel @Inject constructor(
                 is String ->
                     when (key) {
                         "hardware_hangul_layout" -> repository.updateString(SettingsKeys.hardwareHangulLayout, value)
-                        "hardware_alphabet_layout" -> repository.updateString(SettingsKeys.hardwareAlphabetLayout, value)
                         "system_start_hangul_mode" ->
                             repository.updateString(SettingsKeys.systemStartHangulMode, value)
                         "system_action_on_lang_key_press" -> repository.updateString(SettingsKeys.systemLangKeyPress, value)

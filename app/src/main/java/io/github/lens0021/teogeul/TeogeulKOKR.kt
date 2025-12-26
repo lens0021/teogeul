@@ -110,6 +110,29 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 put(KeyEvent.KEYCODE_EQUALS, KeyEvent.KEYCODE_RIGHT_BRACKET)
             }
 
+        private val QWERTY_TO_COLEMAK: MutableMap<Int, Int> =
+            HashMap<Int, Int>().apply {
+                put(KeyEvent.KEYCODE_E, KeyEvent.KEYCODE_F)
+                put(KeyEvent.KEYCODE_R, KeyEvent.KEYCODE_P)
+                put(KeyEvent.KEYCODE_T, KeyEvent.KEYCODE_G)
+                put(KeyEvent.KEYCODE_Y, KeyEvent.KEYCODE_J)
+                put(KeyEvent.KEYCODE_U, KeyEvent.KEYCODE_L)
+                put(KeyEvent.KEYCODE_I, KeyEvent.KEYCODE_U)
+                put(KeyEvent.KEYCODE_O, KeyEvent.KEYCODE_Y)
+                put(KeyEvent.KEYCODE_P, KeyEvent.KEYCODE_SEMICOLON)
+
+                put(KeyEvent.KEYCODE_S, KeyEvent.KEYCODE_R)
+                put(KeyEvent.KEYCODE_D, KeyEvent.KEYCODE_S)
+                put(KeyEvent.KEYCODE_F, KeyEvent.KEYCODE_T)
+                put(KeyEvent.KEYCODE_G, KeyEvent.KEYCODE_D)
+                put(KeyEvent.KEYCODE_J, KeyEvent.KEYCODE_N)
+                put(KeyEvent.KEYCODE_K, KeyEvent.KEYCODE_E)
+                put(KeyEvent.KEYCODE_L, KeyEvent.KEYCODE_I)
+                put(KeyEvent.KEYCODE_SEMICOLON, KeyEvent.KEYCODE_O)
+
+                put(KeyEvent.KEYCODE_N, KeyEvent.KEYCODE_K)
+            }
+
         const val LANGKEY_LIST_ACTIONS = "list_actions"
         const val LANGKEY_SWITCH_KOR_ENG = "switch_kor_eng"
         const val LANGKEY_SWITCH_NEXT_METHOD = "switch_next_method"
@@ -151,7 +174,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     var mStandardJamo: Boolean = false
     var mLangKeyAction: String? = null
 
-    var mEnableDvorakLayout: Boolean = false
+    var mAlphabetLayout: String = "keyboard_alphabet_qwerty"
 
     var mSelectionMode: Boolean = false
     var mSelectionStart: Int = 0
@@ -452,13 +475,15 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    private fun convertQwertyToDvorak(ev: KeyEvent): KeyEvent? {
-        if (!mEnableDvorakLayout) {
-            return null
+    private fun convertQwertyToLayout(ev: KeyEvent): KeyEvent? {
+        val conversionMap = when (mAlphabetLayout) {
+            "keyboard_alphabet_dvorak" -> QWERTY_TO_DVORAK
+            "keyboard_alphabet_colemak" -> QWERTY_TO_COLEMAK
+            else -> return null // QWERTY or unknown - no conversion needed
         }
 
         val originalKeyCode = ev.keyCode
-        val convertedKeyCode = QWERTY_TO_DVORAK[originalKeyCode] ?: return null
+        val convertedKeyCode = conversionMap[originalKeyCode] ?: return null
 
         return KeyEvent(
             ev.downTime,
@@ -557,7 +582,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
         // Ctrl key handling (available since API 11, always true for minSdk 26)
         if (ev.isCtrlPressed) {
-            val convertedEvent = convertQwertyToDvorak(ev)
+            val convertedEvent = convertQwertyToLayout(ev)
             if (convertedEvent != null) {
                 inputConnection.sendKeyEvent(convertedEvent)
                 return true
@@ -597,7 +622,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
         if (ev.isPrintingKey) {
             var processedEvent: KeyEvent = ev
-            val convertedEvent = convertQwertyToDvorak(ev)
+            val convertedEvent = convertQwertyToLayout(ev)
             if (convertedEvent != null) {
                 processedEvent = convertedEvent
             }
@@ -679,11 +704,24 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
         mLangKeyAction = snapshot.systemLangKeyPress
         mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
-        mEnableDvorakLayout = snapshot.hardwareEnableDvorak
+
+        // Get alphabet layout from subtype if available, otherwise use app settings
+        val currentSubtype = currentInputMethodSubtype
+        if (currentSubtype != null) {
+            val extraValue = currentSubtype.extraValue
+            val layoutMatch = Regex("KeyboardLayoutSet=(\\w+)").find(extraValue)
+            if (layoutMatch != null) {
+                mAlphabetLayout = layoutMatch.groupValues[1]
+            } else {
+                mAlphabetLayout = snapshot.hardwareAlphabetLayout
+            }
+        } else {
+            mAlphabetLayout = snapshot.hardwareAlphabetLayout
+        }
 
         val modeKey =
             if (mCurrentLanguage == EngineMode.LANG_EN) {
-                snapshot.hardwareAlphabetLayout
+                mAlphabetLayout
             } else {
                 snapshot.hardwareHangulLayout
             }

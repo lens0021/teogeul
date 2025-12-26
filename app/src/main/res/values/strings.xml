@@ -54,6 +54,10 @@
 	<string name="preference_keyboard_alphabet_dvorak">DVORAK</string>
 	<string name="preference_keyboard_alphabet_colemak">COLEMAK</string>
 
+	<!-- Subtype labels for system keyboard settings -->
+	<string name="subtype_korean_qwerty">한국어 (QWERTY)</string>
+	<string name="subtype_korean_dvorak">한국어 (Dvorak)</string>
+	<string name="subtype_korean_colemak">한국어 (Colemak)</string>
 
 	<string name="preference_hardware_setting_menu">하드웨어 키보드</string>
 
