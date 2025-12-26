@@ -1,13 +1,20 @@
 name: Linter
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   rumdl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: rvben/rumdl@2c8cb017490f9bc5dc969f3b9de1da81385985de # v0.0.203
+
+  spotless:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -19,8 +26,5 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
       - name: Spotless XML check
         run: ./gradlew spotlessCheck
-      - uses: rvben/rumdl@2c8cb017490f9bc5dc969f3b9de1da81385985de # v0.0.203
