@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt")
+    alias(libs.plugins.ksp)
     alias(libs.plugins.ktlint)
     alias(libs.plugins.hilt)
 }
@@ -98,7 +98,6 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.datastore.preferences)
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-    kapt(libs.javapoet)
+    ksp(libs.hilt.compiler)
     debugImplementation(libs.compose.ui.tooling)
 }
