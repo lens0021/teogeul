@@ -26,7 +26,7 @@ object SettingsDefaults {
     const val systemLangKeyPress = "switch_next_method"
     const val systemLangKeyLongPress = "list_methods"
     const val systemAltKeyLongPress = "list_actions"
-    const val systemHardwareLangKeyStroke = "---s62"
+    const val systemHardwareLangKeyStroke = "----218" // KeyEvent.KEYCODE_KANA (no modifiers)
 }
 
 object SettingsValues {
