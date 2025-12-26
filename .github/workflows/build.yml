@@ -23,7 +23,7 @@ jobs:
     - name: Set up Gradle
       uses: gradle/actions/setup-gradle@v3
       with:
-        cache-read-only: ${{ github.event_name == 'pull_request' }}
+        cache-read-only: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork }}
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
@@ -39,6 +39,7 @@ jobs:
         ./gradlew assembleDebug --build-cache --configuration-cache --parallel
 
     - name: Upload APK
+      if: github.event_name != 'pull_request'
       uses: actions/upload-artifact@v4
       with:
         name: teogeul-debug
@@ -46,6 +47,7 @@ jobs:
         retention-days: 30
 
     - name: Get APK info
+      if: github.event_name != 'pull_request'
       run: |
         APK_FILE=$(ls app/build/outputs/apk/debug/teogeul-debug-*.apk)
         echo "APK Size: $(du -h $APK_FILE | cut -f1)"
