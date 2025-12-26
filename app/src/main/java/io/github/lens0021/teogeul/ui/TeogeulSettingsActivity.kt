@@ -299,6 +299,7 @@ fun SystemScreen(
     viewModel: SettingsViewModel,
 ) {
     val useStandardJamo by viewModel.systemUseStandardJamo.collectAsState()
+    val startHangulMode by viewModel.systemStartHangulMode.collectAsState()
     val langKeyPress by viewModel.systemLangKeyPress.collectAsState()
     val langKeyLongPress by viewModel.systemLangKeyLongPress.collectAsState()
     val altKeyLongPress by viewModel.systemAltKeyLongPress.collectAsState()
@@ -306,6 +307,8 @@ fun SystemScreen(
 
     val langKeyActions = stringArrayResource(R.array.lang_key_actions).toList()
     val langKeyActionsId = stringArrayResource(R.array.lang_key_actions_id).toList()
+    val startHangulEntries = stringArrayResource(R.array.start_hangul_mode_entries).toList()
+    val startHangulValues = stringArrayResource(R.array.start_hangul_mode_values).toList()
 
     Scaffold(
         topBar = {
@@ -337,6 +340,17 @@ fun SystemScreen(
                     summary = stringResource(R.string.preference_system_use_standard_jamo_summary),
                     checked = useStandardJamo,
                     onCheckedChange = { viewModel.updatePreference("system_use_standard_jamo", it) },
+                )
+            }
+
+            item {
+                ListPreference(
+                    title = stringResource(R.string.preference_system_start_hangul_mode_title),
+                    summary = stringResource(R.string.preference_system_start_hangul_mode_summary),
+                    entries = startHangulEntries,
+                    entryValues = startHangulValues,
+                    selectedValue = startHangulMode,
+                    onValueChange = { viewModel.updatePreference("system_start_hangul_mode", it) },
                 )
             }
 

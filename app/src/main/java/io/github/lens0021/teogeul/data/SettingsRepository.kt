@@ -22,10 +22,17 @@ object SettingsDefaults {
     const val hardwareFullMoachigiDelay = 100
     const val hardwareEnableDvorak = true
     const val systemUseStandardJamo = false
+    const val systemStartHangulMode = SettingsValues.startHangulModeKeepLast
     const val systemLangKeyPress = "switch_next_method"
     const val systemLangKeyLongPress = "list_methods"
     const val systemAltKeyLongPress = "list_actions"
     const val systemHardwareLangKeyStroke = "---s62"
+}
+
+object SettingsValues {
+    const val startHangulModeKeepLast = "keep_last"
+    const val startHangulModeStartHangul = "start_hangul"
+    const val startHangulModeStartEnglish = "start_english"
 }
 
 object SettingsKeys {
@@ -36,6 +43,7 @@ object SettingsKeys {
     val hardwareFullMoachigiDelay = intPreferencesKey("hardware_full_moachigi_delay")
     val hardwareEnableDvorak = booleanPreferencesKey("hardware_enable_dvorak")
     val systemUseStandardJamo = booleanPreferencesKey("system_use_standard_jamo")
+    val systemStartHangulMode = stringPreferencesKey("system_start_hangul_mode")
     val systemLangKeyPress = stringPreferencesKey("system_action_on_lang_key_press")
     val systemLangKeyLongPress = stringPreferencesKey("system_action_on_lang_key_long_press")
     val systemAltKeyLongPress = stringPreferencesKey("system_action_on_alt_key_long_press")
@@ -50,6 +58,7 @@ data class SettingsSnapshot(
     val hardwareFullMoachigiDelay: Int,
     val hardwareEnableDvorak: Boolean,
     val systemUseStandardJamo: Boolean,
+    val systemStartHangulMode: String,
     val systemLangKeyPress: String,
     val systemLangKeyLongPress: String,
     val systemAltKeyLongPress: String,
@@ -79,6 +88,9 @@ class SettingsRepository(
 
     val systemUseStandardJamo: Flow<Boolean> =
         dataStore.data.map { it[SettingsKeys.systemUseStandardJamo] ?: SettingsDefaults.systemUseStandardJamo }
+
+    val systemStartHangulMode: Flow<String> =
+        dataStore.data.map { it[SettingsKeys.systemStartHangulMode] ?: SettingsDefaults.systemStartHangulMode }
 
     val systemLangKeyPress: Flow<String> =
         dataStore.data.map { it[SettingsKeys.systemLangKeyPress] ?: SettingsDefaults.systemLangKeyPress }
@@ -124,6 +136,8 @@ class SettingsRepository(
                 prefs[SettingsKeys.hardwareFullMoachigiDelay] ?: SettingsDefaults.hardwareFullMoachigiDelay,
             hardwareEnableDvorak = prefs[SettingsKeys.hardwareEnableDvorak] ?: SettingsDefaults.hardwareEnableDvorak,
             systemUseStandardJamo = prefs[SettingsKeys.systemUseStandardJamo] ?: SettingsDefaults.systemUseStandardJamo,
+            systemStartHangulMode =
+                prefs[SettingsKeys.systemStartHangulMode] ?: SettingsDefaults.systemStartHangulMode,
             systemLangKeyPress = prefs[SettingsKeys.systemLangKeyPress] ?: SettingsDefaults.systemLangKeyPress,
             systemLangKeyLongPress = prefs[SettingsKeys.systemLangKeyLongPress] ?: SettingsDefaults.systemLangKeyLongPress,
             systemAltKeyLongPress = prefs[SettingsKeys.systemAltKeyLongPress] ?: SettingsDefaults.systemAltKeyLongPress,

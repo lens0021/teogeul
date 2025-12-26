@@ -29,6 +29,7 @@ import io.github.lens0021.teogeul.event.TeogeulEvent
 import io.github.lens0021.teogeul.event.TeogeulEventFlow
 import io.github.lens0021.teogeul.ui.TeogeulSettingsActivity
 import io.github.lens0021.teogeul.data.SettingsRepository
+import io.github.lens0021.teogeul.data.SettingsValues
 import io.github.lens0021.teogeul.data.settingsDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -206,7 +207,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     ) {
         resetCharComposition()
         super.onStartInputView(attribute, restarting)
-        applyPreferences()
+        applyPreferences(resetLanguage = true)
     }
 
     override fun onStartInput(
@@ -214,7 +215,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         restarting: Boolean,
     ) {
         super.onStartInput(attribute, restarting)
-        applyPreferences()
+        applyPreferences(resetLanguage = true)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -667,12 +668,15 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     fun updateMetaKeyStateDisplay() {
     }
 
-    private fun applyPreferences() {
+    private fun applyPreferences(resetLanguage: Boolean = false) {
         val snapshot = runBlocking { settingsRepository.snapshot() }
         mHardwareMoachigi = snapshot.hardwareUseMoachigi
         mFullMoachigi = snapshot.hardwareFullMoachigi
         mMoachigiDelay = snapshot.hardwareFullMoachigiDelay
         mStandardJamo = snapshot.systemUseStandardJamo
+        if (resetLanguage) {
+            applyStartLanguage(snapshot.systemStartHangulMode)
+        }
         mLangKeyAction = snapshot.systemLangKeyPress
         mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
         mEnableDvorakLayout = snapshot.hardwareEnableDvorak
@@ -684,6 +688,16 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 snapshot.hardwareHangulLayout
             }
         applyEngineMode(EngineMode.get(modeKey))
+    }
+
+    private fun applyStartLanguage(mode: String) {
+        when (mode) {
+            SettingsValues.startHangulModeStartHangul -> mCurrentLanguage = EngineMode.LANG_KO
+            SettingsValues.startHangulModeStartEnglish -> mCurrentLanguage = EngineMode.LANG_EN
+            "new_input",
+            "always",
+            -> mCurrentLanguage = EngineMode.LANG_KO
+        }
     }
 
     private fun applyEngineMode(mode: EngineMode) {
