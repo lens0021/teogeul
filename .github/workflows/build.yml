@@ -11,44 +11,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      - name: Set up JDK 17
+        uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e #v5.1.0
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Set up Gradle
-      uses: gradle/actions/setup-gradle@v5
-      with:
-        cache-read-only: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork }}
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5.0.0
+        with:
+          cache-read-only: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork }}
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: |
-        # Calculate 60% of available memory for Gradle
-        TOTAL_MEM=$(free -m | awk '/^Mem:/{print $2}')
-        GRADLE_MEM=$(( TOTAL_MEM * 60 / 100 ))
-        METASPACE_MEM=$(( TOTAL_MEM * 15 / 100 ))
-        echo "Total memory: ${TOTAL_MEM}MB, Gradle: ${GRADLE_MEM}MB, Metaspace: ${METASPACE_MEM}MB"
-        export GRADLE_OPTS="-Xmx${GRADLE_MEM}m -XX:MaxMetaspaceSize=${METASPACE_MEM}m -Dfile.encoding=UTF-8 -XX:+UseParallelGC"
-        ./gradlew assembleDebug --build-cache --configuration-cache --parallel
+      - name: Build with Gradle
+        run: |
+          # Calculate 60% of available memory for Gradle
+          TOTAL_MEM=$(free -m | awk '/^Mem:/{print $2}')
+          GRADLE_MEM=$(( TOTAL_MEM * 60 / 100 ))
+          METASPACE_MEM=$(( TOTAL_MEM * 15 / 100 ))
+          echo "Total memory: ${TOTAL_MEM}MB, Gradle: ${GRADLE_MEM}MB, Metaspace: ${METASPACE_MEM}MB"
+          export GRADLE_OPTS="-Xmx${GRADLE_MEM}m -XX:MaxMetaspaceSize=${METASPACE_MEM}m -Dfile.encoding=UTF-8 -XX:+UseParallelGC"
+          ./gradlew assembleDebug --build-cache --configuration-cache --parallel
 
-    - name: Upload APK
-      if: github.event_name != 'pull_request'
-      uses: actions/upload-artifact@v4
-      with:
-        name: teogeul-debug
-        path: app/build/outputs/apk/debug/teogeul-debug-*.apk
-        retention-days: 30
+      - name: Upload APK
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: teogeul-debug
+          path: app/build/outputs/apk/debug/teogeul-debug-*.apk
+          retention-days: 30
 
-    - name: Get APK info
-      if: github.event_name != 'pull_request'
-      run: |
-        APK_FILE=$(ls app/build/outputs/apk/debug/teogeul-debug-*.apk)
-        echo "APK Size: $(du -h $APK_FILE | cut -f1)"
-        echo "APK Location: $APK_FILE"
+      - name: Get APK info
+        if: github.event_name != 'pull_request'
+        run: |
+          APK_FILE=$(ls app/build/outputs/apk/debug/teogeul-debug-*.apk)
+          echo "APK Size: $(du -h $APK_FILE | cut -f1)"
+          echo "APK Location: $APK_FILE"
