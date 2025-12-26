@@ -1,3 +1,5 @@
+import com.diffplug.spotless.extra.wtp.EclipseWtpFormatterStep
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
@@ -75,6 +77,6 @@ spotless {
     format("xml") {
         target("**/*.xml")
         targetExclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")
-        eclipseWtp("xml")
+        eclipseWtp(EclipseWtpFormatterStep.XML)
     }
 }
