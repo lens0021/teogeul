@@ -103,6 +103,7 @@ class IMEService() : InputMethodService(), HangulEngineListener {
             directInputModeProvider = { mDirectInputMode },
             alphabetLayoutProvider = { mAlphabetLayout },
             hardLangKeyProvider = { mHardLangKey },
+            currentLanguageProvider = { mCurrentLanguage },
             toggleLanguage = { toggleLanguage() },
             resetCharComposition = { resetCharComposition() },
             updateMetaKeyStateDisplay = { updateMetaKeyStateDisplay() },

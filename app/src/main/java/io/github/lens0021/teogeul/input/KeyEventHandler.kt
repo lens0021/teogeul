@@ -3,6 +3,7 @@ package io.github.lens0021.teogeul.input
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import io.github.lens0021.teogeul.korean.EngineMode
 import io.github.lens0021.teogeul.korean.HangulEngine
 import io.github.lens0021.teogeul.model.KeyStroke
 
@@ -14,6 +15,7 @@ class KeyEventHandler(
     private val directInputModeProvider: () -> Boolean,
     private val alphabetLayoutProvider: () -> String,
     private val hardLangKeyProvider: () -> KeyStroke?,
+    private val currentLanguageProvider: () -> Int,
     private val toggleLanguage: () -> Unit,
     private val resetCharComposition: () -> Unit,
     private val updateMetaKeyStateDisplay: () -> Unit,
@@ -109,7 +111,7 @@ class KeyEventHandler(
 
         // Ctrl key handling (available since API 11, always true for minSdk 26)
         if (ev.isCtrlPressed) {
-            val convertedEvent = layoutConverter.convertQwertyToLayout(ev, alphabetLayoutProvider())
+            val convertedEvent = layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
             if (convertedEvent != null) {
                 inputConnection.sendKeyEvent(convertedEvent)
                 return true
@@ -145,14 +147,24 @@ class KeyEventHandler(
         }
 
         if (ev.isPrintingKey) {
-            var processedEvent: KeyEvent = ev
-            val convertedEvent = layoutConverter.convertQwertyToLayout(ev, alphabetLayoutProvider())
-            if (convertedEvent != null) {
-                processedEvent = convertedEvent
-            }
-
+            val qwertyCharCode = layoutConverter.getQwertyCharCode(ev)
+            val isKorean = currentLanguageProvider() == EngineMode.LANG_KO
             // Don't apply Alt meta state for character input - Alt is only used for shortcuts/language switching
-            val code = processedEvent.getUnicodeChar(modifierStateManager.getShiftMeta())
+            val code = modifierStateManager.getShiftMeta()
+                .let { shiftMeta ->
+                    if (qwertyCharCode != null) {
+                        if (isKorean) {
+                            qwertyCharCode
+                        } else {
+                            layoutConverter.convertQwertyCharCodeToLayout(
+                                qwertyCharCode,
+                                alphabetLayoutProvider(),
+                            ) ?: qwertyCharCode
+                        }
+                    } else {
+                        ev.getUnicodeChar(shiftMeta)
+                    }
+                }
             inputChar(code.toChar())
             markInput()
 
@@ -261,4 +273,5 @@ class KeyEventHandler(
         }
         inputConnectionProvider()?.commitText(mutableCode.toString(), 1)
     }
+
 }
