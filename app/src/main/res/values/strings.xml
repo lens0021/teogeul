@@ -91,6 +91,12 @@
     <string name="preference_system_use_standard_jamo_title">Use standard Hangul jamo</string>
     <string name="preference_system_use_standard_jamo_summary">Use standard Hangul jamo (Unicode U+1100-U+11FF range) for First-Mid-End Hangul composition when required.\nFirst-Mid-End composition: A method that separates initial, medial, and final consonants. This may be needed for compatibility with some apps.</string>
 
+    <string name="preference_system_start_hangul_mode_title">Start language mode</string>
+    <string name="preference_system_start_hangul_mode_summary">Choose what happens at input start.\nInput start: when Teogeul becomes active for a text field (switching from another IME or returning to a field). Default: Keep last language.</string>
+    <string name="preference_system_start_hangul_mode_start_hangul">Reset to Hangul at input start</string>
+    <string name="preference_system_start_hangul_mode_keep_last">Keep last language (default)</string>
+    <string name="preference_system_start_hangul_mode_start_english">Always reset to English at input start</string>
+
     <string name="preference_system_lang_key_press_title">Action on Language Key Press</string>
     <string name="preference_system_lang_key_press_summary">Choose action to perform on language key press.\nLanguage key: A special key that switches between Korean/English modes, typically the \'한/영\' key on Korean keyboards.</string>
 

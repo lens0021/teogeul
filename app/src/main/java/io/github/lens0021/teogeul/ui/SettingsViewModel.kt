@@ -61,6 +61,13 @@ class SettingsViewModel @Inject constructor(
             SettingsDefaults.systemUseStandardJamo,
         )
 
+    val systemStartHangulMode: StateFlow<String> =
+        repository.systemStartHangulMode.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            SettingsDefaults.systemStartHangulMode,
+        )
+
     val systemLangKeyPress: StateFlow<String> =
         repository.systemLangKeyPress.stateIn(
             viewModelScope,
@@ -106,6 +113,8 @@ class SettingsViewModel @Inject constructor(
                     when (key) {
                         "hardware_hangul_layout" -> repository.updateString(SettingsKeys.hardwareHangulLayout, value)
                         "hardware_alphabet_layout" -> repository.updateString(SettingsKeys.hardwareAlphabetLayout, value)
+                        "system_start_hangul_mode" ->
+                            repository.updateString(SettingsKeys.systemStartHangulMode, value)
                         "system_action_on_lang_key_press" -> repository.updateString(SettingsKeys.systemLangKeyPress, value)
                         "system_action_on_lang_key_long_press" ->
                             repository.updateString(SettingsKeys.systemLangKeyLongPress, value)

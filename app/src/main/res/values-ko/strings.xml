@@ -60,6 +60,12 @@
     <string name="preference_system_use_standard_jamo_title">표준 한글 자모 사용</string>
     <string name="preference_system_use_standard_jamo_summary">필요할 경우 표준 한글 자모(유니코드 U+1100-U+11FF 영역)로 첫가끝 한글 조합을 합니다.\n첫가끝 한글 조합: 초성-중성-종성을 분리하여 조합하는 방식입니다. 일부 앱에서 호환성을 위해 필요할 수 있습니다.</string>
 
+    <string name="preference_system_start_hangul_mode_title">시작 언어 모드</string>
+    <string name="preference_system_start_hangul_mode_summary">입력 시작 시 동작을 선택합니다.\n입력 시작: 텍스트 입력 칸에서 터글이 활성화되는 시점(다른 입력기에서 전환하거나 입력창으로 돌아올 때). 기본값: 마지막 언어 유지.</string>
+    <string name="preference_system_start_hangul_mode_start_hangul">입력 시작에 한글 모드로 초기화</string>
+    <string name="preference_system_start_hangul_mode_keep_last">마지막 언어 유지(기본값)</string>
+    <string name="preference_system_start_hangul_mode_start_english">항상 영어로 초기화</string>
+
     <string name="preference_system_lang_key_press_title">언어 키 행동</string>
     <string name="preference_system_lang_key_press_summary">언어 키(한글/영어 모드를 전환하는 특수 키, 일반적으로 \'한/영\' 키)를 누를 때 실행할 행동을 정합니다.</string>
 
