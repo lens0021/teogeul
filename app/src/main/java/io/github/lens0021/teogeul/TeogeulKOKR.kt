@@ -627,7 +627,8 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 processedEvent = convertedEvent
             }
 
-            val code = processedEvent.getUnicodeChar(mShiftKeyToggle[mHardShift] or mAltKeyToggle[mHardAlt])
+            // Don't apply Alt meta state for character input - Alt is only used for shortcuts/language switching
+            val code = processedEvent.getUnicodeChar(mShiftKeyToggle[mHardShift])
             inputChar(code.toChar())
             mInput = true
 
