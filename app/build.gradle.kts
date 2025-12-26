@@ -7,18 +7,22 @@ plugins {
 }
 
 android {
-    compileSdk = 34
-    buildToolsVersion = "34.0.0"
     namespace = "io.github.lens0021.teogeul"
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "io.github.lens0021.teogeul"
         minSdk = 26
         targetSdk = 34
-        compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -30,44 +34,22 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt")
         }
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     lint {
-        // 기본 설정
         checkAllWarnings = true
-        abortOnError = false
-
-        // 리포트 생성
-        htmlReport = true
-        xmlReport = true
-
-        // 비활성화할 규칙들
-        disable += setOf(
-            "MissingTranslation",
-            "ObsoleteLintCustomCheck"  // Compose 린트 호환성 경고 무시
-        )
-
-        // 경고 대신 에러로 처리할 중요 규칙들
-        error += setOf(
-            "MissingPrefix",
-            "StringFormatInvalid"
-        )
+        disable += setOf("MissingTranslation", "ObsoleteLintCustomCheck")
+        error += setOf("MissingPrefix", "StringFormatInvalid")
     }
 }
 
 repositories {
+    google()
     mavenCentral()
-    maven {
-        url = uri("https://maven.google.com")
-    }
 }
 
 configurations.configureEach {
