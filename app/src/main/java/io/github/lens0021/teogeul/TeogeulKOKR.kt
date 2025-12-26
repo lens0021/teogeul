@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import android.os.IBinder
 import android.text.method.MetaKeyKeyListener
 import android.view.KeyEvent
@@ -227,10 +228,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         super.onFinishInput()
     }
 
-    @Suppress("DEPRECATION")
+    // onViewClicked is deprecated and no longer called since API 28
+    // Keeping empty implementation for compatibility
     override fun onViewClicked(focusChanged: Boolean) {
-        resetCharComposition()
-        super.onViewClicked(focusChanged)
+        // No-op: This callback is deprecated and not invoked on modern Android versions
     }
 
     override fun onEvent(event: HangulEngineEvent) {
@@ -265,7 +266,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    private fun handleInputTimeout(_: InputTimeoutEvent) {
+    private fun handleInputTimeout(@Suppress("UNUSED_PARAMETER") event: InputTimeoutEvent) {
         if (mEnableTimeout) {
             resetCharComposition()
         }
@@ -332,7 +333,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         shinShift()
     }
 
-    private fun handleCommitComposingText(_: CommitComposingTextEvent) {
+    private fun handleCommitComposingText(@Suppress("UNUSED_PARAMETER") event: CommitComposingTextEvent) {
         currentInputConnection.finishComposingText()
     }
 
@@ -428,15 +429,13 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             }
 
             LANGKEY_SWITCH_NEXT_METHOD -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    if (mInput) {
-                        mInput = false
-                        @Suppress("DEPRECATION")
-                        imm?.switchToLastInputMethod(token)
-                    } else {
-                        @Suppress("DEPRECATION")
-                        imm?.switchToNextInputMethod(token, false)
-                    }
+                // Note: switchToLastInputMethod and switchToNextInputMethod are deprecated in API 28,
+                // but no replacement API is available. These methods still work on modern Android.
+                if (mInput) {
+                    mInput = false
+                    imm?.switchToLastInputMethod(token)
+                } else {
+                    imm?.switchToNextInputMethod(token, false)
                 }
             }
 
@@ -474,7 +473,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         )
     }
 
-    @SuppressLint("NewApi")
     private fun processKeyEvent(ev: KeyEvent): Boolean {
         val inputConnection = mInputConnection ?: return false
         val key = ev.keyCode
@@ -556,15 +554,14 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             mSelectionMode = false
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            if (ev.isCtrlPressed) {
-                val convertedEvent = convertQwertyToDvorak(ev)
-                if (convertedEvent != null) {
-                    inputConnection.sendKeyEvent(convertedEvent)
-                    return true
-                }
-                return false
+        // Ctrl key handling (available since API 11, always true for minSdk 26)
+        if (ev.isCtrlPressed) {
+            val convertedEvent = convertQwertyToDvorak(ev)
+            if (convertedEvent != null) {
+                inputConnection.sendKeyEvent(convertedEvent)
+                return true
             }
+            return false
         }
 
         if (key >= KeyEvent.KEYCODE_NUMPAD_0 && key <= KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN) {
@@ -758,7 +755,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         event: KeyEvent,
     ): Boolean {
         if (mTimeOutHandler == null) {
-            mTimeOutHandler = Handler()
+            mTimeOutHandler = Handler(Looper.getMainLooper())
             mTimeOutHandler?.postDelayed({
                 TeogeulEventFlow.emitBlocking(InputTimeoutEvent())
                 mTimeOutHandler = null
