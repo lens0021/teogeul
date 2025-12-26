@@ -20,7 +20,6 @@ object SettingsDefaults {
     const val hardwareUseMoachigi = true
     const val hardwareFullMoachigi = true
     const val hardwareFullMoachigiDelay = 100
-    const val hardwareAltDirect = true
     const val hardwareEnableDvorak = true
     const val systemUseStandardJamo = false
     const val systemLangKeyPress = "switch_next_method"
@@ -35,7 +34,6 @@ object SettingsKeys {
     val hardwareUseMoachigi = booleanPreferencesKey("hardware_use_moachigi")
     val hardwareFullMoachigi = booleanPreferencesKey("hardware_full_moachigi")
     val hardwareFullMoachigiDelay = intPreferencesKey("hardware_full_moachigi_delay")
-    val hardwareAltDirect = booleanPreferencesKey("hardware_alt_direct")
     val hardwareEnableDvorak = booleanPreferencesKey("hardware_enable_dvorak")
     val systemUseStandardJamo = booleanPreferencesKey("system_use_standard_jamo")
     val systemLangKeyPress = stringPreferencesKey("system_action_on_lang_key_press")
@@ -50,7 +48,6 @@ data class SettingsSnapshot(
     val hardwareUseMoachigi: Boolean,
     val hardwareFullMoachigi: Boolean,
     val hardwareFullMoachigiDelay: Int,
-    val hardwareAltDirect: Boolean,
     val hardwareEnableDvorak: Boolean,
     val systemUseStandardJamo: Boolean,
     val systemLangKeyPress: String,
@@ -76,9 +73,6 @@ class SettingsRepository(
 
     val hardwareFullMoachigiDelay: Flow<Int> =
         dataStore.data.map { it[SettingsKeys.hardwareFullMoachigiDelay] ?: SettingsDefaults.hardwareFullMoachigiDelay }
-
-    val hardwareAltDirect: Flow<Boolean> =
-        dataStore.data.map { it[SettingsKeys.hardwareAltDirect] ?: SettingsDefaults.hardwareAltDirect }
 
     val hardwareEnableDvorak: Flow<Boolean> =
         dataStore.data.map { it[SettingsKeys.hardwareEnableDvorak] ?: SettingsDefaults.hardwareEnableDvorak }
@@ -128,7 +122,6 @@ class SettingsRepository(
             hardwareFullMoachigi = prefs[SettingsKeys.hardwareFullMoachigi] ?: SettingsDefaults.hardwareFullMoachigi,
             hardwareFullMoachigiDelay =
                 prefs[SettingsKeys.hardwareFullMoachigiDelay] ?: SettingsDefaults.hardwareFullMoachigiDelay,
-            hardwareAltDirect = prefs[SettingsKeys.hardwareAltDirect] ?: SettingsDefaults.hardwareAltDirect,
             hardwareEnableDvorak = prefs[SettingsKeys.hardwareEnableDvorak] ?: SettingsDefaults.hardwareEnableDvorak,
             systemUseStandardJamo = prefs[SettingsKeys.systemUseStandardJamo] ?: SettingsDefaults.systemUseStandardJamo,
             systemLangKeyPress = prefs[SettingsKeys.systemLangKeyPress] ?: SettingsDefaults.systemLangKeyPress,

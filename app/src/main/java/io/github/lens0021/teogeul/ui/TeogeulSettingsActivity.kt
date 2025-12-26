@@ -208,7 +208,6 @@ fun HardKeyboardScreen(
     val useMoachigi by viewModel.hardwareUseMoachigi.collectAsState()
     val fullMoachigi by viewModel.hardwareFullMoachigi.collectAsState()
     val moachingiDelay by viewModel.hardwareFullMoachingiDelay.collectAsState()
-    val altDirect by viewModel.hardwareAltDirect.collectAsState()
 
     val hangulEntries = stringArrayResource(R.array.keyboard_hangul_layout).toList()
     val hangulValues = stringArrayResource(R.array.keyboard_hangul_layout_id).toList()
@@ -285,15 +284,6 @@ fun HardKeyboardScreen(
                     summary = stringResource(R.string.preference_hardware_full_moachigi_delay_summary),
                     value = moachingiDelay,
                     onValueChange = { viewModel.updatePreference("hardware_full_moachigi_delay", it) },
-                )
-            }
-
-            item {
-                CheckboxPreference(
-                    title = stringResource(R.string.preference_hardware_alt_direct_title),
-                    summary = stringResource(R.string.preference_hardware_alt_direct_summary),
-                    checked = altDirect,
-                    onCheckedChange = { viewModel.updatePreference("hardware_alt_direct", it) },
                 )
             }
         }

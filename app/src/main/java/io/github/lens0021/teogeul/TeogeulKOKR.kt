@@ -152,8 +152,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     var mEnableDvorakLayout: Boolean = false
 
-    var mAltDirect: Boolean = false
-
     var mSelectionMode: Boolean = false
     var mSelectionStart: Int = 0
     var mSelectionEnd: Int = 0
@@ -343,11 +341,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     private fun inputChar(
         code: Char,
-        direct: Boolean,
     ) {
         var shift = mHardShift
         var mutableCode = code
-        var isDirect = direct
+        var isDirect = false
 
         if (mutableCode.code == 128) {
             mutableCode = if (shift > 0) 0x2c.toChar() else 0x2e.toChar()
@@ -602,7 +599,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             }
 
             val code = processedEvent.getUnicodeChar(mShiftKeyToggle[mHardShift] or mAltKeyToggle[mHardAlt])
-            inputChar(code.toChar(), mHardAlt != 0 && mAltDirect)
+            inputChar(code.toChar())
             mInput = true
 
             if (mHardShift == 1) {
@@ -675,7 +672,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         mStandardJamo = snapshot.systemUseStandardJamo
         mLangKeyAction = snapshot.systemLangKeyPress
         mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
-        mAltDirect = snapshot.hardwareAltDirect
         mEnableDvorakLayout = snapshot.hardwareEnableDvorak
 
         val modeKey =
