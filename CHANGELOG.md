@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.2.1](https://github.com/lens0021/Teogeul/compare/v0.2.0...v0.2.1) (2025-12-26)
+
+
+### Bug Fixes
+
+* Add signing configuration to release builds ([287b29f](https://github.com/lens0021/Teogeul/commit/287b29f133a835ee54ab56783f2caacc73e2794e))
+* Remove incompatible gradle-home-cache-cleanup option ([e113e69](https://github.com/lens0021/Teogeul/commit/e113e6953704b459755e28859b38fdaee6f3606f))
+
+
+### Performance Improvements
+
+* Optimize Android CI build performance ([53f0ef9](https://github.com/lens0021/Teogeul/commit/53f0ef942cccc0355174baf12f311c9c4ca5269f))
+
 ## [0.2.0](https://github.com/lens0021/Teogeul/compare/v0.1.0...v0.2.0) (2025-12-26)
 
 ### Features
