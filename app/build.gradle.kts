@@ -44,6 +44,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.txt")
+            // Use debug signing config for development/testing releases
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 

@@ -2,14 +2,12 @@
 
 ## [0.2.0](https://github.com/lens0021/Teogeul/compare/v0.1.0...v0.2.0) (2025-12-26)
 
-
 ### Features
 
 * Add JSON linting support for non-IDE environments ([96450db](https://github.com/lens0021/Teogeul/commit/96450db82316d5d310401d7b7e81faaa7c3d49ae))
 * Automate APK versioning and release uploads ([4ace0b2](https://github.com/lens0021/Teogeul/commit/4ace0b214de520284c764ade055526357cc38a72))
 * convert java to kotlin ([d562ffa](https://github.com/lens0021/Teogeul/commit/d562ffa7bcbc2856efc6fa37a9f54256541ed3df))
 * Migrate settings UI to Jetpack Compose ([704aac8](https://github.com/lens0021/Teogeul/commit/704aac843c07bbd7da86e999d458756434e570aa))
-
 
 ### Bug Fixes
 
