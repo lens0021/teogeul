@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/lens0021/teogeul/compare/v0.2.1...v0.2.2) (2025-12-26)
+
+
+### Bug Fixes
+
+* Connect onEvent to processKeyEvent to handle hardware keys ([#7](https://github.com/lens0021/teogeul/issues/7)) ([99857dd](https://github.com/lens0021/teogeul/commit/99857dd8adbd764db63f4e9594e1ce39665cf1bf))
+
 ## [0.2.1](https://github.com/lens0021/Teogeul/compare/v0.2.0...v0.2.1) (2025-12-26)
 
 
