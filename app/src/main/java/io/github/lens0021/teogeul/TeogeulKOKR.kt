@@ -18,6 +18,7 @@ import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineEvent
 import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineListener
 import io.github.lens0021.teogeul.KOKR.HangulEngine.SetComposingEvent
 import io.github.lens0021.teogeul.KOKR.ListLangKeyActionDialogActivity
+import io.github.lens0021.teogeul.data.SettingsDefaults
 import io.github.lens0021.teogeul.data.SettingsRepository
 import io.github.lens0021.teogeul.data.SettingsValues
 import io.github.lens0021.teogeul.data.settingsDataStore
@@ -683,20 +684,19 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
         mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
 
-        // Get alphabet layout from subtype if available, otherwise use app settings
+        // Use subtype layout when explicitly set; otherwise use app settings.
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
         val currentSubtype = imm?.currentInputMethodSubtype
-        if (currentSubtype != null) {
-            val extraValue = currentSubtype.extraValue
-            val layoutMatch = Regex("KeyboardLayoutSet=(\\w+)").find(extraValue)
-            if (layoutMatch != null) {
-                mAlphabetLayout = layoutMatch.groupValues[1]
-            } else {
-                mAlphabetLayout = snapshot.hardwareAlphabetLayout
+        val subtypeLayout =
+            currentSubtype?.extraValue?.let { extraValue ->
+                Regex("KeyboardLayoutSet=(\\w+)").find(extraValue)?.groupValues?.get(1)
             }
-        } else {
-            mAlphabetLayout = snapshot.hardwareAlphabetLayout
-        }
+        mAlphabetLayout =
+            if (subtypeLayout != null && subtypeLayout != SettingsDefaults.HARDWARE_ALPHABET_LAYOUT) {
+                subtypeLayout
+            } else {
+                snapshot.hardwareAlphabetLayout
+            }
 
         val modeKey =
             if (mCurrentLanguage == EngineMode.LANG_EN) {

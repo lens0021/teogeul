@@ -104,6 +104,11 @@ class SettingsViewModel
                                     SettingsKeys.hardwareHangulLayout,
                                     value,
                                 )
+                            "hardware_alphabet_layout" ->
+                                repository.updateString(
+                                    SettingsKeys.hardwareAlphabetLayout,
+                                    value,
+                                )
                             "system_start_hangul_mode" ->
                                 repository.updateString(SettingsKeys.systemStartHangulMode, value)
                             "system_hardware_lang_key_stroke" ->
