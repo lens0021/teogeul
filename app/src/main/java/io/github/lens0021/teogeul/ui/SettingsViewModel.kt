@@ -68,27 +68,6 @@ class SettingsViewModel @Inject constructor(
             SettingsDefaults.systemStartHangulMode,
         )
 
-    val systemLangKeyPress: StateFlow<String> =
-        repository.systemLangKeyPress.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            SettingsDefaults.systemLangKeyPress,
-        )
-
-    val systemLangKeyLongPress: StateFlow<String> =
-        repository.systemLangKeyLongPress.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            SettingsDefaults.systemLangKeyLongPress,
-        )
-
-    val systemAltKeyLongPress: StateFlow<String> =
-        repository.systemAltKeyLongPress.stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5_000),
-            SettingsDefaults.systemAltKeyLongPress,
-        )
-
     val systemHardwareLangKeyStroke: StateFlow<String> =
         repository.systemHardwareLangKeyStroke.stateIn(
             viewModelScope,
@@ -114,11 +93,6 @@ class SettingsViewModel @Inject constructor(
                         "hardware_hangul_layout" -> repository.updateString(SettingsKeys.hardwareHangulLayout, value)
                         "system_start_hangul_mode" ->
                             repository.updateString(SettingsKeys.systemStartHangulMode, value)
-                        "system_action_on_lang_key_press" -> repository.updateString(SettingsKeys.systemLangKeyPress, value)
-                        "system_action_on_lang_key_long_press" ->
-                            repository.updateString(SettingsKeys.systemLangKeyLongPress, value)
-                        "system_action_on_alt_key_long_press" ->
-                            repository.updateString(SettingsKeys.systemAltKeyLongPress, value)
                         "system_hardware_lang_key_stroke" ->
                             repository.updateString(SettingsKeys.systemHardwareLangKeyStroke, value)
                         else -> Unit

@@ -172,7 +172,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     var mMoachigiDelay: Int = 0
 
     var mStandardJamo: Boolean = false
-    var mLangKeyAction: String? = null
 
     var mAlphabetLayout: String = "keyboard_alphabet_qwerty"
 
@@ -279,13 +278,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 updateMetaKeyStateDisplay()
             }
         }
-        if (!mAltPressing) {
-            if (key == KeyEvent.KEYCODE_ALT_LEFT || key == KeyEvent.KEYCODE_ALT_RIGHT) {
-                mHardAlt = 0
-                mAltPressing = true
-                updateMetaKeyStateDisplay()
-            }
-        }
+        // Alt key is not handled by IME - let system handle it
     }
 
     private fun handleInputTimeout(@Suppress("UNUSED_PARAMETER") event: InputTimeoutEvent) {
@@ -297,16 +290,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     private fun handleInputKey(event: InputKeyEvent) {
         val keyEvent = event.keyEvent
         when (keyEvent.keyCode) {
-            KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.KEYCODE_ALT_RIGHT -> {
-                if (keyEvent.repeatCount == 0) {
-                    if (++mHardAlt > 2) {
-                        mHardAlt = 0
-                    }
-                }
-                mAltPressing = true
-                updateMetaKeyStateDisplay()
-                return
-            }
+            // Alt key is not handled by IME - let system handle it for shortcuts
 
             KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
                 if (keyEvent.repeatCount == 0) {
@@ -590,22 +574,27 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             return false
         }
 
+        // Alt key is not handled by IME - let system handle it for shortcuts
+        if (ev.isAltPressed) {
+            return false
+        }
+
         if (key >= KeyEvent.KEYCODE_NUMPAD_0 && key <= KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN) {
             resetCharComposition()
             return false
         }
 
-        // Handle dedicated language switch key (한/영 key)
+        // Language switch key is not handled by IME - let system handle it
         if (key == KeyEvent.KEYCODE_LANGUAGE_SWITCH) {
             resetCharComposition()
-            toggleLanguage()
-            return true
+            return false
         }
 
+        // Handle custom language key combination (e.g., user-defined shortcut for toggling language)
         val hardLangKey = mHardLangKey
         if (hardLangKey != null && key == hardLangKey.keyCode) {
             if ((mHardShift == 1) == hardLangKey.shift &&
-                (mHardAlt == 1) == hardLangKey.alt &&
+                ev.isAltPressed == hardLangKey.alt &&
                 ev.isCtrlPressed == hardLangKey.control &&
                 ev.isMetaPressed == hardLangKey.win
             ) {
@@ -613,8 +602,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 toggleLanguage()
                 mHardShift = 0
                 mShiftPressing = false
-                mHardAlt = 0
-                mAltPressing = false
                 updateMetaKeyStateDisplay()
                 return true
             }
@@ -635,20 +622,12 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             if (mHardShift == 1) {
                 mShiftPressing = false
             }
-            if (mHardAlt == 1) {
-                mAltPressing = false
-            }
-            if (!ev.isAltPressed) {
-                if (mHardAlt == 1) {
-                    mHardAlt = 0
-                }
-            }
             if (!ev.isShiftPressed) {
                 if (mHardShift == 1) {
                     mHardShift = 0
                 }
             }
-            if (!ev.isShiftPressed && !ev.isShiftPressed) {
+            if (!ev.isShiftPressed) {
                 updateMetaKeyStateDisplay()
             }
 
@@ -669,7 +648,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         } else if (key == KeyEvent.KEYCODE_ENTER) {
             resetCharComposition()
             mHardShift = 0
-            mHardAlt = 0
             updateMetaKeyStateDisplay()
             val editorInfo = currentInputEditorInfo
             return when (editorInfo.imeOptions and EditorInfo.IME_MASK_ACTION) {
@@ -703,7 +681,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         if (resetLanguage) {
             applyStartLanguage(snapshot.systemStartHangulMode)
         }
-        mLangKeyAction = snapshot.systemLangKeyPress
         mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
 
         // Get alphabet layout from subtype if available, otherwise use app settings
