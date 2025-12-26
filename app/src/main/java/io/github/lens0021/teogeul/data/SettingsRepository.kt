@@ -15,24 +15,21 @@ import kotlinx.coroutines.flow.map
 val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 object SettingsDefaults {
-    const val hardwareHangulLayout = "keyboard_sebul_391"
-    const val hardwareAlphabetLayout = "keyboard_alphabet_qwerty"
-    const val hardwareUseMoachigi = true
-    const val hardwareFullMoachigi = true
-    const val hardwareFullMoachigiDelay = 100
-    const val hardwareEnableDvorak = true
-    const val systemUseStandardJamo = false
-    const val systemStartHangulMode = SettingsValues.startHangulModeKeepLast
-    const val systemLangKeyPress = "switch_next_method"
-    const val systemLangKeyLongPress = "list_methods"
-    const val systemAltKeyLongPress = "list_actions"
-    const val systemHardwareLangKeyStroke = "----218" // KeyEvent.KEYCODE_KANA (no modifiers)
+    const val HARDWARE_HANGUL_LAYOUT = "keyboard_sebul_391"
+    const val HARDWARE_ALPHABET_LAYOUT = "keyboard_alphabet_qwerty"
+    const val HARDWARE_USE_MOACHIGI = true
+    const val HARDWARE_FULL_MOACHIGI = true
+    const val HARDWARE_FULL_MOACHIGI_DELAY = 100
+    const val HARDWARE_ENABLE_DVORAK = true
+    const val SYSTEM_USE_STANDARD_JAMO = false
+    const val SYSTEM_START_HANGUL_MODE = SettingsValues.START_HANGUL_MODE_KEEP_LAST
+    const val SYSTEM_HARDWARE_LANG_KEY_STROKE = "----218" // KeyEvent.KEYCODE_KANA
 }
 
 object SettingsValues {
-    const val startHangulModeKeepLast = "keep_last"
-    const val startHangulModeStartHangul = "start_hangul"
-    const val startHangulModeStartEnglish = "start_english"
+    const val START_HANGUL_MODE_KEEP_LAST = "keep_last"
+    const val START_HANGUL_MODE_START_HANGUL = "start_hangul"
+    const val START_HANGUL_MODE_START_ENGLISH = "start_english"
 }
 
 object SettingsKeys {
@@ -44,9 +41,6 @@ object SettingsKeys {
     val hardwareEnableDvorak = booleanPreferencesKey("hardware_enable_dvorak")
     val systemUseStandardJamo = booleanPreferencesKey("system_use_standard_jamo")
     val systemStartHangulMode = stringPreferencesKey("system_start_hangul_mode")
-    val systemLangKeyPress = stringPreferencesKey("system_action_on_lang_key_press")
-    val systemLangKeyLongPress = stringPreferencesKey("system_action_on_lang_key_long_press")
-    val systemAltKeyLongPress = stringPreferencesKey("system_action_on_alt_key_long_press")
     val systemHardwareLangKeyStroke = stringPreferencesKey("system_hardware_lang_key_stroke")
 }
 
@@ -59,9 +53,6 @@ data class SettingsSnapshot(
     val hardwareEnableDvorak: Boolean,
     val systemUseStandardJamo: Boolean,
     val systemStartHangulMode: String,
-    val systemLangKeyPress: String,
-    val systemLangKeyLongPress: String,
-    val systemAltKeyLongPress: String,
     val systemHardwareLangKeyStroke: String,
 )
 
@@ -69,40 +60,51 @@ class SettingsRepository(
     private val dataStore: DataStore<Preferences>,
 ) {
     val hardwareHangulLayout: Flow<String> =
-        dataStore.data.map { it[SettingsKeys.hardwareHangulLayout] ?: SettingsDefaults.hardwareHangulLayout }
+        dataStore.data.map {
+            it[SettingsKeys.hardwareHangulLayout] ?: SettingsDefaults.HARDWARE_HANGUL_LAYOUT
+        }
 
     val hardwareAlphabetLayout: Flow<String> =
-        dataStore.data.map { it[SettingsKeys.hardwareAlphabetLayout] ?: SettingsDefaults.hardwareAlphabetLayout }
+        dataStore.data.map {
+            it[SettingsKeys.hardwareAlphabetLayout] ?: SettingsDefaults.HARDWARE_ALPHABET_LAYOUT
+        }
 
     val hardwareUseMoachigi: Flow<Boolean> =
-        dataStore.data.map { it[SettingsKeys.hardwareUseMoachigi] ?: SettingsDefaults.hardwareUseMoachigi }
+        dataStore.data.map {
+            it[SettingsKeys.hardwareUseMoachigi] ?: SettingsDefaults.HARDWARE_USE_MOACHIGI
+        }
 
     val hardwareFullMoachigi: Flow<Boolean> =
-        dataStore.data.map { it[SettingsKeys.hardwareFullMoachigi] ?: SettingsDefaults.hardwareFullMoachigi }
+        dataStore.data.map {
+            it[SettingsKeys.hardwareFullMoachigi] ?: SettingsDefaults.HARDWARE_FULL_MOACHIGI
+        }
 
     val hardwareFullMoachigiDelay: Flow<Int> =
-        dataStore.data.map { it[SettingsKeys.hardwareFullMoachigiDelay] ?: SettingsDefaults.hardwareFullMoachigiDelay }
+        dataStore.data.map {
+            it[SettingsKeys.hardwareFullMoachigiDelay]
+                ?: SettingsDefaults.HARDWARE_FULL_MOACHIGI_DELAY
+        }
 
     val hardwareEnableDvorak: Flow<Boolean> =
-        dataStore.data.map { it[SettingsKeys.hardwareEnableDvorak] ?: SettingsDefaults.hardwareEnableDvorak }
+        dataStore.data.map {
+            it[SettingsKeys.hardwareEnableDvorak] ?: SettingsDefaults.HARDWARE_ENABLE_DVORAK
+        }
 
     val systemUseStandardJamo: Flow<Boolean> =
-        dataStore.data.map { it[SettingsKeys.systemUseStandardJamo] ?: SettingsDefaults.systemUseStandardJamo }
+        dataStore.data.map {
+            it[SettingsKeys.systemUseStandardJamo] ?: SettingsDefaults.SYSTEM_USE_STANDARD_JAMO
+        }
 
     val systemStartHangulMode: Flow<String> =
-        dataStore.data.map { it[SettingsKeys.systemStartHangulMode] ?: SettingsDefaults.systemStartHangulMode }
-
-    val systemLangKeyPress: Flow<String> =
-        dataStore.data.map { it[SettingsKeys.systemLangKeyPress] ?: SettingsDefaults.systemLangKeyPress }
-
-    val systemLangKeyLongPress: Flow<String> =
-        dataStore.data.map { it[SettingsKeys.systemLangKeyLongPress] ?: SettingsDefaults.systemLangKeyLongPress }
-
-    val systemAltKeyLongPress: Flow<String> =
-        dataStore.data.map { it[SettingsKeys.systemAltKeyLongPress] ?: SettingsDefaults.systemAltKeyLongPress }
+        dataStore.data.map {
+            it[SettingsKeys.systemStartHangulMode] ?: SettingsDefaults.SYSTEM_START_HANGUL_MODE
+        }
 
     val systemHardwareLangKeyStroke: Flow<String> =
-        dataStore.data.map { it[SettingsKeys.systemHardwareLangKeyStroke] ?: SettingsDefaults.systemHardwareLangKeyStroke }
+        dataStore.data.map {
+            it[SettingsKeys.systemHardwareLangKeyStroke]
+                ?: SettingsDefaults.SYSTEM_HARDWARE_LANG_KEY_STROKE
+        }
 
     suspend fun updateBoolean(
         key: Preferences.Key<Boolean>,
@@ -128,21 +130,33 @@ class SettingsRepository(
     suspend fun snapshot(): SettingsSnapshot {
         val prefs = dataStore.data.first()
         return SettingsSnapshot(
-            hardwareHangulLayout = prefs[SettingsKeys.hardwareHangulLayout] ?: SettingsDefaults.hardwareHangulLayout,
-            hardwareAlphabetLayout = prefs[SettingsKeys.hardwareAlphabetLayout] ?: SettingsDefaults.hardwareAlphabetLayout,
-            hardwareUseMoachigi = prefs[SettingsKeys.hardwareUseMoachigi] ?: SettingsDefaults.hardwareUseMoachigi,
-            hardwareFullMoachigi = prefs[SettingsKeys.hardwareFullMoachigi] ?: SettingsDefaults.hardwareFullMoachigi,
+            hardwareHangulLayout =
+                prefs[SettingsKeys.hardwareHangulLayout]
+                    ?: SettingsDefaults.HARDWARE_HANGUL_LAYOUT,
+            hardwareAlphabetLayout =
+                prefs[SettingsKeys.hardwareAlphabetLayout]
+                    ?: SettingsDefaults.HARDWARE_ALPHABET_LAYOUT,
+            hardwareUseMoachigi =
+                prefs[SettingsKeys.hardwareUseMoachigi]
+                    ?: SettingsDefaults.HARDWARE_USE_MOACHIGI,
+            hardwareFullMoachigi =
+                prefs[SettingsKeys.hardwareFullMoachigi]
+                    ?: SettingsDefaults.HARDWARE_FULL_MOACHIGI,
             hardwareFullMoachigiDelay =
-                prefs[SettingsKeys.hardwareFullMoachigiDelay] ?: SettingsDefaults.hardwareFullMoachigiDelay,
-            hardwareEnableDvorak = prefs[SettingsKeys.hardwareEnableDvorak] ?: SettingsDefaults.hardwareEnableDvorak,
-            systemUseStandardJamo = prefs[SettingsKeys.systemUseStandardJamo] ?: SettingsDefaults.systemUseStandardJamo,
+                prefs[SettingsKeys.hardwareFullMoachigiDelay]
+                    ?: SettingsDefaults.HARDWARE_FULL_MOACHIGI_DELAY,
+            hardwareEnableDvorak =
+                prefs[SettingsKeys.hardwareEnableDvorak]
+                    ?: SettingsDefaults.HARDWARE_ENABLE_DVORAK,
+            systemUseStandardJamo =
+                prefs[SettingsKeys.systemUseStandardJamo]
+                    ?: SettingsDefaults.SYSTEM_USE_STANDARD_JAMO,
             systemStartHangulMode =
-                prefs[SettingsKeys.systemStartHangulMode] ?: SettingsDefaults.systemStartHangulMode,
-            systemLangKeyPress = prefs[SettingsKeys.systemLangKeyPress] ?: SettingsDefaults.systemLangKeyPress,
-            systemLangKeyLongPress = prefs[SettingsKeys.systemLangKeyLongPress] ?: SettingsDefaults.systemLangKeyLongPress,
-            systemAltKeyLongPress = prefs[SettingsKeys.systemAltKeyLongPress] ?: SettingsDefaults.systemAltKeyLongPress,
+                prefs[SettingsKeys.systemStartHangulMode]
+                    ?: SettingsDefaults.SYSTEM_START_HANGUL_MODE,
             systemHardwareLangKeyStroke =
-                prefs[SettingsKeys.systemHardwareLangKeyStroke] ?: SettingsDefaults.systemHardwareLangKeyStroke,
+                prefs[SettingsKeys.systemHardwareLangKeyStroke]
+                    ?: SettingsDefaults.SYSTEM_HARDWARE_LANG_KEY_STROKE,
         )
     }
 }

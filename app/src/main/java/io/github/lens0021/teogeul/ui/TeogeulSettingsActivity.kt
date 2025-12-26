@@ -286,13 +286,8 @@ fun SystemScreen(
 ) {
     val useStandardJamo by viewModel.systemUseStandardJamo.collectAsState()
     val startHangulMode by viewModel.systemStartHangulMode.collectAsState()
-    val langKeyPress by viewModel.systemLangKeyPress.collectAsState()
-    val langKeyLongPress by viewModel.systemLangKeyLongPress.collectAsState()
-    val altKeyLongPress by viewModel.systemAltKeyLongPress.collectAsState()
     val hardwareLangKeyStroke by viewModel.systemHardwareLangKeyStroke.collectAsState()
 
-    val langKeyActions = stringArrayResource(R.array.lang_key_actions).toList()
-    val langKeyActionsId = stringArrayResource(R.array.lang_key_actions_id).toList()
     val startHangulEntries = stringArrayResource(R.array.start_hangul_mode_entries).toList()
     val startHangulValues = stringArrayResource(R.array.start_hangul_mode_values).toList()
 
@@ -337,39 +332,6 @@ fun SystemScreen(
                     entryValues = startHangulValues,
                     selectedValue = startHangulMode,
                     onValueChange = { viewModel.updatePreference("system_start_hangul_mode", it) },
-                )
-            }
-
-            item {
-                ListPreference(
-                    title = stringResource(R.string.preference_system_lang_key_press_title),
-                    summary = stringResource(R.string.preference_system_lang_key_press_summary),
-                    entries = langKeyActions,
-                    entryValues = langKeyActionsId,
-                    selectedValue = langKeyPress,
-                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_press", it) },
-                )
-            }
-
-            item {
-                ListPreference(
-                    title = stringResource(R.string.preference_system_lang_key_long_press_title),
-                    summary = stringResource(R.string.preference_system_lang_key_long_press_summary),
-                    entries = langKeyActions,
-                    entryValues = langKeyActionsId,
-                    selectedValue = langKeyLongPress,
-                    onValueChange = { viewModel.updatePreference("system_action_on_lang_key_long_press", it) },
-                )
-            }
-
-            item {
-                ListPreference(
-                    title = stringResource(R.string.preference_system_alt_key_long_press_title),
-                    summary = stringResource(R.string.preference_system_alt_key_long_press_summary),
-                    entries = langKeyActions,
-                    entryValues = langKeyActionsId,
-                    selectedValue = altKeyLongPress,
-                    onValueChange = { viewModel.updatePreference("system_action_on_alt_key_long_press", it) },
                 )
             }
 

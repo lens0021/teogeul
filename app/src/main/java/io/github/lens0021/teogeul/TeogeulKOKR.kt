@@ -1,13 +1,11 @@
 package io.github.lens0021.teogeul
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Handler
-import android.os.Looper
 import android.os.IBinder
+import android.os.Looper
 import android.text.method.MetaKeyKeyListener
 import android.view.KeyEvent
 import android.view.View
@@ -20,7 +18,9 @@ import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineEvent
 import io.github.lens0021.teogeul.KOKR.HangulEngine.HangulEngineListener
 import io.github.lens0021.teogeul.KOKR.HangulEngine.SetComposingEvent
 import io.github.lens0021.teogeul.KOKR.ListLangKeyActionDialogActivity
-import io.github.lens0021.teogeul.KeyStroke
+import io.github.lens0021.teogeul.data.SettingsRepository
+import io.github.lens0021.teogeul.data.SettingsValues
+import io.github.lens0021.teogeul.data.settingsDataStore
 import io.github.lens0021.teogeul.event.CommitComposingTextEvent
 import io.github.lens0021.teogeul.event.InputKeyEvent
 import io.github.lens0021.teogeul.event.InputTimeoutEvent
@@ -28,9 +28,6 @@ import io.github.lens0021.teogeul.event.KeyUpEvent
 import io.github.lens0021.teogeul.event.TeogeulEvent
 import io.github.lens0021.teogeul.event.TeogeulEventFlow
 import io.github.lens0021.teogeul.ui.TeogeulSettingsActivity
-import io.github.lens0021.teogeul.data.SettingsRepository
-import io.github.lens0021.teogeul.data.SettingsValues
-import io.github.lens0021.teogeul.data.settingsDataStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -172,7 +169,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     var mMoachigiDelay: Int = 0
 
     var mStandardJamo: Boolean = false
-    var mLangKeyAction: String? = null
 
     var mAlphabetLayout: String = "keyboard_alphabet_qwerty"
 
@@ -279,16 +275,12 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 updateMetaKeyStateDisplay()
             }
         }
-        if (!mAltPressing) {
-            if (key == KeyEvent.KEYCODE_ALT_LEFT || key == KeyEvent.KEYCODE_ALT_RIGHT) {
-                mHardAlt = 0
-                mAltPressing = true
-                updateMetaKeyStateDisplay()
-            }
-        }
+        // Alt key is not handled by IME - let system handle it
     }
 
-    private fun handleInputTimeout(@Suppress("UNUSED_PARAMETER") event: InputTimeoutEvent) {
+    private fun handleInputTimeout(
+        @Suppress("UNUSED_PARAMETER") event: InputTimeoutEvent,
+    ) {
         if (mEnableTimeout) {
             resetCharComposition()
         }
@@ -297,16 +289,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     private fun handleInputKey(event: InputKeyEvent) {
         val keyEvent = event.keyEvent
         when (keyEvent.keyCode) {
-            KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.KEYCODE_ALT_RIGHT -> {
-                if (keyEvent.repeatCount == 0) {
-                    if (++mHardAlt > 2) {
-                        mHardAlt = 0
-                    }
-                }
-                mAltPressing = true
-                updateMetaKeyStateDisplay()
-                return
-            }
+            // Alt key is not handled by IME - let system handle it for shortcuts
 
             KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
                 if (keyEvent.repeatCount == 0) {
@@ -355,7 +338,9 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         shinShift()
     }
 
-    private fun handleCommitComposingText(@Suppress("UNUSED_PARAMETER") event: CommitComposingTextEvent) {
+    private fun handleCommitComposingText(
+        @Suppress("UNUSED_PARAMETER") event: CommitComposingTextEvent,
+    ) {
         currentInputConnection.finishComposingText()
     }
 
@@ -366,9 +351,7 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         }
     }
 
-    private fun inputChar(
-        code: Char,
-    ) {
+    private fun inputChar(code: Char) {
         var shift = mHardShift
         var mutableCode = code
         var isDirect = false
@@ -476,11 +459,12 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     }
 
     private fun convertQwertyToLayout(ev: KeyEvent): KeyEvent? {
-        val conversionMap = when (mAlphabetLayout) {
-            "keyboard_alphabet_dvorak" -> QWERTY_TO_DVORAK
-            "keyboard_alphabet_colemak" -> QWERTY_TO_COLEMAK
-            else -> return null // QWERTY or unknown - no conversion needed
-        }
+        val conversionMap =
+            when (mAlphabetLayout) {
+                "keyboard_alphabet_dvorak" -> QWERTY_TO_DVORAK
+                "keyboard_alphabet_colemak" -> QWERTY_TO_COLEMAK
+                else -> return null // QWERTY or unknown - no conversion needed
+            }
 
         val originalKeyCode = ev.keyCode
         val convertedKeyCode = conversionMap[originalKeyCode] ?: return null
@@ -590,22 +574,27 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             return false
         }
 
+        // Alt key is not handled by IME - let system handle it for shortcuts
+        if (ev.isAltPressed) {
+            return false
+        }
+
         if (key >= KeyEvent.KEYCODE_NUMPAD_0 && key <= KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN) {
             resetCharComposition()
             return false
         }
 
-        // Handle dedicated language switch key (한/영 key)
+        // Language switch key is not handled by IME - let system handle it
         if (key == KeyEvent.KEYCODE_LANGUAGE_SWITCH) {
             resetCharComposition()
-            toggleLanguage()
-            return true
+            return false
         }
 
+        // Handle custom language key combination (e.g., user-defined shortcut for toggling language)
         val hardLangKey = mHardLangKey
         if (hardLangKey != null && key == hardLangKey.keyCode) {
             if ((mHardShift == 1) == hardLangKey.shift &&
-                (mHardAlt == 1) == hardLangKey.alt &&
+                ev.isAltPressed == hardLangKey.alt &&
                 ev.isCtrlPressed == hardLangKey.control &&
                 ev.isMetaPressed == hardLangKey.win
             ) {
@@ -613,8 +602,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
                 toggleLanguage()
                 mHardShift = 0
                 mShiftPressing = false
-                mHardAlt = 0
-                mAltPressing = false
                 updateMetaKeyStateDisplay()
                 return true
             }
@@ -635,20 +622,12 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
             if (mHardShift == 1) {
                 mShiftPressing = false
             }
-            if (mHardAlt == 1) {
-                mAltPressing = false
-            }
-            if (!ev.isAltPressed) {
-                if (mHardAlt == 1) {
-                    mHardAlt = 0
-                }
-            }
             if (!ev.isShiftPressed) {
                 if (mHardShift == 1) {
                     mHardShift = 0
                 }
             }
-            if (!ev.isShiftPressed && !ev.isShiftPressed) {
+            if (!ev.isShiftPressed) {
                 updateMetaKeyStateDisplay()
             }
 
@@ -669,7 +648,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         } else if (key == KeyEvent.KEYCODE_ENTER) {
             resetCharComposition()
             mHardShift = 0
-            mHardAlt = 0
             updateMetaKeyStateDisplay()
             val editorInfo = currentInputEditorInfo
             return when (editorInfo.imeOptions and EditorInfo.IME_MASK_ACTION) {
@@ -703,7 +681,6 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         if (resetLanguage) {
             applyStartLanguage(snapshot.systemStartHangulMode)
         }
-        mLangKeyAction = snapshot.systemLangKeyPress
         mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
 
         // Get alphabet layout from subtype if available, otherwise use app settings
@@ -732,8 +709,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
 
     private fun applyStartLanguage(mode: String) {
         when (mode) {
-            SettingsValues.startHangulModeStartHangul -> mCurrentLanguage = EngineMode.LANG_KO
-            SettingsValues.startHangulModeStartEnglish -> mCurrentLanguage = EngineMode.LANG_EN
+            SettingsValues.START_HANGUL_MODE_START_HANGUL ->
+                mCurrentLanguage = EngineMode.LANG_KO
+            SettingsValues.START_HANGUL_MODE_START_ENGLISH ->
+                mCurrentLanguage = EngineMode.LANG_EN
             "new_input",
             "always",
             -> mCurrentLanguage = EngineMode.LANG_KO
