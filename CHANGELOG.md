@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/lens0021/teogeul/compare/v0.4.1...v0.4.2) (2025-12-26)
+
+
+### Bug Fixes
+
+* restore alphabet layout setting ([#34](https://github.com/lens0021/teogeul/issues/34)) ([acbf9a4](https://github.com/lens0021/teogeul/commit/acbf9a4f7535baacec988160ace055a5a28540a3))
+
 ## [0.4.1](https://github.com/lens0021/teogeul/compare/v0.4.0...v0.4.1) (2025-12-26)
 
 
