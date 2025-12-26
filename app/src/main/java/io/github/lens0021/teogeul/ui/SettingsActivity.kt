@@ -23,18 +23,18 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.lens0021.teogeul.R
-import io.github.lens0021.teogeul.TeogeulKOKR
+import io.github.lens0021.teogeul.IMEService
 
 @AndroidEntryPoint
-class TeogeulSettingsActivity : ComponentActivity() {
+class SettingsActivity : ComponentActivity() {
     private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Initialize IME instance if needed
-        if (TeogeulKOKR.getInstance() == null) {
-            TeogeulKOKR(this)
+        if (IMEService.getInstance() == null) {
+            IMEService(this)
         }
 
         setContent {

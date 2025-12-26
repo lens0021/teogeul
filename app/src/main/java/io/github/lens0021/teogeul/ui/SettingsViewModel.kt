@@ -3,9 +3,9 @@ package io.github.lens0021.teogeul.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.github.lens0021.teogeul.data.SettingsDefaults
-import io.github.lens0021.teogeul.data.SettingsKeys
-import io.github.lens0021.teogeul.data.SettingsRepository
+import io.github.lens0021.teogeul.config.SettingsDefaults
+import io.github.lens0021.teogeul.config.SettingsKeys
+import io.github.lens0021.teogeul.config.SettingsRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn

@@ -1,4 +1,4 @@
-package io.github.lens0021.teogeul.KOKR
+package io.github.lens0021.teogeul.korean
 
 class ComposingWord {
     private var composingWord = StringBuilder()

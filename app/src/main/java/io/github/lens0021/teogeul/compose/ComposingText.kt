@@ -1,4 +1,4 @@
-package io.github.lens0021.teogeul
+package io.github.lens0021.teogeul.compose
 
 import android.util.Log
 import java.util.ArrayList

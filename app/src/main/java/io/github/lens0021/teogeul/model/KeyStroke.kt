@@ -1,4 +1,4 @@
-package io.github.lens0021.teogeul
+package io.github.lens0021.teogeul.model
 
 data class KeyStroke(
     val control: Boolean,

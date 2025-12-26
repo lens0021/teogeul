@@ -8,8 +8,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.github.lens0021.teogeul.data.SettingsRepository
-import io.github.lens0021.teogeul.data.settingsDataStore
+import io.github.lens0021.teogeul.config.SettingsRepository
+import io.github.lens0021.teogeul.config.settingsDataStore
 import javax.inject.Singleton
 
 @Module
