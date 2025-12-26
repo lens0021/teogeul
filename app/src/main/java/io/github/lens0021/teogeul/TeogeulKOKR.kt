@@ -706,7 +706,8 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
         mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
 
         // Get alphabet layout from subtype if available, otherwise use app settings
-        val currentSubtype = currentInputMethodSubtype
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        val currentSubtype = imm?.currentInputMethodSubtype
         if (currentSubtype != null) {
             val extraValue = currentSubtype.extraValue
             val layoutMatch = Regex("KeyboardLayoutSet=(\\w+)").find(extraValue)
