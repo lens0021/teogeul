@@ -1,76 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
- Copyright (C) 2008,2009  OMRON SOFTWARE Co., Ltd.
-
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--->
+<!-- Copyright (C) 2008,2009 OMRON SOFTWARE Co., Ltd. Licensed under the 
+	Apache License, Version 2.0 (the "License"); you may not use this file except 
+	in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed 
+	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+	the specific language governing permissions and limitations under the License. -->
 <resources>
 
 	<string-array name="keyboard_hangul_layout">
-        <item>@string/preference_keyboard_dubul_standard</item>
-        <item>@string/preference_keyboard_dubul_nk</item>
-        <item>@string/preference_keyboard_sebul_390</item>
-        <item>@string/preference_keyboard_sebul_391</item>
-        <item>@string/preference_keyboard_sebul_danmoeum</item>
-        <item>@string/preference_keyboard_sebul_sun_2014</item>
-        <item>@string/preference_keyboard_sebul_3_2015m</item>
-        <item>@string/preference_keyboard_sebul_3_2015</item>
-        <item>@string/preference_keyboard_sebul_3_p3</item>
-        <item>@string/preference_keyboard_sebul_shin_original</item>
-        <item>@string/preference_keyboard_sebul_shin_edit</item>
-        <item>@string/preference_keyboard_sebul_shin_m</item>
-        <item>@string/preference_keyboard_sebul_shin_p2</item>
-        <item>@string/preference_keyboard_sebul_ahnmatae</item>
+		<item>@string/preference_keyboard_dubul_standard</item>
+		<item>@string/preference_keyboard_dubul_nk</item>
+		<item>@string/preference_keyboard_sebul_390</item>
+		<item>@string/preference_keyboard_sebul_391</item>
+		<item>@string/preference_keyboard_sebul_danmoeum</item>
+		<item>@string/preference_keyboard_sebul_sun_2014</item>
+		<item>@string/preference_keyboard_sebul_3_2015m</item>
+		<item>@string/preference_keyboard_sebul_3_2015</item>
+		<item>@string/preference_keyboard_sebul_3_p3</item>
+		<item>@string/preference_keyboard_sebul_shin_original</item>
+		<item>@string/preference_keyboard_sebul_shin_edit</item>
+		<item>@string/preference_keyboard_sebul_shin_m</item>
+		<item>@string/preference_keyboard_sebul_shin_p2</item>
+		<item>@string/preference_keyboard_sebul_ahnmatae</item>
 		<item>@string/preference_keyboard_sebul_semoe_2016</item>
-        <item>@string/preference_keyboard_sebul_semoe</item>
-        <item>@string/preference_keyboard_dubul_yet</item>
-        <item>@string/preference_keyboard_sebul_393y</item>
-        <item>@string/preference_keyboard_sebul_3_2015y</item>
-    </string-array>
+		<item>@string/preference_keyboard_sebul_semoe</item>
+		<item>@string/preference_keyboard_dubul_yet</item>
+		<item>@string/preference_keyboard_sebul_393y</item>
+		<item>@string/preference_keyboard_sebul_3_2015y</item>
+	</string-array>
 
-    <string-array name="keyboard_hangul_layout_id">
-        <item>keyboard_dubul_standard</item>
-        <item>keyboard_dubul_nk</item>
-        <item>keyboard_sebul_390</item>
-        <item>keyboard_sebul_391</item>
-        <item>keyboard_sebul_danmoeum</item>
-        <item>keyboard_sebul_sun_2014</item>
-        <item>keyboard_sebul_3_2015m</item>
-        <item>keyboard_sebul_3_2015</item>
-        <item>keyboard_sebul_3_p3</item>
-        <item>keyboard_sebul_shin_original</item>
-        <item>keyboard_sebul_shin_edit</item>
-        <item>keyboard_sebul_shin_m</item>
-        <item>keyboard_sebul_shin_p2</item>
-        <item>keyboard_sebul_ahnmatae</item>
+	<string-array name="keyboard_hangul_layout_id">
+		<item>keyboard_dubul_standard</item>
+		<item>keyboard_dubul_nk</item>
+		<item>keyboard_sebul_390</item>
+		<item>keyboard_sebul_391</item>
+		<item>keyboard_sebul_danmoeum</item>
+		<item>keyboard_sebul_sun_2014</item>
+		<item>keyboard_sebul_3_2015m</item>
+		<item>keyboard_sebul_3_2015</item>
+		<item>keyboard_sebul_3_p3</item>
+		<item>keyboard_sebul_shin_original</item>
+		<item>keyboard_sebul_shin_edit</item>
+		<item>keyboard_sebul_shin_m</item>
+		<item>keyboard_sebul_shin_p2</item>
+		<item>keyboard_sebul_ahnmatae</item>
 		<item>keyboard_sebul_semoe_2016</item>
-        <item>keyboard_sebul_semoe</item>
-        <item>keyboard_dubul_yet</item>
-        <item>keyboard_sebul_393y</item>
-        <item>keyboard_sebul_3_2015y</item>
-    </string-array>
+		<item>keyboard_sebul_semoe</item>
+		<item>keyboard_dubul_yet</item>
+		<item>keyboard_sebul_393y</item>
+		<item>keyboard_sebul_3_2015y</item>
+	</string-array>
 
-    <string-array name="keyboard_alphabet_layout">
-    	<item>@string/preference_keyboard_alphabet_qwerty</item>
-    	<item>@string/preference_keyboard_alphabet_dvorak</item>
-    	<item>@string/preference_keyboard_alphabet_colemak</item>
-    </string-array>
+	<string-array name="keyboard_alphabet_layout">
+		<item>@string/preference_keyboard_alphabet_qwerty</item>
+		<item>@string/preference_keyboard_alphabet_dvorak</item>
+		<item>@string/preference_keyboard_alphabet_colemak</item>
+	</string-array>
 
-    <string-array name="keyboard_alphabet_layout_id">
-    	<item>keyboard_alphabet_qwerty</item>
-    	<item>keyboard_alphabet_dvorak</item>
-    	<item>keyboard_alphabet_colemak</item>
-    </string-array>
+	<string-array name="keyboard_alphabet_layout_id">
+		<item>keyboard_alphabet_qwerty</item>
+		<item>keyboard_alphabet_dvorak</item>
+		<item>keyboard_alphabet_colemak</item>
+	</string-array>
 
 	<string-array name="lang_key_actions">
 		<item>@string/preference_system_list_actions</item>
@@ -82,11 +74,11 @@
 
 	<string-array name="lang_key_actions_id">
 		<item>list_actions</item>
-	    <item>switch_kor_eng</item>
-	    <item>switch_next_method</item>
-	    <item>list_methods</item>
-	    <item>open_settings</item>
-    </string-array>
+		<item>switch_kor_eng</item>
+		<item>switch_next_method</item>
+		<item>list_methods</item>
+		<item>open_settings</item>
+	</string-array>
 
 	<string-array name="start_hangul_mode_entries">
 		<item>@string/preference_system_start_hangul_mode_start_hangul</item>
