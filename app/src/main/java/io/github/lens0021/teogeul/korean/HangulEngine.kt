@@ -1,4 +1,4 @@
-package io.github.lens0021.teogeul.KOKR
+package io.github.lens0021.teogeul.korean
 
 import java.util.EmptyStackException
 import java.util.Stack

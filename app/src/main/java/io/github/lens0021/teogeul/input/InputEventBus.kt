@@ -1,20 +1,20 @@
-package io.github.lens0021.teogeul.event
+package io.github.lens0021.teogeul.input
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.runBlocking
 
-object TeogeulEventFlow {
-    private val eventFlow = MutableSharedFlow<TeogeulEvent>(extraBufferCapacity = 0)
+object InputEventBus {
+    private val eventFlow = MutableSharedFlow<InputEvent>(extraBufferCapacity = 0)
     val events = eventFlow.asSharedFlow()
 
-    fun emitBlocking(event: TeogeulEvent) {
+    fun emitBlocking(event: InputEvent) {
         runBlocking {
             eventFlow.emit(event)
         }
     }
 
-    suspend fun emit(event: TeogeulEvent) {
+    suspend fun emit(event: InputEvent) {
         eventFlow.emit(event)
     }
 }

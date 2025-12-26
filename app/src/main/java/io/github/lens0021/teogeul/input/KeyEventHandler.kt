@@ -1,0 +1,270 @@
+package io.github.lens0021.teogeul.input
+
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
+import io.github.lens0021.teogeul.korean.HangulEngine
+import io.github.lens0021.teogeul.model.KeyStroke
+
+class KeyEventHandler(
+    private val modifierStateManager: ModifierStateManager,
+    private val layoutConverter: LayoutConverter,
+    private val inputConnectionProvider: () -> InputConnection?,
+    private val hangulEngineProvider: () -> HangulEngine,
+    private val directInputModeProvider: () -> Boolean,
+    private val alphabetLayoutProvider: () -> String,
+    private val hardLangKeyProvider: () -> KeyStroke?,
+    private val toggleLanguage: () -> Unit,
+    private val resetCharComposition: () -> Unit,
+    private val updateMetaKeyStateDisplay: () -> Unit,
+    private val currentInputEditorInfoProvider: () -> EditorInfo?,
+    private val sendDefaultEditorAction: (Boolean) -> Unit,
+    private val markInput: () -> Unit,
+) {
+    private var selectionMode: Boolean = false
+    private var selectionStart: Int = 0
+    private var selectionEnd: Int = 0
+
+    fun processKeyEvent(ev: KeyEvent): Boolean {
+        val inputConnection = inputConnectionProvider() ?: return false
+        val hangulEngine = hangulEngineProvider()
+        val key = ev.keyCode
+
+        if (ev.isShiftPressed) {
+            when (key) {
+                KeyEvent.KEYCODE_DPAD_UP,
+                KeyEvent.KEYCODE_DPAD_DOWN,
+                KeyEvent.KEYCODE_DPAD_LEFT,
+                KeyEvent.KEYCODE_DPAD_RIGHT,
+                -> {
+                    if (!selectionMode) {
+                        val beforeAll = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0)
+                        selectionEnd = beforeAll?.length ?: 0
+                        selectionStart = selectionEnd
+                        selectionMode = true
+                    } else {
+                        if (key == KeyEvent.KEYCODE_DPAD_LEFT) selectionEnd--
+                        if (key == KeyEvent.KEYCODE_DPAD_RIGHT) selectionEnd++
+                        if (key == KeyEvent.KEYCODE_DPAD_UP) {
+                            var i = 1
+                            var text: CharSequence = ""
+                            var end: Boolean
+                            while (true) {
+                                val before = inputConnection.getTextBeforeCursor(i, 0) ?: ""
+                                end = before == text
+                                text = before
+                                if (end || (text.isNotEmpty() && text[0] == '\n')) {
+                                    break
+                                }
+                                i++
+                            }
+                            if (end) {
+                                val beforeAll = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0)
+                                selectionEnd -= beforeAll?.length ?: 0
+                            } else {
+                                selectionEnd -= i
+                            }
+                        }
+                        if (key == KeyEvent.KEYCODE_DPAD_DOWN) {
+                            var i = 1
+                            var text: CharSequence = ""
+                            var end: Boolean
+                            while (true) {
+                                val after = inputConnection.getTextAfterCursor(i, 0) ?: ""
+                                end = after == text
+                                text = after
+                                if (end || (text.isNotEmpty() && text[text.length - 1] == '\n')) {
+                                    break
+                                }
+                                i++
+                            }
+                            if (end) {
+                                val afterAll = inputConnection.getTextAfterCursor(Char.MAX_VALUE.code, 0)
+                                selectionEnd += afterAll?.length ?: 0
+                            } else {
+                                selectionEnd += i
+                            }
+                        }
+                        var start = selectionStart
+                        var end = selectionEnd
+                        if (selectionStart > selectionEnd) {
+                            start = selectionEnd
+                            end = selectionStart
+                        }
+                        inputConnection.setSelection(start, end)
+                        modifierStateManager.hardShift = 0
+                        updateMetaKeyStateDisplay()
+                        updateMetaKeyStateDisplay()
+                    }
+                    return true
+                }
+
+                else -> {
+                    selectionMode = false
+                }
+            }
+        } else {
+            selectionMode = false
+        }
+
+        // Ctrl key handling (available since API 11, always true for minSdk 26)
+        if (ev.isCtrlPressed) {
+            val convertedEvent = layoutConverter.convertQwertyToLayout(ev, alphabetLayoutProvider())
+            if (convertedEvent != null) {
+                inputConnection.sendKeyEvent(convertedEvent)
+                return true
+            }
+            return false
+        }
+
+        // Alt key is not handled by IME - let system handle it for shortcuts
+        if (ev.isAltPressed) {
+            return false
+        }
+
+        if (key >= KeyEvent.KEYCODE_NUMPAD_0 && key <= KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN) {
+            resetCharComposition()
+            return false
+        }
+
+        // Language switch key is not handled by IME - let system handle it
+        if (key == KeyEvent.KEYCODE_LANGUAGE_SWITCH) {
+            resetCharComposition()
+            return false
+        }
+
+        // Handle custom language key combination (e.g., user-defined shortcut for toggling language)
+        val hardLangKey = hardLangKeyProvider()
+        if (hardLangKey != null && key == hardLangKey.keyCode) {
+            if ((modifierStateManager.hardShift == 1) == hardLangKey.shift &&
+                ev.isAltPressed == hardLangKey.alt &&
+                ev.isCtrlPressed == hardLangKey.control &&
+                ev.isMetaPressed == hardLangKey.win
+            ) {
+                resetCharComposition()
+                toggleLanguage()
+                modifierStateManager.hardShift = 0
+                modifierStateManager.shiftPressing = false
+                updateMetaKeyStateDisplay()
+                return true
+            }
+        }
+
+        if (ev.isPrintingKey) {
+            var processedEvent: KeyEvent = ev
+            val convertedEvent = layoutConverter.convertQwertyToLayout(ev, alphabetLayoutProvider())
+            if (convertedEvent != null) {
+                processedEvent = convertedEvent
+            }
+
+            // Don't apply Alt meta state for character input - Alt is only used for shortcuts/language switching
+            val code = processedEvent.getUnicodeChar(modifierStateManager.getShiftMeta())
+            inputChar(code.toChar())
+            markInput()
+
+            modifierStateManager.afterPrintingKey(ev.isShiftPressed, updateMetaKeyStateDisplay)
+            return true
+        } else if (key == KeyEvent.KEYCODE_SPACE) {
+            resetCharComposition()
+            inputConnection.commitText(" ", 1)
+            return true
+        } else if (key == KeyEvent.KEYCODE_DEL) {
+            if (!hangulEngine.backspace()) {
+                resetCharComposition()
+                inputConnection.deleteSurroundingText(1, 0)
+            }
+            if (hangulEngine.composing == "") {
+                resetCharComposition()
+            }
+            return true
+        } else if (key == KeyEvent.KEYCODE_ENTER) {
+            resetCharComposition()
+            modifierStateManager.hardShift = 0
+            updateMetaKeyStateDisplay()
+            val editorInfo = currentInputEditorInfoProvider()
+            return when (editorInfo?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)) {
+                EditorInfo.IME_ACTION_SEARCH, EditorInfo.IME_ACTION_GO -> {
+                    sendDefaultEditorAction(true)
+                    true
+                }
+
+                else -> false
+            }
+        } else {
+            resetCharComposition()
+        }
+
+        return false
+    }
+
+    private fun inputChar(code: Char) {
+        var shift = modifierStateManager.hardShift
+        var mutableCode = code
+        var isDirect = false
+
+        if (mutableCode.code == 128) {
+            mutableCode = if (shift > 0) 0x2c.toChar() else 0x2e.toChar()
+            shift = 0
+            isDirect = true
+        }
+
+        val originalCode = mutableCode
+        for (item in ModifierStateManager.SHIFT_CONVERT) {
+            if (mutableCode.code == item[1]) {
+                mutableCode = item[0].toChar()
+                shift = 1
+            }
+        }
+
+        val inputConnection = inputConnectionProvider()
+        if (directInputModeProvider()) {
+            mutableCode = originalCode
+            resetCharComposition()
+            directInput(mutableCode, shift > 0)
+            return
+        } else if (isDirect) {
+            resetCharComposition()
+            inputConnection?.commitText(String(charArrayOf(originalCode)), 1)
+            resetCharComposition()
+            return
+        }
+
+        val hangulEngine = hangulEngineProvider()
+        val inputCode = hangulEngine.inputCode(mutableCode.lowercaseChar().code, shift)
+        if (inputCode != -1) {
+            if (hangulEngine.inputJamo(inputCode) == 0) {
+                inputConnection?.commitText(String(charArrayOf(inputCode.toChar())), 1)
+                resetCharComposition()
+            }
+        } else {
+            resetCharComposition()
+            if (shift > 0) {
+                mutableCode = originalCode.uppercaseChar()
+                for (item in ModifierStateManager.SHIFT_CONVERT) {
+                    if (mutableCode.code == item[0]) {
+                        mutableCode = item[1].toChar()
+                    }
+                }
+            }
+            inputConnection?.commitText(String(charArrayOf(mutableCode)), 1)
+            resetCharComposition()
+        }
+    }
+
+    private fun directInput(
+        code: Char,
+        shift: Boolean,
+    ) {
+        var mutableCode = code
+        if (shift) {
+            mutableCode = mutableCode.uppercaseChar()
+            for (item in ModifierStateManager.SHIFT_CONVERT) {
+                if (mutableCode.code == item[0]) {
+                    mutableCode = item[1].toChar()
+                    break
+                }
+            }
+        }
+        inputConnectionProvider()?.commitText(mutableCode.toString(), 1)
+    }
+}
