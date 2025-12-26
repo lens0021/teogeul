@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.1](https://github.com/lens0021/teogeul/compare/v0.4.0...v0.4.1) (2025-12-26)
+
+
+### Bug Fixes
+
+* Pass Alt and Lang keys to system ([#27](https://github.com/lens0021/teogeul/issues/27)) ([845a4c5](https://github.com/lens0021/teogeul/commit/845a4c5464c9ca96c292daad9f2edddde90a2e0a))
+* Upgrade setup-gradle from v3 to v5 to resolve cache errors ([269f95a](https://github.com/lens0021/teogeul/commit/269f95a7708d47e516913595271416d926363af9))
+* Upgrade setup-gradle from v3 to v5 to resolve cache errors ([f2de249](https://github.com/lens0021/teogeul/commit/f2de2493a4e235f550868c3330a96f96f6aa4b62))
+* Use KEYCODE_KANA as the default hardware long key stroke ([#25](https://github.com/lens0021/teogeul/issues/25)) ([05a0c1b](https://github.com/lens0021/teogeul/commit/05a0c1b66df7d88d7b89a18274e4f22adb5edad0))
+
 ## [0.4.0](https://github.com/lens0021/teogeul/compare/v0.3.0...v0.4.0) (2025-12-26)
 
 
