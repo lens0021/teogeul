@@ -21,10 +21,10 @@ Windows에서는 `gradlew.bat`를 사용합니다.
 
 ## 초기화(로컬 환경 세팅)
 
-- asdf를 사용하는 경우 Java 플러그인을 추가하고 설치합니다.
+- asdf를 사용하는 경우 Java 플러그인을 추가하고 `.tool-versions`에 맞춰 설치합니다.
   - `asdf plugin add java`
-  - `asdf install java <version>`
-  - `asdf local java <version>`
+  - `asdf install` (프로젝트의 `.tool-versions`를 사용)
+  - `asdf set java <version>`
 - Android SDK 경로를 설정합니다.
   - 환경 변수: `ANDROID_HOME=/path/to/Android/Sdk`
   - 또는 `local.properties`에 `sdk.dir=/path/to/Android/Sdk`
