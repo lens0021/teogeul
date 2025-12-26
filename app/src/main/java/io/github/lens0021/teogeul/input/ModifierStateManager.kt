@@ -33,31 +33,26 @@ class ModifierStateManager {
     }
 
     var hardShift: Int = 0
-    var hardAlt: Int = 0
     var capsLock: Boolean = false
     var shiftOnCapsLock: Boolean = false
 
     var shiftPressing: Boolean = false
-    var altPressing: Boolean = false
 
     private val shiftKeyToggle = intArrayOf(0, MetaKeyKeyListener.META_SHIFT_ON, MetaKeyKeyListener.META_CAP_LOCKED)
-    private val altKeyToggle = intArrayOf(0, MetaKeyKeyListener.META_ALT_ON, MetaKeyKeyListener.META_ALT_LOCKED)
 
     fun getShiftMeta(): Int = shiftKeyToggle[hardShift]
 
     fun handleKeyUp(event: KeyEvent, updateDisplay: () -> Unit) {
         val key = event.keyCode
-        if (!shiftPressing) {
-            if (key == KeyEvent.KEYCODE_SHIFT_LEFT || key == KeyEvent.KEYCODE_SHIFT_RIGHT) {
-                hardShift = 0
-                shiftPressing = true
-                if (shiftOnCapsLock) {
-                    hardShift = 2
-                    shiftPressing = true
-                    shiftOnCapsLock = false
-                }
-                updateDisplay()
+        if (key == KeyEvent.KEYCODE_SHIFT_LEFT || key == KeyEvent.KEYCODE_SHIFT_RIGHT) {
+            shiftPressing = false
+            if (shiftOnCapsLock) {
+                hardShift = 2
+                shiftOnCapsLock = false
+            } else {
+                hardShift = if (capsLock) 2 else 0
             }
+            updateDisplay()
         }
         // Alt key is not handled by IME - let system handle it
     }
@@ -66,16 +61,14 @@ class ModifierStateManager {
         return when (event.keyCode) {
             KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
                 if (event.repeatCount == 0) {
-                    if (++hardShift > 2) {
+                    if (capsLock) {
                         hardShift = 0
+                        shiftOnCapsLock = true
+                    } else {
+                        hardShift = 1
                     }
                 }
                 shiftPressing = true
-                if (capsLock) {
-                    hardShift = 0
-                    shiftPressing = false
-                    shiftOnCapsLock = true
-                }
                 updateDisplay()
                 true
             }
@@ -114,13 +107,8 @@ class ModifierStateManager {
     }
 
     fun afterPrintingKey(isShiftPressed: Boolean, updateDisplay: () -> Unit) {
-        if (hardShift == 1) {
-            shiftPressing = false
-        }
-        if (!isShiftPressed) {
-            if (hardShift == 1) {
-                hardShift = 0
-            }
+        if (!isShiftPressed && !capsLock && hardShift == 1) {
+            hardShift = 0
             updateDisplay()
         }
     }

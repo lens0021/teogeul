@@ -117,8 +117,8 @@ class KeyEventHandler(
             return false
         }
 
-        // Alt key is not handled by IME - let system handle it for shortcuts
-        if (ev.isAltPressed) {
+        // Alt/Meta key is not handled by IME - let system handle it for shortcuts
+        if (ev.isAltPressed || ev.isMetaPressed) {
             return false
         }
 
@@ -136,18 +136,12 @@ class KeyEventHandler(
         // Handle custom language key combination (e.g., user-defined shortcut for toggling language)
         val hardLangKey = hardLangKeyProvider()
         if (hardLangKey != null && key == hardLangKey.keyCode) {
-            if ((modifierStateManager.hardShift == 1) == hardLangKey.shift &&
-                ev.isAltPressed == hardLangKey.alt &&
-                ev.isCtrlPressed == hardLangKey.control &&
-                ev.isMetaPressed == hardLangKey.win
-            ) {
-                resetCharComposition()
-                toggleLanguage()
-                modifierStateManager.hardShift = 0
-                modifierStateManager.shiftPressing = false
-                updateMetaKeyStateDisplay()
-                return true
-            }
+            resetCharComposition()
+            toggleLanguage()
+            modifierStateManager.hardShift = 0
+            modifierStateManager.shiftPressing = false
+            updateMetaKeyStateDisplay()
+            return true
         }
 
         if (ev.isPrintingKey) {
