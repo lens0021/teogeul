@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/lens0021/teogeul/compare/v0.3.0...v0.4.0) (2025-12-26)
+
+
+### Features
+
+* Add keyboard layout selection via system settings ([#18](https://github.com/lens0021/teogeul/issues/18)) ([61959e1](https://github.com/lens0021/teogeul/commit/61959e1599018e8df7414ed93d572ee4fa8f35eb))
+
+
+### Bug Fixes
+
+* Don't apply Alt meta state for character input ([#22](https://github.com/lens0021/teogeul/issues/22)) ([596f1f4](https://github.com/lens0021/teogeul/commit/596f1f43e58f27c74fea4cd43dbab18455fa1ea0))
+* Improve description of hardware preferences ([#16](https://github.com/lens0021/teogeul/issues/16)) ([8bebb88](https://github.com/lens0021/teogeul/commit/8bebb88b8f6aa4f078233e96ba7a00bae84e6252))
+
 ## [0.3.0](https://github.com/lens0021/teogeul/compare/v0.2.2...v0.3.0) (2025-12-26)
 
 
