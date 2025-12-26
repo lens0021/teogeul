@@ -47,27 +47,27 @@
     <string name="preference_hardware_alphabet_summary">하드웨어 키보드 사용시 영문 키보드 레이아웃을 설정합니다.</string>
     
     <string name="preference_hardware_use_moachigi_title">모아주기 사용</string>
-    <string name="preference_hardware_use_moachigi_summary">하드웨어 키보드 사용시 모아주기를 사용합니다.</string>
+    <string name="preference_hardware_use_moachigi_summary">하드웨어 키보드 사용시 모아주기를 사용합니다.\n모아주기: 세벌식 자판에서 자음과 모음을 입력하면 자동으로 한 글자로 합쳐주는 기능입니다.</string>
 
     <string name="preference_hardware_full_moachigi_title">한 번에 모아치기</string>
-    <string name="preference_hardware_full_moachigi_summary">모아치기 자판에서 한 번에 모아치기를 사용합니다.</string>
+    <string name="preference_hardware_full_moachigi_summary">모아치기 자판(자음과 모음을 순서 상관없이 입력할 수 있는 특수한 세벌식 자판)에서 한 번에 모아치기를 사용합니다.\n한 번에 모아치기: 모든 자모를 입력한 후 한 번에 조합하는 방식입니다. (예: ㄱ+ㅏ+ㄴ을 입력하면 잠시 대기 후 \'간\'으로 조합됩니다)</string>
 
     <string name="preference_hardware_full_moachigi_delay_title">한 번에 모아치기 대기 시간</string>
-    <string name="preference_hardware_full_moachigi_delay_summary">한 번에 모아치기 사용 시 조합 종료 대기 시간을 정합니다. 기본값은 100입니다.</string>
+    <string name="preference_hardware_full_moachigi_delay_summary">한 번에 모아치기 사용 시 조합 종료 대기 시간을 밀리초(ms) 단위로 정합니다. 이 시간 동안 추가 입력이 없으면 입력된 자모들이 한 글자로 조합됩니다. 기본값은 100ms입니다.</string>
 
     <string name="preference_hardware_alt_direct_title">Alt키로 항상 기호 입력</string>
-    <string name="preference_hardware_alt_direct_summary">하드웨어 Alt키 조합시 기호를 그대로 입력합니다.</string>
+    <string name="preference_hardware_alt_direct_summary">하드웨어 Alt키 조합시 기호를 그대로 입력합니다.\n예: Alt+1을 누르면 키에 표시된 기호(! 등)가 그대로 입력됩니다.\n이 옵션을 끄면 한글 모드에서 Alt 키 조합이 한글 자모로 해석될 수 있습니다.</string>
 
     <string name="preference_system_setting_menu">시스템 설정</string>
 
     <string name="preference_system_use_standard_jamo_title">표준 한글 자모 사용</string>
-    <string name="preference_system_use_standard_jamo_summary">필요할 경우 표준 한글 자모로 첫가끝 한글 조합을 합니다.</string>
+    <string name="preference_system_use_standard_jamo_summary">필요할 경우 표준 한글 자모(유니코드 U+1100-U+11FF 영역)로 첫가끝 한글 조합을 합니다.\n첫가끝 한글 조합: 초성-중성-종성을 분리하여 조합하는 방식입니다. 일부 앱에서 호환성을 위해 필요할 수 있습니다.</string>
 
     <string name="preference_system_lang_key_press_title">언어 키 행동</string>
-    <string name="preference_system_lang_key_press_summary">언어키를 누를 때 실행할 행동을 정합니다.</string>
+    <string name="preference_system_lang_key_press_summary">언어 키(한글/영어 모드를 전환하는 특수 키, 일반적으로 \'한/영\' 키)를 누를 때 실행할 행동을 정합니다.</string>
 
     <string name="preference_system_lang_key_long_press_title">언어 키 롱클릭 행동</string>
-    <string name="preference_system_lang_key_long_press_summary">언어키를 길게 누를 때 실행할 행동을 정합니다.</string>
+    <string name="preference_system_lang_key_long_press_summary">언어 키(한/영 키)를 길게 누를 때 실행할 행동을 정합니다.</string>
 
     <string name="preference_system_alt_key_long_press_title">ALT 키 롱클릭 행동</string>
     <string name="preference_system_alt_key_long_press_summary">ALT 키를 길게 누를 때 실행할 행동을 정합니다.</string>

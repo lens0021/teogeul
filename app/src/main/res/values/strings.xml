@@ -78,28 +78,28 @@
     <string name="preference_hardware_alphabet_summary">Type of Alphabet keyboard while using hardware keyboard.</string>
 
     <string name="preference_hardware_use_moachigi_title">Use Moajugi</string>
-    <string name="preference_hardware_use_moachigi_summary">Use moajugi when using hardware keyboard.</string>
+    <string name="preference_hardware_use_moachigi_summary">Use moajugi when using hardware keyboard.\nMoajugi: A feature in Sebeolsik (three-set) layouts that automatically combines consonants and vowels into complete characters.</string>
 
   <string name="preference_hardware_full_moachigi_title">Full Moachigi</string>
-  <string name="preference_hardware_full_moachigi_summary">Use Full Moachigi (Moachigi at once) if available.</string>
+  <string name="preference_hardware_full_moachigi_summary">Use Full Moachigi (Moachigi at once) if available.\nMoachigi keyboard: A special Sebeolsik layout that allows typing consonants and vowels in any order.\nFull Moachigi: Combines all characters at once after inputting them. (e.g., typing ㄱ+ㅏ+ㄴ will wait briefly then combine into \'간\')</string>
 
   <string name="preference_hardware_full_moachigi_delay_title">Full Moachigi Timeout</string>
-  <string name="preference_hardware_full_moachigi_delay_summary">Set the timeout (ms) for Full Moachigi. Default value is 100.</string>
+  <string name="preference_hardware_full_moachigi_delay_summary">Set the timeout in milliseconds (ms) for Full Moachigi. If there\'s no additional input during this time, the entered characters will be combined into one character. Default value is 100ms.</string>
 
     <string name="preference_hardware_alt_direct_title">Alt Direct input</string>
-    <string name="preference_hardware_alt_direct_summary">Always input literal chars on hard Alt combination.</string>
+    <string name="preference_hardware_alt_direct_summary">Always input literal symbols on hardware Alt key combination.\nExample: Alt+1 inputs the symbol (such as !) shown on the key.\nWhen this option is off, Alt key combinations in Korean mode may be interpreted as Korean characters.</string>
 
 
     <string name="preference_system_setting_menu">System Settings</string>
 
     <string name="preference_system_use_standard_jamo_title">Use standard Hangul jamo</string>
-    <string name="preference_system_use_standard_jamo_summary">Use First-Mid-End Hangul code with standard hangul jamo when required.</string>
+    <string name="preference_system_use_standard_jamo_summary">Use standard Hangul jamo (Unicode U+1100-U+11FF range) for First-Mid-End Hangul composition when required.\nFirst-Mid-End composition: A method that separates initial, medial, and final consonants. This may be needed for compatibility with some apps.</string>
 
     <string name="preference_system_lang_key_press_title">Action on Language Key Press</string>
-    <string name="preference_system_lang_key_press_summary">Choose action to perform on language key press.</string>
+    <string name="preference_system_lang_key_press_summary">Choose action to perform on language key press.\nLanguage key: A special key that switches between Korean/English modes, typically the \'한/영\' key on Korean keyboards.</string>
 
     <string name="preference_system_lang_key_long_press_title">Action on Language Key Long-Press</string>
-    <string name="preference_system_lang_key_long_press_summary">Choose action on language key long-press.</string>
+    <string name="preference_system_lang_key_long_press_summary">Choose action on language key (한/영 key) long-press.</string>
 
     <string name="preference_system_alt_key_long_press_title">Action on Alt Key Long-Press</string>
     <string name="preference_system_alt_key_long_press_summary">Choose action on alt key long-press.</string>
