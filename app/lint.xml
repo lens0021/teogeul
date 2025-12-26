@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
-    <!-- 경로별 제외 설정 -->
+    <!-- 경로별 제외 설정: 특정 경로에서 규칙 무시 -->
+
     <issue id="UnusedResources">
         <ignore path="**/build/**" />
     </issue>
@@ -15,14 +16,5 @@
 
     <issue id="HardcodedText">
         <ignore path="**/debug/**" />
-    </issue>
-
-    <!-- 임계값 설정 -->
-    <issue id="TooManyViews">
-        <option name="max" value="80" />
-    </issue>
-
-    <issue id="TooDeepLayout">
-        <option name="max" value="10" />
     </issue>
 </lint>
