@@ -336,7 +336,10 @@ class TeogeulKOKR : Teogeul, HangulEngineListener {
     }
 
     override fun onEvent(ev: TeogeulEvent): Boolean {
-        return false
+        return when (ev) {
+            is InputKeyEvent -> processKeyEvent(ev.keyEvent)
+            else -> false
+        }
     }
 
     private fun inputChar(
