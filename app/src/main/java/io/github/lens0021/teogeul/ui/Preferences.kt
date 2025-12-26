@@ -296,10 +296,6 @@ fun KeystrokePreference(
 
     if (showDialog) {
         val stroke = remember(keystrokeValue) { KeyStroke.parse(keystrokeValue) }
-        var controlChecked by remember { mutableStateOf(stroke.control) }
-        var altChecked by remember { mutableStateOf(stroke.alt) }
-        var winChecked by remember { mutableStateOf(stroke.win) }
-        var shiftChecked by remember { mutableStateOf(stroke.shift) }
         var keyCode by remember { mutableStateOf(stroke.keyCode) }
 
         Dialog(onDismissRequest = { showDialog = false }) {
@@ -321,26 +317,6 @@ fun KeystrokePreference(
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    // Modifier checkboxes
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(checked = controlChecked, onCheckedChange = { controlChecked = it })
-                        Text("Ctrl")
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(checked = altChecked, onCheckedChange = { altChecked = it })
-                        Text("Alt")
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(checked = winChecked, onCheckedChange = { winChecked = it })
-                        Text("Win")
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(checked = shiftChecked, onCheckedChange = { shiftChecked = it })
-                        Text("Shift")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
 
                     // Key capture view
                     AndroidView(
@@ -374,7 +350,7 @@ fun KeystrokePreference(
                         }
                         TextButton(
                             onClick = {
-                                val newStroke = KeyStroke(controlChecked, altChecked, winChecked, shiftChecked, keyCode)
+                                val newStroke = KeyStroke(keyCode)
                                 onValueChange(newStroke.serialize())
                                 showDialog = false
                             },

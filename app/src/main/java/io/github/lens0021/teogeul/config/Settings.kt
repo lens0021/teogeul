@@ -14,7 +14,7 @@ object SettingsDefaults {
     const val HARDWARE_ENABLE_DVORAK = true
     const val SYSTEM_USE_STANDARD_JAMO = false
     const val SYSTEM_START_HANGUL_MODE = SettingsValues.START_HANGUL_MODE_KEEP_LAST
-    const val SYSTEM_HARDWARE_LANG_KEY_STROKE = "----218" // KeyEvent.KEYCODE_KANA
+    const val SYSTEM_HARDWARE_LANG_KEY_STROKE = "218" // KeyEvent.KEYCODE_KANA
 }
 
 object SettingsValues {
