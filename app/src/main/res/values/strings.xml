@@ -16,52 +16,52 @@
 <resources>
   <!-- common part -->
 
-  <string name="app_name">Teogeul</string>
-  <string name="ime_name">Teogeul</string>
+  <string name="app_name">터글</string>
+  <string name="ime_name">터글</string>
 
   <!-- Preferences -->
-    <string name="preference_ime_setting_app">Keyboard Settings</string>
+    <string name="preference_ime_setting_app">터글 키보드 설정</string>
 
-    <string name="preference_method_setting_menu">Input Method</string>
+    <string name="preference_method_setting_menu">입력 방식</string>
 
-  <string name="preference_method_enabler_title">Open Input Methods Window</string>
-    <string name="preference_method_enabler_summary">Please activate &#8216;Teogeul&#8217;.</string>
-    <string name="preference_method_picker_title">Show Input Method Picker</string>
+  <string name="preference_method_enabler_title">입력 방식 활성화 창 열기</string>
+    <string name="preference_method_enabler_summary">&#8216;터글&#8217;을 활성화해 주세요.</string>
+    <string name="preference_method_picker_title">입력 방식 선택 창 열기</string>
 
-    <string name="preference_aboutime_menu"> About IME </string>
+    <string name="preference_aboutime_menu">IME 정보</string>
 
     <!-- Dialog Messages -->
-    <string name="dialog_button_ok">OK</string>
-    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_ok">확인</string>
+    <string name="dialog_button_cancel">취소</string>
 
 
   <!-- IME dependency -->
   <!-- Teogeul -->
-    <string name="teogeul_korean">"Teogeul "</string>
+    <string name="teogeul_korean">터글</string>
 
   <!-- After Config Change -->
 
     <!-- Korean-specific strings -->
 
-    <string name="preference_keyboard_dubul_standard">Dubeolsik Standard</string>
-    <string name="preference_keyboard_dubul_nk">Dubeolsik North Korea</string>
-    <string name="preference_keyboard_sebul_390">Sebeolsik 390</string>
-    <string name="preference_keyboard_sebul_391">Sebeolsik Final</string>
-    <string name="preference_keyboard_sebul_danmoeum">Sebeolsik Danmoeum (Single-Vowel)</string>
-    <string name="preference_keyboard_sebul_sun_2014">Sebeolsik Sunarae 2014 by Ahn Jonghyeok</string>
-    <string name="preference_keyboard_sebul_3_2015m">Sebeolsik 3–2015M by Metalliza</string>
-    <string name="preference_keyboard_sebul_3_2015">Sebeolsik 3–2015 by Soinbae</string>
-    <string name="preference_keyboard_sebul_3_p3">Sebeolsik 3-P3 by Pat-al</string>
-    <string name="preference_keyboard_sebul_shin_original">Shin Sebeolsik 1995 Original by Shin Gwangjo</string>
-    <string name="preference_keyboard_sebul_shin_edit">Shin Sebeolsik 2003 Edited by Park Gyeongnam</string>
-    <string name="preference_keyboard_sebul_shin_m">Shin Sebeolsik M by Metalliza</string>
-    <string name="preference_keyboard_sebul_shin_p2">Shin Sebeolsik P2 by Pat-al (Traditional Hangul available)</string>
-    <string name="preference_keyboard_sebul_ahnmatae">Moachigi Sebeolsik Ahnmatae Keyboard</string>
-  <string name="preference_keyboard_sebul_semoe_2016">Moachigi Sebeolsik Semo-e 2016 by Shin Segi</string>
-    <string name="preference_keyboard_sebul_semoe">Moachigi Sebeolsik Semo-e 2017 by Shin Segi</string>
-    <string name="preference_keyboard_dubul_yet">Traditional Hangul Dubeolsik</string>
-    <string name="preference_keyboard_sebul_393y">Traditional Hangul Sebeolsik 393 by Gim Gyeongseog</string>
-    <string name="preference_keyboard_sebul_3_2015y">Traditional Hangul Sebeolsik 3–2015 by Soinbae</string>
+    <string name="preference_keyboard_dubul_standard">두벌식 표준</string>
+    <string name="preference_keyboard_dubul_nk">두벌식 북한 국규</string>
+    <string name="preference_keyboard_sebul_390">세벌식 390</string>
+    <string name="preference_keyboard_sebul_391">세벌식 최종</string>
+    <string name="preference_keyboard_sebul_danmoeum">세벌식 단모음</string>
+    <string name="preference_keyboard_sebul_sun_2014">세벌식 순아래 2014 (안종혁)</string>
+    <string name="preference_keyboard_sebul_3_2015m">세벌식 3–2015M (메탈리쟈)</string>
+    <string name="preference_keyboard_sebul_3_2015">세벌식 3–2015 (소인배)</string>
+    <string name="preference_keyboard_sebul_3_p3">세벌식 3-P3 (팥알)</string>
+    <string name="preference_keyboard_sebul_shin_original">신세벌식 1995 원안 (신광조)</string>
+    <string name="preference_keyboard_sebul_shin_edit">신세벌식 2003 수정 (박경남)</string>
+    <string name="preference_keyboard_sebul_shin_m">신세벌식 M (메탈리쟈)</string>
+    <string name="preference_keyboard_sebul_shin_p2">신세벌식 P2 (옛한글 가능)(팥알)</string>
+    <string name="preference_keyboard_sebul_ahnmatae">모아치기세벌식 안마태 소리글판</string>
+  <string name="preference_keyboard_sebul_semoe_2016">모아치기세벌식 세모이 2016 (신세기)</string>
+    <string name="preference_keyboard_sebul_semoe">모아치기세벌식 세모이 2017 (신세기)</string>
+    <string name="preference_keyboard_dubul_yet">옛한글 두벌식</string>
+    <string name="preference_keyboard_sebul_393y">옛한글 세벌식 393 (김경석)</string>
+    <string name="preference_keyboard_sebul_3_2015y">옛한글 세벌식 3–2015 (소인배)</string>
 
 
     <string name="preference_keyboard_alphabet_qwerty">QWERTY</string>
@@ -69,54 +69,54 @@
     <string name="preference_keyboard_alphabet_colemak">COLEMAK</string>
 
 
-    <string name="preference_hardware_setting_menu">Hardware Keyboard</string>
+    <string name="preference_hardware_setting_menu">하드웨어 키보드</string>
 
-  <string name="preference_hardware_hangul_title">Hardware Hangul keyboard type</string>
-    <string name="preference_hardware_hangul_summary">Type of Hangul keyboard while using hardware keyboard.</string>
+  <string name="preference_hardware_hangul_title">하드웨어 한글 키보드 종류</string>
+    <string name="preference_hardware_hangul_summary">하드웨어 키보드 사용시 한글 키보드 레이아웃을 설정합니다.</string>
 
-  <string name="preference_hardware_alphabet_title">Hardware Alphabet keyboard type</string>
-    <string name="preference_hardware_alphabet_summary">Type of Alphabet keyboard while using hardware keyboard.</string>
+  <string name="preference_hardware_alphabet_title">하드웨어 영문 키보드 종류</string>
+    <string name="preference_hardware_alphabet_summary">하드웨어 키보드 사용시 영문 키보드 레이아웃을 설정합니다.</string>
 
-    <string name="preference_hardware_use_moachigi_title">Use Moajugi</string>
-    <string name="preference_hardware_use_moachigi_summary">Use moajugi when using hardware keyboard.\nMoajugi: A feature in Sebeolsik (three-set) layouts that automatically combines consonants and vowels into complete characters.</string>
+    <string name="preference_hardware_use_moachigi_title">모아주기 사용</string>
+    <string name="preference_hardware_use_moachigi_summary">하드웨어 키보드 사용시 모아주기를 사용합니다.\n모아주기: 세벌식 자판에서 자음과 모음을 입력하면 자동으로 한 글자로 합쳐주는 기능입니다.</string>
 
-  <string name="preference_hardware_full_moachigi_title">Full Moachigi</string>
-  <string name="preference_hardware_full_moachigi_summary">Use Full Moachigi (Moachigi at once) if available.\nMoachigi keyboard: A special Sebeolsik layout that allows typing consonants and vowels in any order.\nFull Moachigi: Combines all characters at once after inputting them. (e.g., typing ㄱ+ㅏ+ㄴ will wait briefly then combine into \'간\')</string>
+  <string name="preference_hardware_full_moachigi_title">한 번에 모아치기</string>
+  <string name="preference_hardware_full_moachigi_summary">모아치기 자판(자음과 모음을 순서 상관없이 입력할 수 있는 특수한 세벌식 자판)에서 한 번에 모아치기를 사용합니다.\n한 번에 모아치기: 모든 자모를 입력한 후 한 번에 조합하는 방식입니다. (예: ㄱ+ㅏ+ㄴ을 입력하면 잠시 대기 후 \'간\'으로 조합됩니다)</string>
 
-  <string name="preference_hardware_full_moachigi_delay_title">Full Moachigi Timeout</string>
-  <string name="preference_hardware_full_moachigi_delay_summary">Set the timeout in milliseconds (ms) for Full Moachigi. If there\'s no additional input during this time, the entered characters will be combined into one character. Default value is 100ms.</string>
+  <string name="preference_hardware_full_moachigi_delay_title">한 번에 모아치기 대기 시간</string>
+  <string name="preference_hardware_full_moachigi_delay_summary">한 번에 모아치기 사용 시 조합 종료 대기 시간을 밀리초(ms) 단위로 정합니다. 이 시간 동안 추가 입력이 없으면 입력된 자모들이 한 글자로 조합됩니다. 기본값은 100ms입니다.</string>
 
-    <string name="preference_system_setting_menu">System Settings</string>
+    <string name="preference_system_setting_menu">시스템 설정</string>
 
-    <string name="preference_system_use_standard_jamo_title">Use standard Hangul jamo</string>
-    <string name="preference_system_use_standard_jamo_summary">Use standard Hangul jamo (Unicode U+1100-U+11FF range) for First-Mid-End Hangul composition when required.\nFirst-Mid-End composition: A method that separates initial, medial, and final consonants. This may be needed for compatibility with some apps.</string>
+    <string name="preference_system_use_standard_jamo_title">표준 한글 자모 사용</string>
+    <string name="preference_system_use_standard_jamo_summary">필요할 경우 표준 한글 자모(유니코드 U+1100-U+11FF 영역)로 첫가끝 한글 조합을 합니다.\n첫가끝 한글 조합: 초성-중성-종성을 분리하여 조합하는 방식입니다. 일부 앱에서 호환성을 위해 필요할 수 있습니다.</string>
 
-    <string name="preference_system_start_hangul_mode_title">Start language mode</string>
-    <string name="preference_system_start_hangul_mode_summary">Choose what happens at input start.\nInput start: when Teogeul becomes active for a text field (switching from another IME or returning to a field). Default: Keep last language.</string>
-    <string name="preference_system_start_hangul_mode_start_hangul">Reset to Hangul at input start</string>
-    <string name="preference_system_start_hangul_mode_keep_last">Keep last language (default)</string>
-    <string name="preference_system_start_hangul_mode_start_english">Always reset to English at input start</string>
+    <string name="preference_system_start_hangul_mode_title">시작 언어 모드</string>
+    <string name="preference_system_start_hangul_mode_summary">입력 시작 시 동작을 선택합니다.\n입력 시작: 텍스트 입력 칸에서 터글이 활성화되는 시점(다른 입력기에서 전환하거나 입력창으로 돌아올 때). 기본값: 마지막 언어 유지.</string>
+    <string name="preference_system_start_hangul_mode_start_hangul">입력 시작에 한글 모드로 초기화</string>
+    <string name="preference_system_start_hangul_mode_keep_last">마지막 언어 유지(기본값)</string>
+    <string name="preference_system_start_hangul_mode_start_english">항상 영어로 초기화</string>
 
-    <string name="preference_system_lang_key_press_title">Action on Language Key Press</string>
-    <string name="preference_system_lang_key_press_summary">Choose action to perform on language key press.\nLanguage key: A special key that switches between Korean/English modes, typically the \'한/영\' key on Korean keyboards.</string>
+    <string name="preference_system_lang_key_press_title">언어 키 행동</string>
+    <string name="preference_system_lang_key_press_summary">언어 키(한글/영어 모드를 전환하는 특수 키, 일반적으로 \'한/영\' 키)를 누를 때 실행할 행동을 정합니다.</string>
 
-    <string name="preference_system_lang_key_long_press_title">Action on Language Key Long-Press</string>
-    <string name="preference_system_lang_key_long_press_summary">Choose action on language key (한/영 key) long-press.</string>
+    <string name="preference_system_lang_key_long_press_title">언어 키 롱클릭 행동</string>
+    <string name="preference_system_lang_key_long_press_summary">언어 키(한/영 키)를 길게 누를 때 실행할 행동을 정합니다.</string>
 
-    <string name="preference_system_alt_key_long_press_title">Action on Alt Key Long-Press</string>
-    <string name="preference_system_alt_key_long_press_summary">Choose action on alt key long-press.</string>
+    <string name="preference_system_alt_key_long_press_title">ALT 키 롱클릭 행동</string>
+    <string name="preference_system_alt_key_long_press_summary">ALT 키를 길게 누를 때 실행할 행동을 정합니다.</string>
 
-  <string name="preference_system_list_actions">List Actions</string>
-  <string name="preference_system_switch_kor_eng">Switch Korean/English Mode</string>
-  <string name="preference_system_switch_next_method">Switch to Next Method</string>
-  <string name="preference_system_list_methods">List Input Methods</string>
-  <string name="preference_system_open_settings">Open Keyboard Settings</string>
+  <string name="preference_system_list_actions">작업 선택 창 표시</string>
+  <string name="preference_system_switch_kor_eng">한/영 전환</string>
+  <string name="preference_system_switch_next_method">다음 입력기로 전환</string>
+  <string name="preference_system_list_methods">입력기 목록 표시</string>
+  <string name="preference_system_open_settings">키보드 설정 열기</string>
 
-  <string name="preference_system_list_actions_title">Select Action</string>
+  <string name="preference_system_list_actions_title">작업 선택</string>
 
-  <string name="preference_hardware_lang_key_title">Hardware Keyboard Language Key</string>
-  <string name="preference_hardware_lang_key_summary">Customize language key storke with shift, alt combinations.</string>
-  <string name="preference_about_license">License</string>
+  <string name="preference_hardware_lang_key_title">하드웨어 키보드 한영 키</string>
+  <string name="preference_hardware_lang_key_summary">하드웨어 키보드 사용시 한영 키를 설정합니다. Shift, Alt 조합을 사용할 수 있습니다.</string>
+  <string name="preference_about_license">라이센스</string>
   <string name="teogeul_korean_license" translatable="false">Apache License 2.0</string>
-  <string name="preference_about_source_code">Source Code</string>
+  <string name="preference_about_source_code">소스코드</string>
 </resources>
