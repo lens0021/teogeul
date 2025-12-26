@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "io.github.lens0021.teogeul"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 34
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_17
