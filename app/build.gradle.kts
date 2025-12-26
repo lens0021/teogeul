@@ -11,12 +11,12 @@ plugins {
 
 android {
     namespace = "io.github.lens0021.teogeul"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "io.github.lens0021.teogeul"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
 
         val versionString = "0.4.1" // x-release-please-version
         versionName = versionString
