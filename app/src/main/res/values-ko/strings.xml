@@ -10,7 +10,7 @@
     <string name="preference_method_setting_menu">입력 방식</string>
     
     <string name="preference_method_enabler_title">입력 방식 활성화 창 열기</string>
-    <string name="preference_method_enabler_summary">\'터글\'을 활성화해 주세요.</string>
+    <string name="preference_method_enabler_summary">&#8216;터글&#8217;을 활성화해 주세요.</string>
     <string name="preference_method_picker_title">입력 방식 선택 창 열기</string>
 
     <string name="preference_keyboard_dubul_standard">두벌식 표준</string>
@@ -19,8 +19,8 @@
     <string name="preference_keyboard_sebul_391">세벌식 최종</string>
     <string name="preference_keyboard_sebul_danmoeum">세벌식 단모음</string>
     <string name="preference_keyboard_sebul_sun_2014">세벌식 순아래 2014 (안종혁)</string>
-    <string name="preference_keyboard_sebul_3_2015m">세벌식 3-2015M (메탈리쟈)</string>
-    <string name="preference_keyboard_sebul_3_2015">세벌식 3-2015 (소인배)</string>
+    <string name="preference_keyboard_sebul_3_2015m">세벌식 3–2015M (메탈리쟈)</string>
+    <string name="preference_keyboard_sebul_3_2015">세벌식 3–2015 (소인배)</string>
     <string name="preference_keyboard_sebul_3_p3">세벌식 3-P3 (팥알)</string>
     <string name="preference_keyboard_sebul_shin_original">신세벌식 1995 원안 (신광조)</string>
     <string name="preference_keyboard_sebul_shin_edit">신세벌식 2003 수정 (박경남)</string>
@@ -31,7 +31,7 @@
     <string name="preference_keyboard_sebul_semoe">모아치기세벌식 세모이 2017 (신세기)</string>
     <string name="preference_keyboard_dubul_yet">옛한글 두벌식</string>
     <string name="preference_keyboard_sebul_393y">옛한글 세벌식 393 (김경석)</string>
-    <string name="preference_keyboard_sebul_3_2015y">옛한글 세벌식 3-2015 (소인배)</string>
+    <string name="preference_keyboard_sebul_3_2015y">옛한글 세벌식 3–2015 (소인배)</string>
 
     <string name="preference_keyboard_alphabet_qwerty">QWERTY</string>
     <string name="preference_keyboard_alphabet_dvorak">DVORAK</string>
@@ -87,9 +87,7 @@
     <string name="preference_aboutime_menu">IME 정보</string>
 
     <string name="ime_name">터글</string>
-    <string name="app_name" translatable="false">터글 키보드</string>
     <string name="teogeul_korean">터글</string>
-    <string name="teogeul_korean_license" translatable="false">Apache License 2.0</string>
     <string name="preference_about_license">라이센스</string>
     <string name="preference_about_source_code">소스코드</string>
 

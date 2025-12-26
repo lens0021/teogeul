@@ -50,10 +50,10 @@ fun PreferenceCategory(
 @Composable
 fun PreferenceItem(
     title: String,
-    summary: String? = null,
     onClick: () -> Unit,
-    enabled: Boolean = true,
     modifier: Modifier = Modifier,
+    summary: String? = null,
+    enabled: Boolean = true,
 ) {
     Surface(
         modifier =
@@ -89,11 +89,11 @@ fun PreferenceItem(
 @Composable
 fun CheckboxPreference(
     title: String,
-    summary: String? = null,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    enabled: Boolean = true,
     modifier: Modifier = Modifier,
+    summary: String? = null,
+    enabled: Boolean = true,
 ) {
     Surface(
         modifier =
@@ -137,13 +137,13 @@ fun CheckboxPreference(
 @Composable
 fun ListPreference(
     title: String,
-    summary: String? = null,
     entries: List<String>,
     entryValues: List<String>,
     selectedValue: String,
     onValueChange: (String) -> Unit,
-    enabled: Boolean = true,
     modifier: Modifier = Modifier,
+    summary: String? = null,
+    enabled: Boolean = true,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
@@ -226,8 +226,8 @@ fun IntEditTextPreference(
     summary: String,
     value: Int,
     onValueChange: (Int) -> Unit,
-    enabled: Boolean = true,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     var showDialog by remember { mutableStateOf(false) }
 

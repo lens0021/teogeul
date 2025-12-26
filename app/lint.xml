@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- XML 포맷팅 및 구조 규칙 -->
+    <issue id="UnusedResources" severity="warning">
+        <ignore path="**/build/**" />
+    </issue>
+
+    <issue id="UnusedIds" severity="warning" />
+
+    <issue id="ExtraText" severity="error">
+        <ignore path="**/values/**" />
+    </issue>
+
+    <!-- 레이아웃 최적화 -->
+    <issue id="InefficientWeight" severity="warning" />
+    <issue id="NestedWeights" severity="warning" />
+    <issue id="UselessParent" severity="warning" />
+    <issue id="UselessLeaf" severity="warning" />
+    <issue id="TooManyViews" severity="warning">
+        <option name="max" value="80" />
+    </issue>
+    <issue id="TooDeepLayout" severity="warning">
+        <option name="max" value="10" />
+    </issue>
+
+    <!-- 접근성 -->
+    <issue id="ContentDescription" severity="warning">
+        <!-- 장식용 이미지는 제외 -->
+        <ignore path="**/drawable/**" />
+    </issue>
+
+    <!-- 문자열 및 타이포그래피 -->
+    <issue id="HardcodedText" severity="warning">
+        <!-- 개발/디버그 용도는 허용 -->
+        <ignore path="**/debug/**" />
+    </issue>
+
+    <issue id="Typos" severity="warning" />
+    <issue id="TypographyDashes" severity="warning" />
+    <issue id="TypographyQuotes" severity="warning" />
+    <issue id="TypographyEllipsis" severity="warning" />
+
+    <!-- 아이콘 및 리소스 -->
+    <issue id="IconMissingDensityFolder" severity="warning" />
+    <issue id="IconDuplicates" severity="warning" />
+    <issue id="IconExpectedSize" severity="warning" />
+
+    <!-- XML 문법 검증 -->
+    <issue id="MissingPrefix" severity="error" />
+    <issue id="StringFormatInvalid" severity="error" />
+    <issue id="StringFormatMatches" severity="error" />
+
+    <!-- 번역 관련 (이미 비활성화됨) -->
+    <issue id="MissingTranslation" severity="ignore" />
+
+    <!-- 성능 -->
+    <issue id="Overdraw" severity="warning" />
+</lint>

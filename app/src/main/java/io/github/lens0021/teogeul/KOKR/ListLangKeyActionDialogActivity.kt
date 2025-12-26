@@ -25,12 +25,7 @@ class ListLangKeyActionDialogActivity : Activity() {
                 TeogeulKOKR.LANGKEY_LIST_METHODS,
                 TeogeulKOKR.LANGKEY_OPEN_SETTINGS,
             )
-        val builder =
-            when {
-                Build.VERSION.SDK_INT >= 21 -> AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog)
-                Build.VERSION.SDK_INT >= 11 -> AlertDialog.Builder(this, android.R.style.Theme_Dialog)
-                else -> AlertDialog.Builder(this)
-            }
+        val builder = AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog)
         builder
             .setTitle(R.string.preference_system_list_actions_title)
             .setItems(labels) { dialog: DialogInterface, which: Int ->

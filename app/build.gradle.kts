@@ -42,6 +42,48 @@ android {
 
     lint {
         disable += "MissingTranslation"
+
+        // XML 검증 규칙
+        enable += setOf(
+            "MissingPrefix",
+            "UnusedResources",
+            "UnusedIds",
+            "ExtraText",
+            "Typos",
+            "StringFormatInvalid",
+            "StringFormatMatches",
+            "PluralsCandidate",
+            "TypographyDashes",
+            "TypographyQuotes",
+            "TypographyEllipsis",
+            "IconMissingDensityFolder",
+            "IconDuplicates",
+            "IconExpectedSize",
+            "WebViewLayout",
+            "ScrollViewSize",
+            "TextViewEdits",
+            "InefficientWeight",
+            "NestedWeights",
+            "DisableBaselineAlignment",
+            "Overdraw",
+            "UselessParent",
+            "UselessLeaf",
+            "TooManyViews",
+            "TooDeepLayout",
+            "HardcodedText",
+            "ContentDescription",
+            "SmallSp",
+            "TextFields"
+        )
+
+        // 경고를 에러로 처리 (선택사항)
+        warningsAsErrors = false
+
+        // HTML 리포트 생성
+        htmlReport = true
+
+        // XML 리포트 생성
+        xmlReport = true
     }
 }
 
