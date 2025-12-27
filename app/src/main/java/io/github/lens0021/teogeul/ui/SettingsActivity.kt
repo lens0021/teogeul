@@ -53,10 +53,7 @@ class SettingsActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = "main",
                     ) {
-                        composable("main") { SettingsMainScreen(navController) }
-                        composable("input_method") { InputMethodScreen(navController) }
-                        composable("hard_keyboard") { HardKeyboardScreen(navController, viewModel) }
-                        composable("system") { SystemScreen(navController, viewModel) }
+                        composable("main") { SettingsMainScreen(navController, viewModel) }
                         composable("about") { AboutScreen(navController) }
                     }
                 }
@@ -74,114 +71,30 @@ class SettingsActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsMainScreen(navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.preference_ime_setting_app)) },
-            )
-        },
-    ) { paddingValues ->
-        LazyColumn(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-        ) {
-            item {
-                SettingSectionItem(
-                    title = stringResource(R.string.preference_method_setting_menu),
-                    icon = Icons.Default.Settings,
-                    onClick = { navController.navigate("input_method") },
-                )
-            }
-
-            item {
-                SettingSectionItem(
-                    title = stringResource(R.string.preference_hardware_setting_menu),
-                    icon = Icons.Default.Keyboard,
-                    onClick = { navController.navigate("hard_keyboard") },
-                )
-            }
-
-            item {
-                SettingSectionItem(
-                    title = stringResource(R.string.preference_system_setting_menu),
-                    icon = Icons.Default.Build,
-                    onClick = { navController.navigate("system") },
-                )
-            }
-
-            item {
-                SettingSectionItem(
-                    title = stringResource(R.string.preference_aboutime_menu),
-                    icon = Icons.Default.Info,
-                    onClick = { navController.navigate("about") },
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun SettingSectionItem(
-    title: String,
-    icon: ImageVector,
-    onClick: () -> Unit,
+fun SettingsMainScreen(
+    navController: NavController,
+    viewModel: SettingsViewModel,
 ) {
-    Surface(
-        modifier =
-            Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onClick),
+    val hardwareHangulLayout by viewModel.hardwareHangulLayout.collectAsState()
+    val hardwareAlphabetLayout by viewModel.hardwareAlphabetLayout.collectAsState()
+    val useMoachigi by viewModel.hardwareUseMoachigi.collectAsState()
+    val fullMoachigi by viewModel.hardwareFullMoachigi.collectAsState()
+    val moachingiDelay by viewModel.hardwareFullMoachingiDelay.collectAsState()
+    val useStandardJamo by viewModel.systemUseStandardJamo.collectAsState()
+    val startHangulMode by viewModel.systemStartHangulMode.collectAsState()
+    val hardwareLangKeyStroke by viewModel.systemHardwareLangKeyStroke.collectAsState()
+
+    val hardwareHangulEntries = stringArrayResource(R.array.keyboard_hangul_layout).toList()
+    val hardwareHangulValues = stringArrayResource(R.array.keyboard_hangul_layout_id).toList()
+    val hardwareAlphabetEntries = stringArrayResource(R.array.keyboard_alphabet_layout).toList()
+    val hardwareAlphabetValues = stringArrayResource(R.array.keyboard_alphabet_layout_id).toList()
+    val startHangulEntries = stringArrayResource(R.array.start_hangul_mode_entries).toList()
+    val startHangulValues = stringArrayResource(R.array.start_hangul_mode_values).toList()
+
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.padding(end = 16.dp),
-            )
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-            )
-        }
-    }
-    HorizontalDivider()
-}
-
-// ===== Input Method Screen =====
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun InputMethodScreen(navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.preference_method_setting_menu)) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
-            )
-        },
-    ) { paddingValues ->
-        LazyColumn(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-        ) {
-            item {
-                PreferenceCategory(
-                    title = stringResource(R.string.preference_method_setting_menu),
-                )
-            }
-
+            // ===== Installation Section =====
             item {
                 EnableInputMethodPreference(
                     title = stringResource(R.string.preference_method_enabler_title),
@@ -194,52 +107,8 @@ fun InputMethodScreen(navController: NavController) {
                     title = stringResource(R.string.preference_method_picker_title),
                 )
             }
-        }
-    }
-}
 
-// ===== Hardware Keyboard Screen =====
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HardKeyboardScreen(
-    navController: NavController,
-    viewModel: SettingsViewModel,
-) {
-    val hardwareHangulLayout by viewModel.hardwareHangulLayout.collectAsState()
-    val hardwareAlphabetLayout by viewModel.hardwareAlphabetLayout.collectAsState()
-    val useMoachigi by viewModel.hardwareUseMoachigi.collectAsState()
-    val fullMoachigi by viewModel.hardwareFullMoachigi.collectAsState()
-    val moachingiDelay by viewModel.hardwareFullMoachingiDelay.collectAsState()
-
-    val hardwareHangulEntries = stringArrayResource(R.array.keyboard_hangul_layout).toList()
-    val hardwareHangulValues = stringArrayResource(R.array.keyboard_hangul_layout_id).toList()
-    val hardwareAlphabetEntries = stringArrayResource(R.array.keyboard_alphabet_layout).toList()
-    val hardwareAlphabetValues = stringArrayResource(R.array.keyboard_alphabet_layout_id).toList()
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.preference_hardware_setting_menu)) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
-            )
-        },
-    ) { paddingValues ->
-        LazyColumn(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-        ) {
-            item {
-                PreferenceCategory(
-                    title = stringResource(R.string.preference_hardware_setting_menu),
-                )
-            }
+            item { HorizontalDivider() }
 
             item {
                 KeyboardListPreference(
@@ -289,48 +158,6 @@ fun HardKeyboardScreen(
                     onValueChange = { viewModel.updatePreference("hardware_full_moachigi_delay", it) },
                 )
             }
-        }
-    }
-}
-
-// ===== System Screen =====
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SystemScreen(
-    navController: NavController,
-    viewModel: SettingsViewModel,
-) {
-    val useStandardJamo by viewModel.systemUseStandardJamo.collectAsState()
-    val startHangulMode by viewModel.systemStartHangulMode.collectAsState()
-    val hardwareLangKeyStroke by viewModel.systemHardwareLangKeyStroke.collectAsState()
-
-    val startHangulEntries = stringArrayResource(R.array.start_hangul_mode_entries).toList()
-    val startHangulValues = stringArrayResource(R.array.start_hangul_mode_values).toList()
-
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(stringResource(R.string.preference_system_setting_menu)) },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                },
-            )
-        },
-    ) { paddingValues ->
-        LazyColumn(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues),
-        ) {
-            item {
-                PreferenceCategory(
-                    title = stringResource(R.string.preference_system_setting_menu),
-                )
-            }
 
             item {
                 CheckboxPreference(
@@ -360,8 +187,48 @@ fun SystemScreen(
                     onValueChange = { viewModel.updatePreference("system_hardware_lang_key_stroke", it) },
                 )
             }
+
+            item { HorizontalDivider() }
+
+            // ===== IME Info Section =====
+            item {
+                SettingSectionItem(
+                    title = stringResource(R.string.preference_aboutime_menu),
+                    icon = Icons.Default.Info,
+                    onClick = { navController.navigate("about") },
+                )
+            }
+    }
+}
+
+@Composable
+private fun SettingSectionItem(
+    title: String,
+    icon: ImageVector,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.padding(end = 16.dp),
+            )
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+            )
         }
     }
+    HorizontalDivider()
 }
 
 // ===== About Screen =====
@@ -389,20 +256,6 @@ fun AboutScreen(navController: NavController) {
                     .fillMaxSize()
                     .padding(paddingValues),
         ) {
-            item {
-                PreferenceCategory(
-                    title = stringResource(R.string.preference_aboutime_menu),
-                )
-            }
-
-            item {
-                PreferenceItem(
-                    title = stringResource(R.string.teogeul_korean),
-                    onClick = {},
-                    enabled = false,
-                )
-            }
-
             item {
                 PreferenceItem(
                     title = stringResource(R.string.preference_about_license),
