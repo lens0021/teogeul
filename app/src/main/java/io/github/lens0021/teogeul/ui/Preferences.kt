@@ -512,7 +512,6 @@ private fun KeyMappingDialog(
     var physicalKeyCode by remember { mutableStateOf<Int?>(null) }
     var selectedAction by remember { mutableStateOf<VirtualKeyAction?>(null) }
     var useDropdown by remember { mutableStateOf(true) }
-    var customKeyCode by remember { mutableStateOf<Int?>(null) }
     var showActionDropdown by remember { mutableStateOf(false) }
 
     // Available predefined actions
@@ -544,36 +543,11 @@ private fun KeyMappingDialog(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
-                OutlinedTextField(
+                KeyCaptureField(
                     value =
                         physicalKeyCode?.let { KeyEvent.keyCodeToString(it) }
                             ?: stringResource(R.string.key_mapping_press_key),
-                    onValueChange = {},
-                    enabled = false,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Physical key capture view
-                AndroidView(
-                    factory = { ctx ->
-                        View(ctx).apply {
-                            isFocusable = true
-                            isFocusableInTouchMode = true
-                            setOnKeyListener { _, kc, event ->
-                                if (event.action == KeyEvent.ACTION_DOWN) {
-                                    physicalKeyCode = kc
-                                }
-                                true
-                            }
-                            requestFocus()
-                        }
-                    },
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(50.dp),
+                    onKeyCaptured = { physicalKeyCode = it },
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -632,37 +606,15 @@ private fun KeyMappingDialog(
                         }
                     }
                 } else {
-                    // Direct key input
-                    OutlinedTextField(
-                        value =
-                            customKeyCode?.let { KeyEvent.keyCodeToString(it) }
-                                ?: stringResource(R.string.key_mapping_press_virtual_key),
-                        onValueChange = {},
-                        enabled = false,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+                    val virtualKeyText =
+                        (selectedAction as? VirtualKeyAction.SendKeyEvent)
+                            ?.keyCode
+                            ?.let { KeyEvent.keyCodeToString(it) }
+                            ?: stringResource(R.string.key_mapping_press_virtual_key)
 
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    AndroidView(
-                        factory = { ctx ->
-                            View(ctx).apply {
-                                isFocusable = true
-                                isFocusableInTouchMode = true
-                                setOnKeyListener { _, kc, event ->
-                                    if (event.action == KeyEvent.ACTION_DOWN) {
-                                        customKeyCode = kc
-                                        selectedAction = VirtualKeyAction.SendKeyEvent(kc)
-                                    }
-                                    true
-                                }
-                                requestFocus()
-                            }
-                        },
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(50.dp),
+                    KeyCaptureField(
+                        value = virtualKeyText,
+                        onKeyCaptured = { selectedAction = VirtualKeyAction.SendKeyEvent(it) },
                     )
                 }
 
@@ -692,4 +644,39 @@ private fun KeyMappingDialog(
             }
         }
     }
+}
+
+@Composable
+private fun KeyCaptureField(
+    value: String,
+    onKeyCaptured: (Int) -> Unit,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = {},
+        enabled = false,
+        modifier = Modifier.fillMaxWidth(),
+    )
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    AndroidView(
+        factory = { ctx ->
+            View(ctx).apply {
+                isFocusable = true
+                isFocusableInTouchMode = true
+                setOnKeyListener { _, kc, event ->
+                    if (event.action == KeyEvent.ACTION_DOWN) {
+                        onKeyCaptured(kc)
+                    }
+                    true
+                }
+                requestFocus()
+            }
+        },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(50.dp),
+    )
 }

@@ -4,31 +4,15 @@ import android.content.Context
 import android.view.KeyEvent
 import io.github.lens0021.teogeul.R
 
-/**
- * Represents a virtual key action that can be triggered by a physical key.
- */
 sealed class VirtualKeyAction {
-    /**
-     * Toggle between Korean and English input.
-     */
     object ToggleLanguage : VirtualKeyAction()
 
-    /**
-     * Send a key event to the system.
-     * @param keyCode The key code to send (e.g., KEYCODE_LANGUAGE_SWITCH)
-     */
     data class SendKeyEvent(
         val keyCode: Int,
     ) : VirtualKeyAction()
 
-    /**
-     * Open the IME picker dialog.
-     */
     object OpenIMEPicker : VirtualKeyAction()
 
-    /**
-     * Serialize this action to a string for storage.
-     */
     fun serialize(): String =
         when (this) {
             is ToggleLanguage -> "toggle_language"
@@ -37,10 +21,6 @@ sealed class VirtualKeyAction {
         }
 
     companion object {
-        /**
-         * Parse a serialized action string back to a VirtualKeyAction.
-         * Returns null if the format is invalid.
-         */
         fun parse(serialized: String): VirtualKeyAction? =
             when {
                 serialized == "toggle_language" -> ToggleLanguage
@@ -52,9 +32,6 @@ sealed class VirtualKeyAction {
                 else -> null
             }
 
-        /**
-         * Get a user-friendly display name for the action.
-         */
         fun getDisplayName(
             action: VirtualKeyAction,
             context: Context,
@@ -75,24 +52,13 @@ sealed class VirtualKeyAction {
     }
 }
 
-/**
- * Represents a single key mapping from a physical key to a virtual action.
- */
 data class KeyMapping(
     val physicalKey: Int, // KeyEvent.KEYCODE_*
     val virtualAction: VirtualKeyAction,
 ) {
-    /**
-     * Serialize this mapping to a string for storage.
-     * Format: "physicalKey|virtualAction"
-     */
     fun serialize(): String = "$physicalKey|${virtualAction.serialize()}"
 
     companion object {
-        /**
-         * Parse a serialized mapping string back to a KeyMapping.
-         * Returns null if the format is invalid.
-         */
         fun parse(serialized: String): KeyMapping? {
             val parts = serialized.split("|", limit = 2)
             if (parts.size != 2) return null
@@ -105,23 +71,12 @@ data class KeyMapping(
     }
 }
 
-/**
- * Container for a list of key mappings.
- */
 data class KeyMappings(
     val mappings: List<KeyMapping>,
 ) {
-    /**
-     * Serialize all mappings to a string for storage.
-     * Format: "mapping1;mapping2;mapping3"
-     */
     fun serialize(): String = mappings.joinToString(";") { it.serialize() }
 
     companion object {
-        /**
-         * Parse a serialized mappings string back to a KeyMappings object.
-         * Invalid mappings are filtered out.
-         */
         fun parse(serialized: String): KeyMappings {
             if (serialized.isEmpty()) return EMPTY
 
@@ -133,9 +88,6 @@ data class KeyMappings(
             return KeyMappings(mappings)
         }
 
-        /**
-         * Empty mappings (no key mappings configured).
-         */
         val EMPTY = KeyMappings(emptyList())
     }
 }
