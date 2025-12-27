@@ -5,6 +5,7 @@ import android.view.View
 import android.view.inputmethod.BaseInputConnection
 import io.github.lens0021.teogeul.korean.EngineMode
 import io.github.lens0021.teogeul.korean.HangulEngine
+import io.github.lens0021.teogeul.model.KeyMappings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
@@ -231,11 +232,14 @@ class KeyEventHandlerTest {
             directInputModeProvider = { false },
             alphabetLayoutProvider = { "keyboard_alphabet_dvorak" },
             hardLangKeyProvider = { null },
+            keyMappingsProvider = { KeyMappings.EMPTY },
             currentLanguageProvider = { EngineMode.LANG_EN },
             toggleLanguage = {},
             resetCharComposition = { hangulEngine.resetComposition() },
             currentInputEditorInfoProvider = { null },
             sendDefaultEditorAction = {},
             markInput = {},
+            sendKeyEvent = { inputConnection.sendKeyEvent(it) },
+            openIMEPicker = {},
         )
 }
