@@ -1,12 +1,14 @@
 # Repository Guidelines
 
+CONTRIBUTE.md을 같이 읽으십시오.
+
 ## 코딩 스타일 및 네이밍 규칙
 
-Java 소스는 4스페이스 들여쓰기, 같은 줄 여는 중괄호를 사용합니다.
-메서드/필드는 camelCase, 클래스는 PascalCase를 유지합니다. 패키지는
+Kotlin 소스는 4스페이스 들여쓰기, 같은 줄 여는 중괄호를 사용합니다.
+함수/프로퍼티는 camelCase, 클래스는 PascalCase를 유지합니다. 패키지는
 `io.github.lens0021.teogeul` 아래로 유지하세요. 리소스 파일은 소문자
 `snake_case`(예: `layout/keyboard_panel.xml`)를 권장합니다. 불필요한 포맷팅
-변경은 최소화합니다.
+변경은 최소화합니다. Kotlin 스타일은 ktlint 기본 규칙을 따릅니다.
 
 ## 테스트 가이드
 
