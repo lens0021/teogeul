@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.3](https://github.com/lens0021/teogeul/compare/v0.7.2...v0.7.3) (2025-12-27)
+
+
+### Bug Fixes
+
+* convert shortcuts for dvorak layouts ([#81](https://github.com/lens0021/teogeul/issues/81)) ([87cf81e](https://github.com/lens0021/teogeul/commit/87cf81ec8921d95c4f8fdfedec5c836b0643e1f4))
+
 ## [0.7.2](https://github.com/lens0021/teogeul/compare/v0.7.1...v0.7.2) (2025-12-27)
 
 
