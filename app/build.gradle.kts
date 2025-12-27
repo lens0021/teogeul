@@ -82,6 +82,7 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.coroutines.android)
     testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
 
     // Compose BOM
     val composeBom = platform(libs.compose.bom)

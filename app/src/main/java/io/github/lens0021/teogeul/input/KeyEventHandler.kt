@@ -55,12 +55,16 @@ class KeyEventHandler(
 
         // Ctrl key handling (available since API 11, always true for minSdk 26)
         if (ev.isCtrlPressed) {
-            inputConnection.sendKeyEvent(ev)
+            val converted =
+                layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
+            inputConnection.sendKeyEvent(converted ?: ev)
             return true
         }
 
         if (ev.isAltPressed || ev.isMetaPressed) {
-            inputConnection.sendKeyEvent(ev)
+            val converted =
+                layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
+            inputConnection.sendKeyEvent(converted ?: ev)
             return true
         }
 
