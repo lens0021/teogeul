@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.6.0](https://github.com/lens0021/teogeul/compare/v0.5.0...v0.6.0) (2025-12-27)
+
+
+### Features
+
+* 옛한글 지원 제거 ([#67](https://github.com/lens0021/teogeul/issues/67)) ([b164061](https://github.com/lens0021/teogeul/commit/b164061c269bc7195ae6df8ac473f689020ba759))
+
+
+### Bug Fixes
+
+* Refactor IMEService ([#68](https://github.com/lens0021/teogeul/issues/68)) ([5da506b](https://github.com/lens0021/teogeul/commit/5da506bd45b31306ce0cbb7742ae1bbe75547c48))
+* remove VIBRATE permission ([#51](https://github.com/lens0021/teogeul/issues/51)) ([7b703d9](https://github.com/lens0021/teogeul/commit/7b703d9c96cfe213ea544e8e9a151cf03dfb54b0))
+* Unify Hangul engine instance ([#65](https://github.com/lens0021/teogeul/issues/65)) ([8b6bf39](https://github.com/lens0021/teogeul/commit/8b6bf39b3469576df37ecd878ce57e8c20db10bf))
+
 ## [0.5.0](https://github.com/lens0021/teogeul/compare/v0.4.2...v0.5.0) (2025-12-26)
 
 
