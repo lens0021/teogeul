@@ -53,7 +53,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     }
 
     protected var mInputConnection: InputConnection? = null
-    protected var mAutoHideMode: Boolean = true
     protected var mDirectInputMode: Boolean = true
 
     private var mConsumeDownEvent: Boolean = false
@@ -111,8 +110,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
 
         mQwertyEngine.listener = this
         mHangulEngine = mQwertyEngine
-
-        mAutoHideMode = false
     }
 
     constructor(context: Context) : this() {
@@ -369,8 +366,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         super.setCandidatesViewShown(shown)
         if (shown) {
             showWindow(true)
-        } else if (mAutoHideMode) {
-            hideWindow()
         }
     }
 
