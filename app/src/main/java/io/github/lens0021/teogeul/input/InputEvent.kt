@@ -6,9 +6,13 @@ sealed class InputEvent {
     var isCancelled: Boolean = false
 }
 
-class InputKeyEvent(val keyEvent: KeyEvent) : InputEvent()
+class InputKeyEvent(
+    val keyEvent: KeyEvent,
+) : InputEvent()
 
-class KeyUpEvent(val keyEvent: KeyEvent) : InputEvent()
+class KeyUpEvent(
+    val keyEvent: KeyEvent,
+) : InputEvent()
 
 class InputTimeoutEvent : InputEvent()
 

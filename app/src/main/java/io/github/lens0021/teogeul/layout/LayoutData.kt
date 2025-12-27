@@ -98,7 +98,6 @@ object LayoutData {
             intArrayOf(128, '.'.code, ','.code),
         )
 
-   
     @JvmField
     val JAMO_SEBUL_3_2015M_CHOJONG_D =
         arrayOf(
@@ -249,7 +248,6 @@ object LayoutData {
             intArrayOf(128, '.'.code, ','.code),
         )
 
-   
     @JvmField
     val JAMO_SEBUL_3_2015_CHOJONG_D =
         arrayOf(
@@ -346,7 +344,6 @@ object LayoutData {
             intArrayOf(HangulJamo.중성_ㅜ, HangulJamo.중성_ㅓ, HangulJamo.중성_ㅝ),
             intArrayOf(HangulJamo.중성_ㅜ, HangulJamo.중성_ㅔ, HangulJamo.중성_ㅞ),
             intArrayOf(HangulJamo.중성_ㅜ, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅟ),
-           
             intArrayOf(0x011169, HangulJamo.중성_ㅏ, HangulJamo.중성_ㅘ),
             intArrayOf(0x011169, HangulJamo.중성_ㅐ, HangulJamo.중성_ㅙ),
             intArrayOf(0x011169, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅚ),
@@ -463,7 +460,6 @@ object LayoutData {
             intArrayOf(128, '.'.code, ','.code),
         )
 
-   
     @JvmField
     val JAMO_SEBUL_3_P3_CHOJONG_D =
         arrayOf(
@@ -548,7 +544,6 @@ object LayoutData {
             intArrayOf(HangulJamo.중성_ㅜ, HangulJamo.중성_ㅔ, HangulJamo.중성_ㅞ),
             intArrayOf(HangulJamo.중성_ㅜ, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅟ),
             intArrayOf(HangulJamo.중성_ㅡ, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅢ),
-           
             intArrayOf(0x011169, HangulJamo.중성_ㅏ, HangulJamo.중성_ㅘ),
             intArrayOf(0x011169, HangulJamo.중성_ㅐ, HangulJamo.중성_ㅙ),
             intArrayOf(0x011169, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅚ),
@@ -665,7 +660,6 @@ object LayoutData {
             intArrayOf(HangulJamo.중성_ㅜ, HangulJamo.중성_ㅔ, HangulJamo.중성_ㅞ),
             intArrayOf(HangulJamo.중성_ㅜ, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅟ),
             intArrayOf(HangulJamo.중성_ㅡ, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅢ),
-           
             intArrayOf(0x011169, HangulJamo.중성_ㅏ, HangulJamo.중성_ㅘ),
             intArrayOf(0x011169, HangulJamo.중성_ㅐ, HangulJamo.중성_ㅙ),
             intArrayOf(0x011169, HangulJamo.중성_ㅣ, HangulJamo.중성_ㅚ),

@@ -19,14 +19,14 @@ buildscript {
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.ktlint) apply false
     alias(libs.plugins.spotless)
 }
 
-val jsonFileTree = fileTree(projectDir) {
-    include("**/*.json")
-    exclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")
-}
+val jsonFileTree =
+    fileTree(projectDir) {
+        include("**/*.json")
+        exclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")
+    }
 
 tasks.register("validateJson") {
     group = "verification"
@@ -74,6 +74,16 @@ tasks.register("lintJson") {
 }
 
 spotless {
+    kotlin {
+        target("**/*.kt")
+        targetExclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")
+        ktlint()
+    }
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        targetExclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")
+        ktlint()
+    }
     format("xml") {
         target("**/*.xml")
         targetExclude("**/build/**", "**/.gradle/**", "**/.git/**", "**/.rumdl_cache/**", "**/.claude/**")

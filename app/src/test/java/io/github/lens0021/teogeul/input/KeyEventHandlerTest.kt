@@ -81,8 +81,8 @@ class KeyEventHandlerTest {
         assertEquals(KeyEvent.META_META_ON, inputConnection.lastEvent?.metaState)
     }
 
-    private fun buildHandler(inputConnection: CapturingInputConnection): KeyEventHandler {
-        return KeyEventHandler(
+    private fun buildHandler(inputConnection: CapturingInputConnection): KeyEventHandler =
+        KeyEventHandler(
             layoutConverter = LayoutConverter(),
             inputConnectionProvider = { inputConnection },
             hangulEngineProvider = { HangulEngine() },
@@ -96,5 +96,4 @@ class KeyEventHandlerTest {
             sendDefaultEditorAction = {},
             markInput = {},
         )
-    }
 }

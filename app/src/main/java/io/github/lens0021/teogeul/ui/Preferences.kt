@@ -23,8 +23,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
-import io.github.lens0021.teogeul.model.KeyStroke
 import io.github.lens0021.teogeul.R
+import io.github.lens0021.teogeul.model.KeyStroke
 
 // Utility
 @Composable
@@ -177,8 +177,7 @@ fun ListPreference(
                                     .clickable {
                                         onValueChange(entryValues[index])
                                         showDialog = false
-                                    }
-                                    .padding(vertical = 12.dp),
+                                    }.padding(vertical = 12.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(

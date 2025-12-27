@@ -130,7 +130,10 @@ class KeyEventHandler(
         return false
     }
 
-    private fun inputChar(code: Char, isShiftPressed: Boolean) {
+    private fun inputChar(
+        code: Char,
+        isShiftPressed: Boolean,
+    ) {
         var shift = if (isShiftPressed) 1 else 0
         var mutableCode = code
         var isDirect = false
@@ -200,5 +203,4 @@ class KeyEventHandler(
         }
         inputConnectionProvider()?.commitText(mutableCode.toString(), 1)
     }
-
 }
