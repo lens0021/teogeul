@@ -14,7 +14,8 @@ object SettingsDefaults {
     const val HARDWARE_ENABLE_DVORAK = true
     const val SYSTEM_USE_STANDARD_JAMO = false
     const val SYSTEM_START_HANGUL_MODE = SettingsValues.START_HANGUL_MODE_KEEP_LAST
-    const val SYSTEM_HARDWARE_LANG_KEY_STROKE = "218" // KeyEvent.KEYCODE_KANA
+    const val SYSTEM_HARDWARE_LANG_KEY_STROKE = "218" // KeyEvent.KEYCODE_KANA (deprecated)
+    const val SYSTEM_KEY_MAPPINGS = "218|toggle_language" // KANA key -> Toggle Language
 }
 
 object SettingsValues {
@@ -32,7 +33,8 @@ object SettingsKeys {
     val hardwareEnableDvorak = booleanPreferencesKey("hardware_enable_dvorak")
     val systemUseStandardJamo = booleanPreferencesKey("system_use_standard_jamo")
     val systemStartHangulMode = stringPreferencesKey("system_start_hangul_mode")
-    val systemHardwareLangKeyStroke = stringPreferencesKey("system_hardware_lang_key_stroke")
+    val systemHardwareLangKeyStroke = stringPreferencesKey("system_hardware_lang_key_stroke") // deprecated
+    val systemKeyMappings = stringPreferencesKey("system_key_mappings")
 }
 
 data class SettingsSnapshot(
@@ -44,5 +46,6 @@ data class SettingsSnapshot(
     val hardwareEnableDvorak: Boolean,
     val systemUseStandardJamo: Boolean,
     val systemStartHangulMode: String,
-    val systemHardwareLangKeyStroke: String,
+    val systemHardwareLangKeyStroke: String, // deprecated
+    val systemKeyMappings: String,
 )

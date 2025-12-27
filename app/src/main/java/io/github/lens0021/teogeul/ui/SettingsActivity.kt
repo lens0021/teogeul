@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.lens0021.teogeul.IMEService
 import io.github.lens0021.teogeul.R
+import io.github.lens0021.teogeul.model.KeyMappings
 
 @AndroidEntryPoint
 class SettingsActivity : ComponentActivity() {
@@ -80,7 +81,7 @@ fun SettingsMainScreen(
     val moachingiDelay by viewModel.hardwareFullMoachingiDelay.collectAsState()
     val useStandardJamo by viewModel.systemUseStandardJamo.collectAsState()
     val startHangulMode by viewModel.systemStartHangulMode.collectAsState()
-    val hardwareLangKeyStroke by viewModel.systemHardwareLangKeyStroke.collectAsState()
+    val keyMappingsString by viewModel.systemKeyMappings.collectAsState()
 
     val hardwareHangulEntries = stringArrayResource(R.array.keyboard_hangul_layout).toList()
     val hardwareHangulValues = stringArrayResource(R.array.keyboard_hangul_layout_id).toList()
@@ -178,11 +179,20 @@ fun SettingsMainScreen(
         }
 
         item {
-            KeystrokePreference(
-                title = stringResource(R.string.preference_hardware_lang_key_title),
-                summary = stringResource(R.string.preference_hardware_lang_key_summary),
-                keystrokeValue = hardwareLangKeyStroke,
-                onValueChange = { viewModel.updatePreference("system_hardware_lang_key_stroke", it) },
+            val keyMappings =
+                remember(keyMappingsString) {
+                    KeyMappings.parse(keyMappingsString)
+                }
+
+            KeyMappingsPreference(
+                title = stringResource(R.string.preference_key_mappings_title),
+                mappings = keyMappings.mappings,
+                onMappingsChange = { newMappings ->
+                    viewModel.updatePreference(
+                        "system_key_mappings",
+                        KeyMappings(newMappings).serialize(),
+                    )
+                },
             )
         }
 

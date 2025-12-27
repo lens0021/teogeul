@@ -24,7 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import io.github.lens0021.teogeul.R
+import io.github.lens0021.teogeul.model.KeyMapping
 import io.github.lens0021.teogeul.model.KeyStroke
+import io.github.lens0021.teogeul.model.VirtualKeyAction
 
 // Utility
 @Composable
@@ -401,5 +403,316 @@ fun PickInputMethodPreference(
             inputMethodManager.showInputMethodPicker()
         },
         modifier = modifier,
+    )
+}
+
+@Composable
+fun KeyMappingsPreference(
+    title: String,
+    mappings: List<KeyMapping>,
+    onMappingsChange: (List<KeyMapping>) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+    var editingIndex by remember { mutableStateOf<Int?>(null) }
+
+    Column(modifier = modifier) {
+        // Header with "Add new item" button
+        Surface(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        editingIndex = null
+                        showDialog = true
+                    },
+        ) {
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text =
+                            if (mappings.isEmpty()) {
+                                stringResource(R.string.key_mappings_empty)
+                            } else {
+                                stringResource(R.string.key_mappings_add)
+                            },
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                TextButton(
+                    onClick = {
+                        editingIndex = null
+                        showDialog = true
+                    },
+                ) {
+                    Text(stringResource(R.string.key_mappings_add))
+                }
+            }
+        }
+
+        // List of existing mappings
+        mappings.forEachIndexed { index, mapping ->
+            Surface(
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            editingIndex = index
+                            showDialog = true
+                        },
+            ) {
+                Row(
+                    modifier = Modifier.padding(start = 32.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = KeyEvent.keyCodeToString(mapping.physicalKey),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "→ ${VirtualKeyAction.getDisplayName(mapping.virtualAction, context)}",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            val newMappings = mappings.toMutableList()
+                            newMappings.removeAt(index)
+                            onMappingsChange(newMappings)
+                        },
+                    ) {
+                        Text("✕", style = MaterialTheme.typography.titleMedium)
+                    }
+                }
+            }
+        }
+    }
+
+    if (showDialog) {
+        val initialMapping =
+            editingIndex?.let { index ->
+                mappings.getOrNull(index)
+            }
+        KeyMappingDialog(
+            onDismiss = {
+                showDialog = false
+                editingIndex = null
+            },
+            onConfirm = { newMapping ->
+                val newMappings = mappings.toMutableList()
+                if (editingIndex != null && editingIndex in newMappings.indices) {
+                    newMappings[editingIndex ?: 0] = newMapping
+                } else {
+                    newMappings.add(newMapping)
+                }
+                onMappingsChange(newMappings)
+                showDialog = false
+                editingIndex = null
+            },
+            initialMapping = initialMapping,
+        )
+    }
+}
+
+@Composable
+private fun KeyMappingDialog(
+    onDismiss: () -> Unit,
+    onConfirm: (KeyMapping) -> Unit,
+    initialMapping: KeyMapping? = null,
+) {
+    val context = LocalContext.current
+    var physicalKeyCode by remember { mutableStateOf(initialMapping?.physicalKey) }
+    var selectedAction by remember { mutableStateOf(initialMapping?.virtualAction) }
+    var useDropdown by
+        remember {
+            mutableStateOf(
+                when (val action = initialMapping?.virtualAction) {
+                    is VirtualKeyAction.SendKeyEvent ->
+                        action.keyCode == KeyEvent.KEYCODE_LANGUAGE_SWITCH
+                    else -> true
+                },
+            )
+        }
+    var showActionDropdown by remember { mutableStateOf(false) }
+
+    // Available predefined actions
+    val predefinedActions =
+        remember {
+            listOf(
+                VirtualKeyAction.ToggleLanguage,
+                VirtualKeyAction.SendKeyEvent(KeyEvent.KEYCODE_LANGUAGE_SWITCH),
+                VirtualKeyAction.OpenIMEPicker,
+            )
+        }
+
+    val isValid = physicalKeyCode != null && selectedAction != null
+
+    Dialog(onDismissRequest = onDismiss) {
+        Card {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = stringResource(R.string.key_mapping_dialog_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Physical key section
+                Text(
+                    text = stringResource(R.string.key_mapping_physical_key),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                KeyCaptureField(
+                    value =
+                        physicalKeyCode?.let { KeyEvent.keyCodeToString(it) }
+                            ?: stringResource(R.string.key_mapping_press_key),
+                    onKeyCaptured = { physicalKeyCode = it },
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Virtual action section
+                Text(
+                    text = stringResource(R.string.key_mapping_virtual_action),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Dropdown / Direct input toggle
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.key_mapping_use_dropdown),
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.weight(1f),
+                    )
+                    Switch(
+                        checked = useDropdown,
+                        onCheckedChange = { useDropdown = it },
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                if (useDropdown) {
+                    // Dropdown selection
+                    OutlinedTextField(
+                        value =
+                            selectedAction?.let { VirtualKeyAction.getDisplayName(it, context) }
+                                ?: stringResource(R.string.key_mapping_select_action),
+                        onValueChange = {},
+                        enabled = false,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .clickable { showActionDropdown = true },
+                    )
+
+                    DropdownMenu(
+                        expanded = showActionDropdown,
+                        onDismissRequest = { showActionDropdown = false },
+                    ) {
+                        predefinedActions.forEach { action ->
+                            DropdownMenuItem(
+                                text = { Text(VirtualKeyAction.getDisplayName(action, context)) },
+                                onClick = {
+                                    selectedAction = action
+                                    showActionDropdown = false
+                                },
+                            )
+                        }
+                    }
+                } else {
+                    val virtualKeyText =
+                        (selectedAction as? VirtualKeyAction.SendKeyEvent)
+                            ?.keyCode
+                            ?.let { KeyEvent.keyCodeToString(it) }
+                            ?: stringResource(R.string.key_mapping_press_virtual_key)
+
+                    KeyCaptureField(
+                        value = virtualKeyText,
+                        onKeyCaptured = { selectedAction = VirtualKeyAction.SendKeyEvent(it) },
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Buttons
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                ) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(R.string.dialog_button_cancel))
+                    }
+                    TextButton(
+                        onClick = {
+                            val pkc = physicalKeyCode
+                            val sa = selectedAction
+                            if (pkc != null && sa != null) {
+                                onConfirm(KeyMapping(pkc, sa))
+                            }
+                        },
+                        enabled = isValid,
+                    ) {
+                        Text(stringResource(R.string.dialog_button_ok))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun KeyCaptureField(
+    value: String,
+    onKeyCaptured: (Int) -> Unit,
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = {},
+        enabled = false,
+        modifier = Modifier.fillMaxWidth(),
+    )
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    AndroidView(
+        factory = { ctx ->
+            View(ctx).apply {
+                isFocusable = true
+                isFocusableInTouchMode = true
+                setOnKeyListener { _, kc, event ->
+                    if (event.action == KeyEvent.ACTION_DOWN) {
+                        onKeyCaptured(kc)
+                    }
+                    true
+                }
+                requestFocus()
+            }
+        },
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .height(50.dp),
     )
 }

@@ -5,7 +5,9 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import io.github.lens0021.teogeul.korean.EngineMode
 import io.github.lens0021.teogeul.korean.HangulEngine
+import io.github.lens0021.teogeul.model.KeyMappings
 import io.github.lens0021.teogeul.model.KeyStroke
+import io.github.lens0021.teogeul.model.VirtualKeyAction
 
 class KeyEventHandler(
     private val layoutConverter: LayoutConverter,
@@ -13,13 +15,16 @@ class KeyEventHandler(
     private val hangulEngineProvider: () -> HangulEngine,
     private val directInputModeProvider: () -> Boolean,
     private val alphabetLayoutProvider: () -> String,
-    private val hardLangKeyProvider: () -> KeyStroke?,
+    private val hardLangKeyProvider: () -> KeyStroke?, // deprecated, kept for compatibility
+    private val keyMappingsProvider: () -> KeyMappings,
     private val currentLanguageProvider: () -> Int,
     private val toggleLanguage: () -> Unit,
     private val resetCharComposition: () -> Unit,
     private val currentInputEditorInfoProvider: () -> EditorInfo?,
     private val sendDefaultEditorAction: (Boolean) -> Unit,
     private val markInput: () -> Unit,
+    private val sendKeyEvent: (KeyEvent) -> Unit,
+    private val openIMEPicker: () -> Unit,
 ) {
     companion object {
         val SHIFT_CONVERT =
@@ -73,14 +78,7 @@ class KeyEventHandler(
         }
 
         // Ctrl key handling (available since API 11, always true for minSdk 26)
-        if (ev.isCtrlPressed) {
-            val converted =
-                layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
-            inputConnection.sendKeyEvent(converted ?: ev)
-            return true
-        }
-
-        if (ev.isAltPressed || ev.isMetaPressed) {
+        if (ev.isCtrlPressed || ev.isAltPressed || ev.isMetaPressed) {
             val converted =
                 layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
             inputConnection.sendKeyEvent(converted ?: ev)
@@ -98,7 +96,37 @@ class KeyEventHandler(
             return false
         }
 
-        // Handle custom language key combination (e.g., user-defined shortcut for toggling language)
+        // Handle custom key mappings
+        val action = keyMappingsProvider().mappings.firstOrNull { it.physicalKey == key }?.virtualAction
+        if (action != null) {
+            resetCharComposition()
+            when (action) {
+                is VirtualKeyAction.ToggleLanguage -> {
+                    toggleLanguage()
+                }
+                is VirtualKeyAction.SendKeyEvent -> {
+                    // Create a new KeyEvent with the mapped key code
+                    val newEvent =
+                        KeyEvent(
+                            ev.downTime,
+                            ev.eventTime,
+                            ev.action,
+                            action.keyCode,
+                            ev.repeatCount,
+                            0, // metaState = 0 (no modifiers)
+                            ev.deviceId,
+                            ev.scanCode,
+                        )
+                    sendKeyEvent(newEvent)
+                }
+                is VirtualKeyAction.OpenIMEPicker -> {
+                    openIMEPicker()
+                }
+            }
+            return true
+        }
+
+        // Handle custom language key combination (deprecated, for backward compatibility)
         val hardLangKey = hardLangKeyProvider()
         if (hardLangKey != null && key == hardLangKey.keyCode) {
             resetCharComposition()
