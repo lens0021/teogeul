@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/lens0021/teogeul/compare/v1.0.0...v1.1.0) (2025-12-27)
+
+
+### Features
+
+* Flatten settings screen to single page ([#88](https://github.com/lens0021/teogeul/issues/88)) ([1db1ba1](https://github.com/lens0021/teogeul/commit/1db1ba17f26eb173190dc20d734535198447cb2f))
+
+
+### Bug Fixes
+
+* Prevent Shift key from breaking Hangul composition ([#91](https://github.com/lens0021/teogeul/issues/91)) ([3e06c70](https://github.com/lens0021/teogeul/commit/3e06c706ad844c934b9f88e4643a904e9064ee12))
+
 ## [1.0.0](https://github.com/lens0021/teogeul/compare/v0.7.3...v1.0.0) (2025-12-27)
 
 
