@@ -12,8 +12,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
-import io.github.lens0021.teogeul.compose.ComposingText
-import io.github.lens0021.teogeul.compose.LetterConverter
 import io.github.lens0021.teogeul.config.SettingsDefaults
 import io.github.lens0021.teogeul.config.SettingsRepository
 import io.github.lens0021.teogeul.config.SettingsValues
@@ -54,8 +52,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         }
     }
 
-    protected var mPreConverter: LetterConverter? = null
-    protected var mComposingText: ComposingText? = null
     protected var mInputConnection: InputConnection? = null
     protected var mAutoHideMode: Boolean = true
     protected var mDirectInputMode: Boolean = true
@@ -126,7 +122,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
 
     override fun onCreate() {
         super.onCreate()
-        mComposingText?.clear()
         eventJob =
             eventScope.launch {
                 InputEventBus.events.collect { event ->
@@ -157,10 +152,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         mInputConnection = currentInputConnection
         setCandidatesViewShown(false)
         mDirectInputMode = mInputConnection == null
-        if (mPreConverter != null) {
-            val snapshot = runBlocking { settingsRepository.snapshot() }
-            mPreConverter?.setPreferences(snapshot)
-        }
         applyPreferences(resetLanguage = true)
     }
 
@@ -170,9 +161,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     ) {
         super.onStartInput(attribute, restarting)
         mInputConnection = currentInputConnection
-        if (!restarting) {
-            mComposingText?.clear()
-        }
         applyPreferences(resetLanguage = true)
     }
 
