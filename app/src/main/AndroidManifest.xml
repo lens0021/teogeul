@@ -6,8 +6,6 @@
 	android:versionName="23080924">
 	<!-- Version Name: yyMM hhmm -->
 
-	<uses-permission android:name="android.permission.VIBRATE" />
-
 	<application
 		android:name=".Application"
 		android:icon="@mipmap/ic_launcher"
