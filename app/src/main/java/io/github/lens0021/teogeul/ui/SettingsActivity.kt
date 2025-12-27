@@ -369,6 +369,8 @@ fun SystemScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(navController: NavController) {
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -407,7 +409,7 @@ fun AboutScreen(navController: NavController) {
                     summary = stringResource(R.string.teogeul_korean_license),
                     onClick = {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.apache.org/licenses/LICENSE-2.0"))
-                        startActivity(intent)
+                        context.startActivity(intent)
                     },
                 )
             }
@@ -418,7 +420,7 @@ fun AboutScreen(navController: NavController) {
                     summary = "https://github.com/lens0021/Teogeul",
                     onClick = {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/lens0021/teogeul"))
-                        startActivity(intent)
+                        context.startActivity(intent)
                     },
                 )
             }
