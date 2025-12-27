@@ -8,7 +8,6 @@ import io.github.lens0021.teogeul.korean.HangulEngine
 import io.github.lens0021.teogeul.model.KeyStroke
 
 class KeyEventHandler(
-    private val modifierStateManager: ModifierStateManager,
     private val layoutConverter: LayoutConverter,
     private val inputConnectionProvider: () -> InputConnection?,
     private val hangulEngineProvider: () -> HangulEngine,
@@ -18,11 +17,37 @@ class KeyEventHandler(
     private val currentLanguageProvider: () -> Int,
     private val toggleLanguage: () -> Unit,
     private val resetCharComposition: () -> Unit,
-    private val updateMetaKeyStateDisplay: () -> Unit,
     private val currentInputEditorInfoProvider: () -> EditorInfo?,
     private val sendDefaultEditorAction: (Boolean) -> Unit,
     private val markInput: () -> Unit,
 ) {
+    companion object {
+        val SHIFT_CONVERT =
+            arrayOf(
+                intArrayOf(0x60, 0x7e),
+                intArrayOf(0x31, 0x21),
+                intArrayOf(0x32, 0x40),
+                intArrayOf(0x33, 0x23),
+                intArrayOf(0x34, 0x24),
+                intArrayOf(0x35, 0x25),
+                intArrayOf(0x36, 0x5e),
+                intArrayOf(0x37, 0x26),
+                intArrayOf(0x38, 0x2a),
+                intArrayOf(0x39, 0x28),
+                intArrayOf(0x30, 0x29),
+                intArrayOf(0x2d, 0x5f),
+                intArrayOf(0x3d, 0x2b),
+                intArrayOf(0x5b, 0x7b),
+                intArrayOf(0x5d, 0x7d),
+                intArrayOf(0x5c, 0x7c),
+                intArrayOf(0x3b, 0x3a),
+                intArrayOf(0x27, 0x22),
+                intArrayOf(0x2c, 0x3c),
+                intArrayOf(0x2e, 0x3e),
+                intArrayOf(0x2f, 0x3f),
+            )
+    }
+
     private var selectionMode: Boolean = false
     private var selectionStart: Int = 0
     private var selectionEnd: Int = 0
@@ -94,9 +119,6 @@ class KeyEventHandler(
                             end = selectionStart
                         }
                         inputConnection.setSelection(start, end)
-                        modifierStateManager.hardShift = 0
-                        updateMetaKeyStateDisplay()
-                        updateMetaKeyStateDisplay()
                     }
                     return true
                 }
@@ -140,9 +162,6 @@ class KeyEventHandler(
         if (hardLangKey != null && key == hardLangKey.keyCode) {
             resetCharComposition()
             toggleLanguage()
-            modifierStateManager.hardShift = 0
-            modifierStateManager.shiftPressing = false
-            updateMetaKeyStateDisplay()
             return true
         }
 
@@ -150,25 +169,21 @@ class KeyEventHandler(
             val qwertyCharCode = layoutConverter.getQwertyCharCode(ev)
             val isKorean = currentLanguageProvider() == EngineMode.LANG_KO
             // Don't apply Alt meta state for character input - Alt is only used for shortcuts/language switching
-            val code = modifierStateManager.getShiftMeta()
-                .let { shiftMeta ->
-                    if (qwertyCharCode != null) {
-                        if (isKorean) {
-                            qwertyCharCode
-                        } else {
-                            layoutConverter.convertQwertyCharCodeToLayout(
-                                qwertyCharCode,
-                                alphabetLayoutProvider(),
-                            ) ?: qwertyCharCode
-                        }
+            val code =
+                if (qwertyCharCode != null) {
+                    if (isKorean) {
+                        qwertyCharCode
                     } else {
-                        ev.getUnicodeChar(shiftMeta)
+                        layoutConverter.convertQwertyCharCodeToLayout(
+                            qwertyCharCode,
+                            alphabetLayoutProvider(),
+                        ) ?: qwertyCharCode
                     }
+                } else {
+                    ev.getUnicodeChar(ev.metaState)
                 }
-            inputChar(code.toChar())
+            inputChar(code.toChar(), ev.isShiftPressed)
             markInput()
-
-            modifierStateManager.afterPrintingKey(ev.isShiftPressed, updateMetaKeyStateDisplay)
             return true
         } else if (key == KeyEvent.KEYCODE_SPACE) {
             resetCharComposition()
@@ -185,8 +200,6 @@ class KeyEventHandler(
             return true
         } else if (key == KeyEvent.KEYCODE_ENTER) {
             resetCharComposition()
-            modifierStateManager.hardShift = 0
-            updateMetaKeyStateDisplay()
             val editorInfo = currentInputEditorInfoProvider()
             return when (editorInfo?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)) {
                 EditorInfo.IME_ACTION_SEARCH, EditorInfo.IME_ACTION_GO -> {
@@ -203,8 +216,8 @@ class KeyEventHandler(
         return false
     }
 
-    private fun inputChar(code: Char) {
-        var shift = modifierStateManager.hardShift
+    private fun inputChar(code: Char, isShiftPressed: Boolean) {
+        var shift = if (isShiftPressed) 1 else 0
         var mutableCode = code
         var isDirect = false
 
@@ -215,7 +228,7 @@ class KeyEventHandler(
         }
 
         val originalCode = mutableCode
-        for (item in ModifierStateManager.SHIFT_CONVERT) {
+        for (item in SHIFT_CONVERT) {
             if (mutableCode.code == item[1]) {
                 mutableCode = item[0].toChar()
                 shift = 1
@@ -246,7 +259,7 @@ class KeyEventHandler(
             resetCharComposition()
             if (shift > 0) {
                 mutableCode = originalCode.uppercaseChar()
-                for (item in ModifierStateManager.SHIFT_CONVERT) {
+                for (item in SHIFT_CONVERT) {
                     if (mutableCode.code == item[0]) {
                         mutableCode = item[1].toChar()
                     }
@@ -264,7 +277,7 @@ class KeyEventHandler(
         var mutableCode = code
         if (shift) {
             mutableCode = mutableCode.uppercaseChar()
-            for (item in ModifierStateManager.SHIFT_CONVERT) {
+            for (item in SHIFT_CONVERT) {
                 if (mutableCode.code == item[0]) {
                     mutableCode = item[1].toChar()
                     break
