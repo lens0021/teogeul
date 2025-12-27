@@ -1,25 +1,11 @@
 package io.github.lens0021.teogeul.input
 
-import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import io.github.lens0021.teogeul.layout.LayoutData
 
 class LayoutConverter {
     private val dvorakConversionMap = buildConversionMap(LayoutData.CONVERT_ENGLISH_DVORAK)
     private val colemakConversionMap = buildConversionMap(LayoutData.CONVERT_ENGLISH_COLEMAK)
-
-    private fun resolveHardwareAlphabetLayout(event: KeyEvent): String? {
-        val keyCharacterMap = KeyCharacterMap.load(event.deviceId)
-        val eLabel = keyCharacterMap.getDisplayLabel(KeyEvent.KEYCODE_E)
-        if (eLabel == 0.toChar()) {
-            return null
-        }
-        return when (eLabel.lowercaseChar()) {
-            '.' -> "keyboard_alphabet_dvorak"
-            'f' -> "keyboard_alphabet_colemak"
-            else -> "keyboard_alphabet_qwerty"
-        }
-    }
 
     private fun buildConversionMap(table: Array<IntArray>): Map<Int, Int> {
         val map = HashMap<Int, Int>(table.size)
@@ -151,21 +137,10 @@ class LayoutConverter {
         return conversionMap[charCode]
     }
 
-    fun shouldConvertAlphabetLayout(
-        event: KeyEvent,
-        alphabetLayout: String,
-    ): Boolean {
-        val hardwareLayout = resolveHardwareAlphabetLayout(event) ?: return true
-        return hardwareLayout != alphabetLayout
-    }
-
     fun convertKeyEventForShortcut(
         event: KeyEvent,
         alphabetLayout: String,
     ): KeyEvent? {
-        if (!shouldConvertAlphabetLayout(event, alphabetLayout)) {
-            return null
-        }
         val qwertyCharCode = getQwertyCharCodeFromKeyCode(event.keyCode) ?: return null
         val layoutCharCode = convertQwertyCharCodeToLayout(qwertyCharCode, alphabetLayout) ?: return null
         val layoutKeyCode = getKeyCodeFromQwertyCharCode(layoutCharCode) ?: return null
