@@ -41,12 +41,6 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity
-			android:name="io.github.lens0021.teogeul.korean.LangKeyActionDialog"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar"
-			android:launchMode="singleInstance"
-			android:excludeFromRecents="true"
-			android:windowSoftInputMode="stateVisible" />
 	</application>
 
 </manifest>

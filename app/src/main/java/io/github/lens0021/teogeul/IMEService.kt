@@ -33,7 +33,6 @@ import io.github.lens0021.teogeul.korean.HangulEngine.FinishComposingEvent
 import io.github.lens0021.teogeul.korean.HangulEngine.HangulEngineEvent
 import io.github.lens0021.teogeul.korean.HangulEngine.HangulEngineListener
 import io.github.lens0021.teogeul.korean.HangulEngine.SetComposingEvent
-import io.github.lens0021.teogeul.korean.LangKeyActionDialog
 import io.github.lens0021.teogeul.model.KeyStroke
 import io.github.lens0021.teogeul.ui.SettingsActivity
 import kotlinx.coroutines.CoroutineScope
@@ -47,12 +46,6 @@ import kotlinx.coroutines.runBlocking
 
 class IMEService() : InputMethodService(), HangulEngineListener {
     companion object {
-        const val LANGKEY_LIST_ACTIONS = "list_actions"
-        const val LANGKEY_SWITCH_KOR_ENG = "switch_kor_eng"
-        const val LANGKEY_SWITCH_NEXT_METHOD = "switch_next_method"
-        const val LANGKEY_LIST_METHODS = "list_methods"
-        const val LANGKEY_OPEN_SETTINGS = "open_settings"
-
         private var mSelf: IMEService? = null
 
         @JvmStatic
@@ -234,45 +227,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         @Suppress("UNUSED_PARAMETER") event: CommitComposingTextEvent,
     ) {
         currentInputConnection.finishComposingText()
-    }
-
-    @Suppress("DEPRECATION")
-    fun onLangKey(action: String) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        val token: IBinder = requireNotNull(window?.window).attributes.token
-
-        when (action) {
-            LANGKEY_LIST_ACTIONS -> {
-                val intent = Intent(this, LangKeyActionDialog::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
-
-            LANGKEY_SWITCH_KOR_ENG -> {
-                toggleLanguage()
-            }
-
-            LANGKEY_SWITCH_NEXT_METHOD -> {
-                // Note: switchToLastInputMethod and switchToNextInputMethod are deprecated in API 28,
-                // but no replacement API is available. These methods still work on modern Android.
-                if (mInput) {
-                    mInput = false
-                    imm?.switchToLastInputMethod(token)
-                } else {
-                    imm?.switchToNextInputMethod(token, false)
-                }
-            }
-
-            LANGKEY_LIST_METHODS -> {
-                imm?.showInputMethodPicker()
-            }
-
-            LANGKEY_OPEN_SETTINGS -> {
-                val intent = Intent(this, SettingsActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            }
-        }
     }
 
     fun updateMetaKeyStateDisplay() {
