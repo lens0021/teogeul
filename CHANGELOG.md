@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2](https://github.com/lens0021/teogeul/compare/v0.7.1...v0.7.2) (2025-12-27)
+
+
+### Bug Fixes
+
+* forward alt/meta and ctrl events ([#79](https://github.com/lens0021/teogeul/issues/79)) ([ed7c5b3](https://github.com/lens0021/teogeul/commit/ed7c5b350cd2d0a16004f5996e871ec80cafd56a))
+
 ## [0.7.1](https://github.com/lens0021/teogeul/compare/v0.7.0...v0.7.1) (2025-12-27)
 
 
