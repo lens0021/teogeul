@@ -106,7 +106,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         )
     }
 
-    private val mAltLayout: Array<IntArray> = emptyArray()
     private val eventScope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
     private var eventJob: Job? = null
     private val settingsRepository by lazy { SettingsRepository(applicationContext.settingsDataStore) }
@@ -323,10 +322,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         applyPreferences()
     }
 
-    fun resetHardShift(force: Boolean) {
-        modifierStateManager.resetHardShift(force)
-    }
-
     override fun hideWindow() {
         super.hideWindow()
         mDirectInputMode = true
@@ -335,7 +330,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        close()
         eventJob?.cancel()
         eventScope.cancel()
     }
@@ -401,43 +395,5 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     override fun onComputeInsets(outInsets: Insets) {
         super.onComputeInsets(outInsets)
         outInsets.contentTopInsets = outInsets.visibleTopInsets
-    }
-
-    protected fun searchToggleCharacter(
-        prevChar: String,
-        toggleTable: Array<String>,
-        reverse: Boolean,
-    ): String? {
-        for (i in toggleTable.indices) {
-            if (prevChar == toggleTable[i]) {
-                return if (reverse) {
-                    val nextIndex = i - 1
-                    if (nextIndex < 0) {
-                        toggleTable[toggleTable.size - 1]
-                    } else {
-                        toggleTable[nextIndex]
-                    }
-                } else {
-                    val nextIndex = i + 1
-                    if (nextIndex == toggleTable.size) {
-                        toggleTable[0]
-                    } else {
-                        toggleTable[nextIndex]
-                    }
-                }
-            }
-        }
-        return null
-    }
-
-    protected fun close() {
-    }
-
-    fun getHangulEngine(): HangulEngine {
-        return mHangulEngine
-    }
-
-    fun getAltSymbols(): Array<IntArray> {
-        return mAltLayout
     }
 }
