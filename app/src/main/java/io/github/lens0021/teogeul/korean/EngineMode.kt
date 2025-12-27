@@ -112,14 +112,6 @@ enum class EngineMode(
         null,
         "keyboard_sebul_shin_m",
     ),
-    SEBUL_SHIN_P2(
-        Properties(),
-        null,
-        LayoutData.JAMOSET_SHIN_P2,
-        LayoutData.COMB_FULL,
-        null,
-        "keyboard_sebul_shin_p2",
-    ),
 
     SEBUL_AHNMATAE(
         Properties(true, false, false, false),
@@ -129,42 +121,8 @@ enum class EngineMode(
         null,
         "keyboard_sebul_ahnmatae",
     ),
-    SEBUL_SEMOE_2016(
-        Properties(true, false, false, false),
-        LayoutData.JAMO_SEBUL_SEMOE_2016,
-        null,
-        LayoutData.COMB_SEBUL_SEMOE,
-        null,
-        "keyboard_sebul_semoe_2016",
-    ),
-    SEBUL_SEMOE(
-        Properties(true, false, false, false),
-        LayoutData.JAMO_SEBUL_SEMOE_2016,
-        null,
-        LayoutData.COMB_SEBUL_SEMOE,
-        null,
-        "keyboard_sebul_semoe",
-    ),
 
     NEBUL_1969(Properties(), LayoutData.JAMO_NEBUL_1969, null, LayoutData.COMB_NEBUL_1969, null, "keyboard_nebul_1969"),
-
-    DUBULSIK_YET(Properties(), LayoutData.JAMO_DUBUL_YET, null, LayoutData.COMB_FULL, null, "keyboard_dubul_yet"),
-    SEBUL_393Y(
-        Properties(),
-        LayoutData.JAMO_SEBUL_393Y,
-        null,
-        LayoutData.COMB_FULL,
-        null,
-        "keyboard_sebul_393y",
-    ),
-    SEBUL_3_2015Y(
-        Properties(),
-        LayoutData.JAMO_SEBUL_3_2015Y,
-        null,
-        LayoutData.COMB_FULL,
-        null,
-        "keyboard_sebul_3_2015y",
-    ),
 
     ENGLISH_QWERTY(
         Properties(LANG_EN_CODE, false, false, false, false, false, false),

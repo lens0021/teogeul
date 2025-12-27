@@ -41,13 +41,7 @@
 	<string name="preference_keyboard_sebul_shin_original">신세벌식 1995 원안 (신광조)</string>
 	<string name="preference_keyboard_sebul_shin_edit">신세벌식 2003 수정 (박경남)</string>
 	<string name="preference_keyboard_sebul_shin_m">신세벌식 M (메탈리쟈)</string>
-	<string name="preference_keyboard_sebul_shin_p2">신세벌식 P2 (옛한글 가능)(팥알)</string>
 	<string name="preference_keyboard_sebul_ahnmatae">모아치기세벌식 안마태 소리글판</string>
-	<string name="preference_keyboard_sebul_semoe_2016">모아치기세벌식 세모이 2016 (신세기)</string>
-	<string name="preference_keyboard_sebul_semoe">모아치기세벌식 세모이 2017 (신세기)</string>
-	<string name="preference_keyboard_dubul_yet">옛한글 두벌식</string>
-	<string name="preference_keyboard_sebul_393y">옛한글 세벌식 393 (김경석)</string>
-	<string name="preference_keyboard_sebul_3_2015y">옛한글 세벌식 3–2015 (소인배)</string>
 
 
 	<string name="preference_keyboard_alphabet_qwerty">QWERTY</string>

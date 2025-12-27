@@ -11,7 +11,6 @@ object LayoutRegistry {
             "JAMO_SEBUL_3_2015_CHOJONG" -> LayoutData.JAMO_SEBUL_3_2015_CHOJONG
             "JAMO_SEBUL_3_2015_CHOJUNG" -> LayoutData.JAMO_SEBUL_3_2015_CHOJUNG
             "JAMO_SEBUL_3_2015_CHOJONG_D" -> LayoutData.JAMO_SEBUL_3_2015_CHOJONG_D
-            "JAMO_SEBUL_3_2015Y" -> LayoutData.JAMO_SEBUL_3_2015Y
             "COMB_SEBUL_3_2015" -> LayoutData.COMB_SEBUL_3_2015
             "JAMO_SEBUL_3_P3_CHOJONG" -> LayoutData.JAMO_SEBUL_3_P3_CHOJONG
             "JAMO_SEBUL_3_P3_CHOJUNG" -> LayoutData.JAMO_SEBUL_3_P3_CHOJUNG
@@ -31,20 +30,14 @@ object LayoutRegistry {
             "COMB_SEBUL_DANMOEUM" -> LayoutData.COMB_SEBUL_DANMOEUM
             "JAMO_SEBUL_391" -> LayoutData.JAMO_SEBUL_391
             "JAMO_SEBUL_390" -> LayoutData.JAMO_SEBUL_390
-            "JAMO_SEBUL_393Y" -> LayoutData.JAMO_SEBUL_393Y
             "JAMO_SEBUL_SUN_2014" -> LayoutData.JAMO_SEBUL_SUN_2014
             "COMB_SEBUL_SUN_2014" -> LayoutData.COMB_SEBUL_SUN_2014
             "COMB_SEBULSIK" -> LayoutData.COMB_SEBULSIK
-            "COMB_FULL" -> LayoutData.COMB_FULL
             "JAMO_SEBUL_AHNMATAE" -> LayoutData.JAMO_SEBUL_AHNMATAE
             "COMB_SEBUL_AHNMATAE" -> LayoutData.COMB_SEBUL_AHNMATAE
-            "JAMO_SEBUL_SEMOE_2016" -> LayoutData.JAMO_SEBUL_SEMOE_2016
-            "JAMO_SEBUL_SEMOE" -> LayoutData.JAMO_SEBUL_SEMOE
-            "COMB_SEBUL_SEMOE" -> LayoutData.COMB_SEBUL_SEMOE
             "JAMO_DUBUL_STANDARD" -> LayoutData.JAMO_DUBUL_STANDARD
             "COMB_DUBUL_STANDARD" -> LayoutData.COMB_DUBUL_STANDARD
             "JAMO_DUBUL_NK" -> LayoutData.JAMO_DUBUL_NK
-            "JAMO_DUBUL_YET" -> LayoutData.JAMO_DUBUL_YET
             "JAMO_DUBUL_DANMOEUM_GOOGLE" -> LayoutData.JAMO_DUBUL_DANMOEUM_GOOGLE
             "COMB_DUBUL_DANMOEUM_GOOGLE" -> LayoutData.COMB_DUBUL_DANMOEUM_GOOGLE
             "JAMO_NEBUL_1969" -> LayoutData.JAMO_NEBUL_1969

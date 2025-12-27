@@ -15,13 +15,7 @@
 		<item>@string/preference_keyboard_sebul_shin_original</item>
 		<item>@string/preference_keyboard_sebul_shin_edit</item>
 		<item>@string/preference_keyboard_sebul_shin_m</item>
-		<item>@string/preference_keyboard_sebul_shin_p2</item>
 		<item>@string/preference_keyboard_sebul_ahnmatae</item>
-		<item>@string/preference_keyboard_sebul_semoe_2016</item>
-		<item>@string/preference_keyboard_sebul_semoe</item>
-		<item>@string/preference_keyboard_dubul_yet</item>
-		<item>@string/preference_keyboard_sebul_393y</item>
-		<item>@string/preference_keyboard_sebul_3_2015y</item>
 	</string-array>
 
 	<string-array name="keyboard_hangul_layout_id">
@@ -39,9 +33,6 @@
 		<item>keyboard_sebul_shin_m</item>
 		<item>keyboard_sebul_shin_p2</item>
 		<item>keyboard_sebul_ahnmatae</item>
-		<item>keyboard_sebul_semoe_2016</item>
-		<item>keyboard_sebul_semoe</item>
-		<item>keyboard_dubul_yet</item>
 		<item>keyboard_sebul_393y</item>
 		<item>keyboard_sebul_3_2015y</item>
 	</string-array>
