@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/lens0021/teogeul/compare/v0.7.0...v0.7.1) (2025-12-27)
+
+
+### Bug Fixes
+
+* avoid double layout conversion ([#77](https://github.com/lens0021/teogeul/issues/77)) ([e1fd016](https://github.com/lens0021/teogeul/commit/e1fd01691fbdf4e6210a5706900b4864efb3d1f3))
+
 ## [0.7.0](https://github.com/lens0021/teogeul/compare/v0.6.2...v0.7.0) (2025-12-27)
 
 
