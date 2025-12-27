@@ -203,9 +203,16 @@ fun HardKeyboardScreen(
     navController: NavController,
     viewModel: SettingsViewModel,
 ) {
+    val hardwareHangulLayout by viewModel.hardwareHangulLayout.collectAsState()
+    val hardwareAlphabetLayout by viewModel.hardwareAlphabetLayout.collectAsState()
     val useMoachigi by viewModel.hardwareUseMoachigi.collectAsState()
     val fullMoachigi by viewModel.hardwareFullMoachigi.collectAsState()
     val moachingiDelay by viewModel.hardwareFullMoachingiDelay.collectAsState()
+
+    val hardwareHangulEntries = stringArrayResource(R.array.keyboard_hangul_layout).toList()
+    val hardwareHangulValues = stringArrayResource(R.array.keyboard_hangul_layout_id).toList()
+    val hardwareAlphabetEntries = stringArrayResource(R.array.keyboard_alphabet_layout).toList()
+    val hardwareAlphabetValues = stringArrayResource(R.array.keyboard_alphabet_layout_id).toList()
 
     Scaffold(
         topBar = {
@@ -228,6 +235,28 @@ fun HardKeyboardScreen(
             item {
                 PreferenceCategory(
                     title = stringResource(R.string.preference_hardware_setting_menu),
+                )
+            }
+
+            item {
+                KeyboardListPreference(
+                    title = stringResource(R.string.preference_hardware_hangul_title),
+                    summary = stringResource(R.string.preference_hardware_hangul_summary),
+                    entries = hardwareHangulEntries,
+                    entryValues = hardwareHangulValues,
+                    selectedValue = hardwareHangulLayout,
+                    onValueChange = { viewModel.updatePreference("hardware_hangul_layout", it) },
+                )
+            }
+
+            item {
+                KeyboardListPreference(
+                    title = stringResource(R.string.preference_hardware_alphabet_title),
+                    summary = stringResource(R.string.preference_hardware_alphabet_summary),
+                    entries = hardwareAlphabetEntries,
+                    entryValues = hardwareAlphabetValues,
+                    selectedValue = hardwareAlphabetLayout,
+                    onValueChange = { viewModel.updatePreference("hardware_alphabet_layout", it) },
                 )
             }
 
