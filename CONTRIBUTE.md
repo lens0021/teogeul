@@ -34,12 +34,32 @@ Android 앱은 `app/` 모듈에 있습니다.
 ## 빌드, 테스트, 검증 명령어
 
 - `./gradlew assembleDebug`: 디버그 APK 빌드
+  - 빠른 빌드: `./gradlew assembleDebug --build-cache --configuration-cache --parallel`
 - `./gradlew installDebug`: 디바이스에 디버그 APK 설치
 - `./gradlew testDebugUnitTest`: 로컬 JVM 단위 테스트 실행
 - `./gradlew lint`: Android Lint 실행
 - `./gradlew lintJson`: JSON 포맷/유효성 검증
 - `./gradlew clean`: 빌드 산출물 정리
+
 Windows에서는 `gradlew.bat`를 사용합니다.
+
+### adb 무선 디버깅
+
+Android SDK의 adb를 사용하여 무선으로 기기에 연결할 수 있습니다:
+
+```bash
+# 페어링 (최초 1회)
+adb pair <IP>:<페어링_포트> <페어링_코드>
+
+# 연결
+adb connect <IP>:<연결_포트>
+
+# 기기 확인
+adb devices -l
+
+# APK 설치
+adb install -r app/build/outputs/apk/debug/teogeul-debug-*.apk
+```
 
 ## 하드웨어 영문 레이아웃 선택
 
