@@ -9,11 +9,14 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ArrayRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -158,12 +161,15 @@ fun ListPreference(
     )
 
     if (showDialog) {
+        val maxDialogHeight = (LocalConfiguration.current.screenHeightDp * 0.9f).dp
         AlertDialog(
             onDismissRequest = { showDialog = false },
             title = { Text(title) },
             text = {
-                Column {
-                    entries.forEachIndexed { index, entry ->
+                LazyColumn(
+                    modifier = Modifier.heightIn(max = maxDialogHeight),
+                ) {
+                    itemsIndexed(entries) { index, entry ->
                         Row(
                             modifier =
                                 Modifier
