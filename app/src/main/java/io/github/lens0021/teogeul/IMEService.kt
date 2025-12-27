@@ -8,7 +8,6 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import io.github.lens0021.teogeul.config.SettingsDefaults
 import io.github.lens0021.teogeul.config.SettingsRepository
 import io.github.lens0021.teogeul.config.SettingsSnapshot
@@ -351,13 +350,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         if (isHardwareKeyboardActive()) {
             return
         }
-        Toast
-            .makeText(
-                this,
-                R.string.toast_hardware_keyboard_missing,
-                Toast.LENGTH_SHORT,
-            )
-            .show()
         skipNextWindowHiddenSwitch = true
         switchToNextInputMethod(false)
     }
