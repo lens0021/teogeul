@@ -58,7 +58,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     private var mConsumeDownEvent: Boolean = false
 
     var mQwertyEngine: HangulEngine = HangulEngine()
-    var mHangulEngine: HangulEngine = mQwertyEngine
 
     lateinit var mCurrentEngineMode: EngineMode
     var mCurrentLanguage: Int = EngineMode.LANG_KO
@@ -87,7 +86,7 @@ class IMEService() : InputMethodService(), HangulEngineListener {
             modifierStateManager = modifierStateManager,
             layoutConverter = layoutConverter,
             inputConnectionProvider = { mInputConnection },
-            hangulEngineProvider = { mHangulEngine },
+            hangulEngineProvider = { mQwertyEngine },
             directInputModeProvider = { mDirectInputMode },
             alphabetLayoutProvider = { mAlphabetLayout },
             hardLangKeyProvider = { mHardLangKey },
@@ -109,7 +108,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         mSelf = this
 
         mQwertyEngine.listener = this
-        mHangulEngine = mQwertyEngine
     }
 
     constructor(context: Context) : this() {
@@ -262,9 +260,8 @@ class IMEService() : InputMethodService(), HangulEngineListener {
             mDirectInputMode = true
             mEnableTimeout = false
             mFullMoachigi = false
-            mHangulEngine = mQwertyEngine
-            mHangulEngine.jamoTable = null
-            mHangulEngine.setCombinationTable(null)
+            mQwertyEngine.jamoTable = null
+            mQwertyEngine.setCombinationTable(null)
             return
         }
 
@@ -272,23 +269,22 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         mDirectInputMode = prop.direct
         mEnableTimeout = prop.timeout
         mFullMoachigi = prop.fullMoachigi
-        mHangulEngine = mQwertyEngine
         if (mode.jamoset != null) {
-            mHangulEngine.jamoSet = mode.jamoset
+            mQwertyEngine.jamoSet = mode.jamoset
         } else {
-            mHangulEngine.jamoTable = mode.layout
+            mQwertyEngine.jamoTable = mode.layout
         }
-        mHangulEngine.setCombinationTable(mode.combination)
-        mHangulEngine.firstMidEnd = mStandardJamo
-        mHangulEngine.moachigi = mHardwareMoachigi
-        mHangulEngine.fullMoachigi = mFullMoachigi
+        mQwertyEngine.setCombinationTable(mode.combination)
+        mQwertyEngine.firstMidEnd = mStandardJamo
+        mQwertyEngine.moachigi = mHardwareMoachigi
+        mQwertyEngine.fullMoachigi = mFullMoachigi
         if (mFullMoachigi) {
             mEnableTimeout = true
         }
     }
 
     private fun resetCharComposition() {
-        mHangulEngine.resetComposition()
+        mQwertyEngine.resetComposition()
     }
 
     private fun toggleLanguage() {
