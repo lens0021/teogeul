@@ -185,12 +185,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         super.onFinishInput()
     }
 
-    // onViewClicked is deprecated and no longer called since API 28
-    // Keeping empty implementation for compatibility
-    override fun onViewClicked(focusChanged: Boolean) {
-        // No-op: This callback is deprecated and not invoked on modern Android versions
-    }
-
     override fun onEvent(event: HangulEngineEvent) {
         if (event is FinishComposingEvent) {
             mInputConnection?.finishComposingText()
