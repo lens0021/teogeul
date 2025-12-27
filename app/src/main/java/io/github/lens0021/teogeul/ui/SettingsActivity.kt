@@ -1,5 +1,7 @@
 package io.github.lens0021.teogeul.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -366,6 +369,8 @@ fun SystemScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(navController: NavController) {
+    val context = LocalContext.current
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -402,7 +407,10 @@ fun AboutScreen(navController: NavController) {
                 PreferenceItem(
                     title = stringResource(R.string.preference_about_license),
                     summary = stringResource(R.string.teogeul_korean_license),
-                    onClick = { /* TODO: Open license */ },
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.apache.org/licenses/LICENSE-2.0"))
+                        context.startActivity(intent)
+                    },
                 )
             }
 
@@ -410,7 +418,10 @@ fun AboutScreen(navController: NavController) {
                 PreferenceItem(
                     title = stringResource(R.string.preference_about_source_code),
                     summary = "https://github.com/lens0021/Teogeul",
-                    onClick = { /* TODO: Open URL */ },
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/lens0021/teogeul"))
+                        context.startActivity(intent)
+                    },
                 )
             }
         }
