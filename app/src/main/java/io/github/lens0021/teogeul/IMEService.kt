@@ -24,7 +24,6 @@ import io.github.lens0021.teogeul.input.InputTimeoutEvent
 import io.github.lens0021.teogeul.input.KeyEventHandler
 import io.github.lens0021.teogeul.input.KeyUpEvent
 import io.github.lens0021.teogeul.input.LayoutConverter
-import io.github.lens0021.teogeul.input.ModifierStateManager
 import io.github.lens0021.teogeul.korean.EngineMode
 import io.github.lens0021.teogeul.korean.HangulEngine
 import io.github.lens0021.teogeul.korean.HangulEngine.FinishComposingEvent
@@ -79,11 +78,9 @@ class IMEService() : InputMethodService(), HangulEngineListener {
 
     var mHardLangKey: KeyStroke? = null
 
-    private val modifierStateManager = ModifierStateManager()
     private val layoutConverter = LayoutConverter()
     private val keyEventHandler by lazy {
         KeyEventHandler(
-            modifierStateManager = modifierStateManager,
             layoutConverter = layoutConverter,
             inputConnectionProvider = { mInputConnection },
             hangulEngineProvider = { mQwertyEngine },
@@ -93,7 +90,6 @@ class IMEService() : InputMethodService(), HangulEngineListener {
             currentLanguageProvider = { mCurrentLanguage },
             toggleLanguage = { toggleLanguage() },
             resetCharComposition = { resetCharComposition() },
-            updateMetaKeyStateDisplay = { updateMetaKeyStateDisplay() },
             currentInputEditorInfoProvider = { currentInputEditorInfo },
             sendDefaultEditorAction = { sendDefaultEditorAction(it) },
             markInput = { mInput = true },
@@ -177,7 +173,7 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     }
 
     private fun handleKeyUp(event: KeyUpEvent) {
-        modifierStateManager.handleKeyUp(event.keyEvent) { updateMetaKeyStateDisplay() }
+        // Shift/Caps key state is now handled by the system
     }
 
     private fun handleInputTimeout(
@@ -190,22 +186,15 @@ class IMEService() : InputMethodService(), HangulEngineListener {
 
     private fun handleInputKey(event: InputKeyEvent) {
         val keyEvent = event.keyEvent
-        if (modifierStateManager.handleShiftAndCapsKey(keyEvent) { updateMetaKeyStateDisplay() }) {
-            return
-        }
-        modifierStateManager.syncCapsLockFromMeta(keyEvent.metaState) { updateMetaKeyStateDisplay() }
+        // Shift/Caps key handling is now delegated to the system
         val ret = keyEventHandler.processKeyEvent(keyEvent)
         event.isCancelled = ret
-        modifierStateManager.shinShift { updateMetaKeyStateDisplay() }
     }
 
     private fun handleCommitComposingText(
         @Suppress("UNUSED_PARAMETER") event: CommitComposingTextEvent,
     ) {
         currentInputConnection.finishComposingText()
-    }
-
-    fun updateMetaKeyStateDisplay() {
     }
 
     private fun applyPreferences(resetLanguage: Boolean = false) {
