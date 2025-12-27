@@ -174,10 +174,15 @@ class KeyEventHandler(
                     if (isKorean) {
                         qwertyCharCode
                     } else {
-                        layoutConverter.convertQwertyCharCodeToLayout(
-                            qwertyCharCode,
-                            alphabetLayoutProvider(),
-                        ) ?: qwertyCharCode
+                        val alphabetLayout = alphabetLayoutProvider()
+                        if (layoutConverter.shouldConvertAlphabetLayout(ev, alphabetLayout)) {
+                            layoutConverter.convertQwertyCharCodeToLayout(
+                                qwertyCharCode,
+                                alphabetLayout,
+                            ) ?: qwertyCharCode
+                        } else {
+                            qwertyCharCode
+                        }
                     }
                 } else {
                     ev.getUnicodeChar(ev.metaState)
