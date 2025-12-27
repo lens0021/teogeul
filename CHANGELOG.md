@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/lens0021/teogeul/compare/v0.6.1...v0.6.2) (2025-12-27)
+
+
+### Bug Fixes
+
+* Restore keyboard prefs. items ([#73](https://github.com/lens0021/teogeul/issues/73)) ([b0ec743](https://github.com/lens0021/teogeul/commit/b0ec743c6ec51437ba16b27a54bb805024e0540a))
+
 ## [0.6.1](https://github.com/lens0021/teogeul/compare/v0.6.0...v0.6.1) (2025-12-27)
 
 
