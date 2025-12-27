@@ -25,7 +25,7 @@
 
 			<meta-data
 				android:name="android.view.im"
-				android:resource="@xml/method_ko" />
+				android:resource="@xml/method" />
 		</service>
 
 		<activity
