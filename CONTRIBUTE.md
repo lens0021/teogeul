@@ -4,21 +4,44 @@
 
 ## 프로젝트 구조 및 모듈 구성
 
-Android 앱은 `app/`에 있습니다. 주요 소스 코드는
-`app/src/main/java/io/github/lens0021/teogeul/`에 있으며, 레이아웃 등 리소스는
-`app/src/main/res/`, 에셋은 `app/src/main/assets/`에 있습니다. 네이티브 코드는
-`app/src/main/cpp/`를 확인하세요. 단위 테스트는 `app/src/test/java/`에 있고,
-빌드 산출물은 `app/build/`에 생성되므로 커밋하지 않습니다.
+Android 앱은 `app/` 모듈에 있습니다.
+
+- 주요 소스: `app/src/main/java/io/github/lens0021/teogeul/`
+- 리소스: `app/src/main/res/`
+- 단위 테스트: `app/src/test/java/`
+- 빌드 산출물: `app/build/` (커밋하지 않음)
 
 ### 주요 패키지 요약
 
 - `config/`: 설정 키/기본값/레포지토리
+- `compose/`: 조합 문자열 모델
+- `di/`: 의존성 주입(Hilt) 모듈
 - `input/`: 입력 이벤트, 레이아웃 변환, 키 처리
 - `korean/`: 한글 엔진 및 레이아웃 레지스트리
-- `layout/`: 모든 레이아웃 데이터 집합
-- `compose/`: 조합 문자열 모델
+- `layout/`: 레이아웃 데이터 집합
 - `model/`: 키/키스트로크 모델
 - `ui/`: 설정 UI
+
+## 개발 환경 설정
+
+- Java 17 사용
+- Android SDK 경로 설정
+  - 환경 변수: `ANDROID_HOME=/path/to/Android/Sdk`
+  - 또는 `local.properties`에 `sdk.dir=/path/to/Android/Sdk`
+- asdf 사용 시
+  - `asdf plugin add java`
+  - `asdf install` (프로젝트의 `.tool-versions` 사용)
+  - `asdf set java <version>`
+
+## 빌드, 테스트, 검증 명령어
+
+- `./gradlew assembleDebug`: 디버그 APK 빌드
+- `./gradlew installDebug`: 디바이스에 디버그 APK 설치
+- `./gradlew testDebugUnitTest`: 로컬 JVM 단위 테스트 실행
+- `./gradlew lint`: Android Lint 실행
+- `./gradlew lintJson`: JSON 포맷/유효성 검증
+- `./gradlew clean`: 빌드 산출물 정리
+Windows에서는 `gradlew.bat`를 사용합니다.
 
 ## 하드웨어 영문 레이아웃 선택 (Subtype vs 앱 설정)
 
@@ -70,25 +93,6 @@ Android 앱은 `app/`에 있습니다. 주요 소스 코드는
 
 이 프로젝트는 하드웨어 키 입력을 `KeyEvent`로 받아 내부 레이아웃 변환 및
 한글 조합 엔진을 거쳐 `InputConnection`으로 결과를 전달합니다.
-
-## 빌드, 테스트, 개발 명령어
-
-- `./gradlew assembleDebug`: 디버그 APK 빌드
-- `./gradlew installDebug`: 디바이스에 디버그 APK 설치
-- `./gradlew testDebugUnitTest`: 로컬 JVM 단위 테스트 실행
-- `./gradlew lint`: Android Lint 실행
-- `./gradlew clean`: 빌드 산출물 정리
-Windows에서는 `gradlew.bat`를 사용합니다.
-
-## 초기화(로컬 환경 세팅)
-
-- asdf를 사용하는 경우 Java 플러그인을 추가하고 `.tool-versions`에 맞춰 설치합니다.
-  - `asdf plugin add java`
-  - `asdf install` (프로젝트의 `.tool-versions`를 사용)
-  - `asdf set java <version>`
-- Android SDK 경로를 설정합니다.
-  - 환경 변수: `ANDROID_HOME=/path/to/Android/Sdk`
-  - 또는 `local.properties`에 `sdk.dir=/path/to/Android/Sdk`
 
 ## 커밋 및 PR 가이드
 
