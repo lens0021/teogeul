@@ -25,8 +25,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import io.github.lens0021.teogeul.R
 import io.github.lens0021.teogeul.IMEService
+import io.github.lens0021.teogeul.R
 
 @AndroidEntryPoint
 class SettingsActivity : ComponentActivity() {
@@ -62,9 +62,7 @@ class SettingsActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun dynamicLightColorScheme(): ColorScheme {
-        return lightColorScheme()
-    }
+    private fun dynamicLightColorScheme(): ColorScheme = lightColorScheme()
 }
 
 // ===== Main Screen =====
@@ -94,110 +92,110 @@ fun SettingsMainScreen(
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
     ) {
-            // ===== Installation Section =====
-            item {
-                EnableInputMethodPreference(
-                    title = stringResource(R.string.preference_method_enabler_title),
-                    summary = stringResource(R.string.preference_method_enabler_summary),
-                )
-            }
+        // ===== Installation Section =====
+        item {
+            EnableInputMethodPreference(
+                title = stringResource(R.string.preference_method_enabler_title),
+                summary = stringResource(R.string.preference_method_enabler_summary),
+            )
+        }
 
-            item {
-                PickInputMethodPreference(
-                    title = stringResource(R.string.preference_method_picker_title),
-                )
-            }
+        item {
+            PickInputMethodPreference(
+                title = stringResource(R.string.preference_method_picker_title),
+            )
+        }
 
-            item { HorizontalDivider() }
+        item { HorizontalDivider() }
 
-            item {
-                KeyboardListPreference(
-                    title = stringResource(R.string.preference_hardware_hangul_title),
-                    summary = stringResource(R.string.preference_hardware_hangul_summary),
-                    entries = hardwareHangulEntries,
-                    entryValues = hardwareHangulValues,
-                    selectedValue = hardwareHangulLayout,
-                    onValueChange = { viewModel.updatePreference("hardware_hangul_layout", it) },
-                )
-            }
+        item {
+            KeyboardListPreference(
+                title = stringResource(R.string.preference_hardware_hangul_title),
+                summary = stringResource(R.string.preference_hardware_hangul_summary),
+                entries = hardwareHangulEntries,
+                entryValues = hardwareHangulValues,
+                selectedValue = hardwareHangulLayout,
+                onValueChange = { viewModel.updatePreference("hardware_hangul_layout", it) },
+            )
+        }
 
-            item {
-                KeyboardListPreference(
-                    title = stringResource(R.string.preference_hardware_alphabet_title),
-                    summary = stringResource(R.string.preference_hardware_alphabet_summary),
-                    entries = hardwareAlphabetEntries,
-                    entryValues = hardwareAlphabetValues,
-                    selectedValue = hardwareAlphabetLayout,
-                    onValueChange = { viewModel.updatePreference("hardware_alphabet_layout", it) },
-                )
-            }
+        item {
+            KeyboardListPreference(
+                title = stringResource(R.string.preference_hardware_alphabet_title),
+                summary = stringResource(R.string.preference_hardware_alphabet_summary),
+                entries = hardwareAlphabetEntries,
+                entryValues = hardwareAlphabetValues,
+                selectedValue = hardwareAlphabetLayout,
+                onValueChange = { viewModel.updatePreference("hardware_alphabet_layout", it) },
+            )
+        }
 
-            item {
-                CheckboxPreference(
-                    title = stringResource(R.string.preference_hardware_use_moachigi_title),
-                    summary = stringResource(R.string.preference_hardware_use_moachigi_summary),
-                    checked = useMoachigi,
-                    onCheckedChange = { viewModel.updatePreference("hardware_use_moachigi", it) },
-                )
-            }
+        item {
+            CheckboxPreference(
+                title = stringResource(R.string.preference_hardware_use_moachigi_title),
+                summary = stringResource(R.string.preference_hardware_use_moachigi_summary),
+                checked = useMoachigi,
+                onCheckedChange = { viewModel.updatePreference("hardware_use_moachigi", it) },
+            )
+        }
 
-            item {
-                CheckboxPreference(
-                    title = stringResource(R.string.preference_hardware_full_moachigi_title),
-                    summary = stringResource(R.string.preference_hardware_full_moachigi_summary),
-                    checked = fullMoachigi,
-                    onCheckedChange = { viewModel.updatePreference("hardware_full_moachigi", it) },
-                )
-            }
+        item {
+            CheckboxPreference(
+                title = stringResource(R.string.preference_hardware_full_moachigi_title),
+                summary = stringResource(R.string.preference_hardware_full_moachigi_summary),
+                checked = fullMoachigi,
+                onCheckedChange = { viewModel.updatePreference("hardware_full_moachigi", it) },
+            )
+        }
 
-            item {
-                IntEditTextPreference(
-                    title = stringResource(R.string.preference_hardware_full_moachigi_delay_title),
-                    summary = stringResource(R.string.preference_hardware_full_moachigi_delay_summary),
-                    value = moachingiDelay,
-                    onValueChange = { viewModel.updatePreference("hardware_full_moachigi_delay", it) },
-                )
-            }
+        item {
+            IntEditTextPreference(
+                title = stringResource(R.string.preference_hardware_full_moachigi_delay_title),
+                summary = stringResource(R.string.preference_hardware_full_moachigi_delay_summary),
+                value = moachingiDelay,
+                onValueChange = { viewModel.updatePreference("hardware_full_moachigi_delay", it) },
+            )
+        }
 
-            item {
-                CheckboxPreference(
-                    title = stringResource(R.string.preference_system_use_standard_jamo_title),
-                    summary = stringResource(R.string.preference_system_use_standard_jamo_summary),
-                    checked = useStandardJamo,
-                    onCheckedChange = { viewModel.updatePreference("system_use_standard_jamo", it) },
-                )
-            }
+        item {
+            CheckboxPreference(
+                title = stringResource(R.string.preference_system_use_standard_jamo_title),
+                summary = stringResource(R.string.preference_system_use_standard_jamo_summary),
+                checked = useStandardJamo,
+                onCheckedChange = { viewModel.updatePreference("system_use_standard_jamo", it) },
+            )
+        }
 
-            item {
-                ListPreference(
-                    title = stringResource(R.string.preference_system_start_hangul_mode_title),
-                    summary = stringResource(R.string.preference_system_start_hangul_mode_summary),
-                    entries = startHangulEntries,
-                    entryValues = startHangulValues,
-                    selectedValue = startHangulMode,
-                    onValueChange = { viewModel.updatePreference("system_start_hangul_mode", it) },
-                )
-            }
+        item {
+            ListPreference(
+                title = stringResource(R.string.preference_system_start_hangul_mode_title),
+                summary = stringResource(R.string.preference_system_start_hangul_mode_summary),
+                entries = startHangulEntries,
+                entryValues = startHangulValues,
+                selectedValue = startHangulMode,
+                onValueChange = { viewModel.updatePreference("system_start_hangul_mode", it) },
+            )
+        }
 
-            item {
-                KeystrokePreference(
-                    title = stringResource(R.string.preference_hardware_lang_key_title),
-                    summary = stringResource(R.string.preference_hardware_lang_key_summary),
-                    keystrokeValue = hardwareLangKeyStroke,
-                    onValueChange = { viewModel.updatePreference("system_hardware_lang_key_stroke", it) },
-                )
-            }
+        item {
+            KeystrokePreference(
+                title = stringResource(R.string.preference_hardware_lang_key_title),
+                summary = stringResource(R.string.preference_hardware_lang_key_summary),
+                keystrokeValue = hardwareLangKeyStroke,
+                onValueChange = { viewModel.updatePreference("system_hardware_lang_key_stroke", it) },
+            )
+        }
 
-            item { HorizontalDivider() }
+        item { HorizontalDivider() }
 
-            // ===== IME Info Section =====
-            item {
-                SettingSectionItem(
-                    title = stringResource(R.string.preference_aboutime_menu),
-                    icon = Icons.Default.Info,
-                    onClick = { navController.navigate("about") },
-                )
-            }
+        // ===== IME Info Section =====
+        item {
+            SettingSectionItem(
+                title = stringResource(R.string.preference_aboutime_menu),
+                icon = Icons.Default.Info,
+                onClick = { navController.navigate("about") },
+            )
+        }
     }
 }
 
@@ -261,7 +259,8 @@ fun AboutScreen(navController: NavController) {
                     title = stringResource(R.string.preference_about_license),
                     summary = stringResource(R.string.teogeul_korean_license),
                     onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.apache.org/licenses/LICENSE-2.0"))
+                        val intent =
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.apache.org/licenses/LICENSE-2.0"))
                         context.startActivity(intent)
                     },
                 )

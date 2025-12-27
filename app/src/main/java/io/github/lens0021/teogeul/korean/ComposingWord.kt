@@ -22,38 +22,27 @@ class ComposingWord {
         return result
     }
 
-    fun backspace(): Boolean {
-        return if (composingWord.isEmpty()) {
+    fun backspace(): Boolean =
+        if (composingWord.isEmpty()) {
             false
         } else {
             composingWord.deleteCharAt(composingWord.length - 1)
             true
         }
-    }
 
-    fun getComposingChar(): String {
-        return composingChar
-    }
+    fun getComposingChar(): String = composingChar
 
-    fun getComposingWord(): String {
-        return composingWord.toString()
-    }
+    fun getComposingWord(): String = composingWord.toString()
 
     fun setComposingWord(composingWord: String) {
         this.composingWord = StringBuilder(composingWord)
     }
 
-    fun getEntireWord(): String {
-        return composingWord.toString() + composingChar
-    }
+    fun getEntireWord(): String = composingWord.toString() + composingChar
 
-    fun length(): Int {
-        return composingWord.length + if (composingChar.isEmpty()) 0 else 1
-    }
+    fun length(): Int = composingWord.length + if (composingChar.isEmpty()) 0 else 1
 
-    fun getFixedWord(): String? {
-        return fixedWord
-    }
+    fun getFixedWord(): String? = fixedWord
 
     fun setFixedWord(fixedWord: String?) {
         this.fixedWord = fixedWord

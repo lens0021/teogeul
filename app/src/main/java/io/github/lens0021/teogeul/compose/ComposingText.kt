@@ -29,8 +29,8 @@ class ComposingText {
     fun getStrSegment(
         layer: Int,
         pos: Int,
-    ): StrSegment? {
-        return try {
+    ): StrSegment? =
+        try {
             val strLayer = mStringLayer[layer]
             var position = pos
             if (position < 0) {
@@ -44,14 +44,13 @@ class ComposingText {
         } catch (ex: Exception) {
             null
         }
-    }
 
     fun toString(
         layer: Int,
         from: Int,
         to: Int,
-    ): String? {
-        return try {
+    ): String? =
+        try {
             val buf = StringBuilder()
             val strLayer = mStringLayer[layer]
             for (i in from..to) {
@@ -62,11 +61,8 @@ class ComposingText {
         } catch (ex: Exception) {
             null
         }
-    }
 
-    fun toString(layer: Int): String? {
-        return toString(layer, 0, mStringLayer[layer].size - 1)
-    }
+    fun toString(layer: Int): String? = toString(layer, 0, mStringLayer[layer].size - 1)
 
     private fun modifyUpper(
         layer: Int,
@@ -344,13 +340,12 @@ class ComposingText {
         return strLayer.size
     }
 
-    fun getStringLayer(layer: Int): ArrayList<StrSegment>? {
-        return try {
+    fun getStringLayer(layer: Int): ArrayList<StrSegment>? =
+        try {
             mStringLayer[layer]
         } catch (ex: Exception) {
             null
         }
-    }
 
     private fun included(
         layer: Int,
@@ -405,13 +400,9 @@ class ComposingText {
         return setCursor(layer, c)
     }
 
-    fun getCursor(layer: Int): Int {
-        return mCursor[layer]
-    }
+    fun getCursor(layer: Int): Int = mCursor[layer]
 
-    fun size(layer: Int): Int {
-        return mStringLayer[layer].size
-    }
+    fun size(layer: Int): Int = mStringLayer[layer].size
 
     fun clear() {
         for (i in 0 until MAX_LAYER) {

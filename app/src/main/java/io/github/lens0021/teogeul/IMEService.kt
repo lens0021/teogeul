@@ -36,14 +36,14 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class IMEService() : InputMethodService(), HangulEngineListener {
+class IMEService() :
+    InputMethodService(),
+    HangulEngineListener {
     companion object {
         private var instance: IMEService? = null
 
         @JvmStatic
-        fun getInstance(): IMEService? {
-            return instance
-        }
+        fun getInstance(): IMEService? = instance
     }
 
     protected var inputConnection: InputConnection? = null
@@ -294,13 +294,9 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         return consumeDownEvent
     }
 
-    override fun onEvaluateFullscreenMode(): Boolean {
-        return false
-    }
+    override fun onEvaluateFullscreenMode(): Boolean = false
 
-    override fun onEvaluateInputViewShown(): Boolean {
-        return super.onEvaluateInputViewShown()
-    }
+    override fun onEvaluateInputViewShown(): Boolean = super.onEvaluateInputViewShown()
 
     override fun onWindowHidden() {
         super.onWindowHidden()

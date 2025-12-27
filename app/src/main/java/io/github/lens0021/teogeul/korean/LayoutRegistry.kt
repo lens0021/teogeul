@@ -3,8 +3,8 @@ package io.github.lens0021.teogeul.korean
 import io.github.lens0021.teogeul.layout.LayoutData
 
 object LayoutRegistry {
-    fun getLayout(name: String): Array<IntArray>? {
-        return when (name) {
+    fun getLayout(name: String): Array<IntArray>? =
+        when (name) {
             "JAMO_SEBUL_3_2015M_CHOJONG" -> LayoutData.JAMO_SEBUL_3_2015M_CHOJONG
             "JAMO_SEBUL_3_2015M_CHOJUNG" -> LayoutData.JAMO_SEBUL_3_2015M_CHOJUNG
             "JAMO_SEBUL_3_2015M_CHOJONG_D" -> LayoutData.JAMO_SEBUL_3_2015M_CHOJONG_D
@@ -47,5 +47,4 @@ object LayoutRegistry {
             "CONVERT_ENGLISH_COLEMAK" -> LayoutData.CONVERT_ENGLISH_COLEMAK
             else -> null
         }
-    }
 }

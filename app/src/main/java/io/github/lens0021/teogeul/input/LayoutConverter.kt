@@ -17,8 +17,8 @@ class LayoutConverter {
 
     fun getQwertyCharCode(event: KeyEvent): Int? = getQwertyCharCodeFromKeyCode(event.keyCode)
 
-    fun getQwertyCharCodeFromKeyCode(keyCode: Int): Int? {
-        return when (keyCode) {
+    fun getQwertyCharCodeFromKeyCode(keyCode: Int): Int? =
+        when (keyCode) {
             KeyEvent.KEYCODE_A -> 'a'.code
             KeyEvent.KEYCODE_B -> 'b'.code
             KeyEvent.KEYCODE_C -> 'c'.code
@@ -68,10 +68,9 @@ class LayoutConverter {
             KeyEvent.KEYCODE_SLASH -> '/'.code
             else -> null
         }
-    }
 
-    fun getKeyCodeFromQwertyCharCode(charCode: Int): Int? {
-        return when (charCode) {
+    fun getKeyCodeFromQwertyCharCode(charCode: Int): Int? =
+        when (charCode) {
             'a'.code -> KeyEvent.KEYCODE_A
             'b'.code -> KeyEvent.KEYCODE_B
             'c'.code -> KeyEvent.KEYCODE_C
@@ -121,7 +120,6 @@ class LayoutConverter {
             '/'.code -> KeyEvent.KEYCODE_SLASH
             else -> null
         }
-    }
 
     fun convertQwertyCharCodeToLayout(
         charCode: Int,
