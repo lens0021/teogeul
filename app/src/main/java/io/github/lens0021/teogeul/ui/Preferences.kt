@@ -415,6 +415,7 @@ fun KeyMappingsPreference(
 ) {
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
+    var editingIndex by remember { mutableStateOf<Int?>(null) }
 
     Column(modifier = modifier) {
         // Header with "Add new item" button
@@ -422,7 +423,10 @@ fun KeyMappingsPreference(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .clickable { showDialog = true },
+                    .clickable {
+                        editingIndex = null
+                        showDialog = true
+                    },
         ) {
             Row(
                 modifier = Modifier.padding(16.dp),
@@ -446,7 +450,12 @@ fun KeyMappingsPreference(
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
-                TextButton(onClick = { showDialog = true }) {
+                TextButton(
+                    onClick = {
+                        editingIndex = null
+                        showDialog = true
+                    },
+                ) {
                     Text(stringResource(R.string.key_mappings_add))
                 }
             }
@@ -457,7 +466,11 @@ fun KeyMappingsPreference(
             Surface(
                 modifier =
                     Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable {
+                            editingIndex = index
+                            showDialog = true
+                        },
             ) {
                 Row(
                     modifier = Modifier.padding(start = 32.dp, end = 8.dp, top = 8.dp, bottom = 8.dp),
@@ -491,14 +504,27 @@ fun KeyMappingsPreference(
     }
 
     if (showDialog) {
+        val initialMapping =
+            editingIndex?.let { index ->
+                mappings.getOrNull(index)
+            }
         KeyMappingDialog(
-            onDismiss = { showDialog = false },
+            onDismiss = {
+                showDialog = false
+                editingIndex = null
+            },
             onConfirm = { newMapping ->
                 val newMappings = mappings.toMutableList()
-                newMappings.add(newMapping)
+                if (editingIndex != null && editingIndex in newMappings.indices) {
+                    newMappings[editingIndex ?: 0] = newMapping
+                } else {
+                    newMappings.add(newMapping)
+                }
                 onMappingsChange(newMappings)
                 showDialog = false
+                editingIndex = null
             },
+            initialMapping = initialMapping,
         )
     }
 }
@@ -507,11 +533,21 @@ fun KeyMappingsPreference(
 private fun KeyMappingDialog(
     onDismiss: () -> Unit,
     onConfirm: (KeyMapping) -> Unit,
+    initialMapping: KeyMapping? = null,
 ) {
     val context = LocalContext.current
-    var physicalKeyCode by remember { mutableStateOf<Int?>(null) }
-    var selectedAction by remember { mutableStateOf<VirtualKeyAction?>(null) }
-    var useDropdown by remember { mutableStateOf(true) }
+    var physicalKeyCode by remember { mutableStateOf(initialMapping?.physicalKey) }
+    var selectedAction by remember { mutableStateOf(initialMapping?.virtualAction) }
+    var useDropdown by
+        remember {
+            mutableStateOf(
+                when (val action = initialMapping?.virtualAction) {
+                    is VirtualKeyAction.SendKeyEvent ->
+                        action.keyCode == KeyEvent.KEYCODE_LANGUAGE_SWITCH
+                    else -> true
+                },
+            )
+        }
     var showActionDropdown by remember { mutableStateOf(false) }
 
     // Available predefined actions
