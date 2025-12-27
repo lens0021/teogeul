@@ -1,23 +1,19 @@
 package io.github.lens0021.teogeul
 
 import android.content.Context
-import android.content.Intent
-import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.os.Handler
-import android.os.IBinder
 import android.os.Looper
 import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import io.github.lens0021.teogeul.config.SettingsDefaults
 import io.github.lens0021.teogeul.config.SettingsRepository
+import io.github.lens0021.teogeul.config.SettingsSnapshot
 import io.github.lens0021.teogeul.config.SettingsValues
 import io.github.lens0021.teogeul.config.settingsDataStore
 import io.github.lens0021.teogeul.input.CommitComposingTextEvent
-import io.github.lens0021.teogeul.input.InputEvent
 import io.github.lens0021.teogeul.input.InputEventBus
 import io.github.lens0021.teogeul.input.InputKeyEvent
 import io.github.lens0021.teogeul.input.InputTimeoutEvent
@@ -31,7 +27,6 @@ import io.github.lens0021.teogeul.korean.HangulEngine.HangulEngineEvent
 import io.github.lens0021.teogeul.korean.HangulEngine.HangulEngineListener
 import io.github.lens0021.teogeul.korean.HangulEngine.SetComposingEvent
 import io.github.lens0021.teogeul.model.KeyStroke
-import io.github.lens0021.teogeul.ui.SettingsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -43,56 +38,53 @@ import kotlinx.coroutines.runBlocking
 
 class IMEService() : InputMethodService(), HangulEngineListener {
     companion object {
-        private var mSelf: IMEService? = null
+        private var instance: IMEService? = null
 
         @JvmStatic
         fun getInstance(): IMEService? {
-            return mSelf
+            return instance
         }
     }
 
-    protected var mInputConnection: InputConnection? = null
-    protected var mDirectInputMode: Boolean = true
+    protected var inputConnection: InputConnection? = null
+    protected var directInputMode: Boolean = true
 
-    private var mConsumeDownEvent: Boolean = false
+    private var consumeDownEvent: Boolean = false
 
-    var mQwertyEngine: HangulEngine = HangulEngine()
+    var hangulEngine: HangulEngine = HangulEngine()
 
-    lateinit var mCurrentEngineMode: EngineMode
-    var mCurrentLanguage: Int = EngineMode.LANG_KO
+    lateinit var currentEngineMode: EngineMode
+    var currentLanguage: Int = EngineMode.LANG_KO
 
-    var mEnableTimeout: Boolean = false
+    var timeoutEnabled: Boolean = false
 
-    var mMoachigi: Boolean = false
-    var mHardwareMoachigi: Boolean = false
-    var mFullMoachigi: Boolean = true
-    var mMoachigiDelay: Int = 0
+    var hardwareMoachigiEnabled: Boolean = false
+    var fullMoachigiEnabled: Boolean = true
+    var moachigiDelayMs: Int = 0
 
-    var mStandardJamo: Boolean = false
+    var standardJamoEnabled: Boolean = false
 
-    var mAlphabetLayout: String = "keyboard_alphabet_qwerty"
+    var alphabetLayout: String = "keyboard_alphabet_qwerty"
 
-    var mInput: Boolean = false
+    var timeoutHandler: Handler? = null
 
-    var mTimeOutHandler: Handler? = null
-
-    var mHardLangKey: KeyStroke? = null
+    var hardwareLangKey: KeyStroke? = null
 
     private val layoutConverter = LayoutConverter()
     private val keyEventHandler by lazy {
         KeyEventHandler(
             layoutConverter = layoutConverter,
-            inputConnectionProvider = { mInputConnection },
-            hangulEngineProvider = { mQwertyEngine },
-            directInputModeProvider = { mDirectInputMode },
-            alphabetLayoutProvider = { mAlphabetLayout },
-            hardLangKeyProvider = { mHardLangKey },
-            currentLanguageProvider = { mCurrentLanguage },
+            inputConnectionProvider = { inputConnection },
+            hangulEngineProvider = { hangulEngine },
+            directInputModeProvider = { directInputMode },
+            alphabetLayoutProvider = { alphabetLayout },
+            hardLangKeyProvider = { hardwareLangKey },
+            currentLanguageProvider = { currentLanguage },
             toggleLanguage = { toggleLanguage() },
             resetCharComposition = { resetCharComposition() },
             currentInputEditorInfoProvider = { currentInputEditorInfo },
             sendDefaultEditorAction = { sendDefaultEditorAction(it) },
-            markInput = { mInput = true },
+            markInput = {},
         )
     }
 
@@ -101,9 +93,9 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     private val settingsRepository by lazy { SettingsRepository(applicationContext.settingsDataStore) }
 
     init {
-        mSelf = this
+        instance = this
 
-        mQwertyEngine.listener = this
+        hangulEngine.listener = this
     }
 
     constructor(context: Context) : this() {
@@ -125,23 +117,15 @@ class IMEService() : InputMethodService(), HangulEngineListener {
             }
     }
 
-    override fun onCreateInputView(): View? {
-        return super.onCreateInputView()
-    }
-
-    override fun onCreateCandidatesView(): View? {
-        return super.onCreateCandidatesView()
-    }
-
     override fun onStartInputView(
         attribute: EditorInfo,
         restarting: Boolean,
     ) {
         resetCharComposition()
         super.onStartInputView(attribute, restarting)
-        mInputConnection = currentInputConnection
+        inputConnection = currentInputConnection
         setCandidatesViewShown(false)
-        mDirectInputMode = mInputConnection == null
+        directInputMode = inputConnection == null
         applyPreferences(resetLanguage = true)
     }
 
@@ -150,12 +134,8 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         restarting: Boolean,
     ) {
         super.onStartInput(attribute, restarting)
-        mInputConnection = currentInputConnection
+        inputConnection = currentInputConnection
         applyPreferences(resetLanguage = true)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
     }
 
     override fun onFinishInput() {
@@ -164,31 +144,29 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     }
 
     override fun onEvent(event: HangulEngineEvent) {
-        if (event is FinishComposingEvent) {
-            mInputConnection?.finishComposingText()
-        }
-        if (event is SetComposingEvent) {
-            mInputConnection?.setComposingText(event.composing, 1)
+        when (event) {
+            is FinishComposingEvent -> inputConnection?.finishComposingText()
+            is SetComposingEvent -> inputConnection?.setComposingText(event.composing, 1)
         }
     }
 
     private fun handleKeyUp(
         @Suppress("UNUSED_PARAMETER") event: KeyUpEvent,
     ) {
-        // Shift/Caps key state is now handled by the system
+        // Shift/Caps 키 상태는 시스템에서 처리합니다.
     }
 
     private fun handleInputTimeout(
         @Suppress("UNUSED_PARAMETER") event: InputTimeoutEvent,
     ) {
-        if (mEnableTimeout) {
+        if (timeoutEnabled) {
             resetCharComposition()
         }
     }
 
     private fun handleInputKey(event: InputKeyEvent) {
         val keyEvent = event.keyEvent
-        // Shift/Caps key handling is now delegated to the system
+        // Shift/Caps 키 처리는 시스템에 위임합니다.
         val ret = keyEventHandler.processKeyEvent(keyEvent)
         event.isCancelled = ret
     }
@@ -201,32 +179,21 @@ class IMEService() : InputMethodService(), HangulEngineListener {
 
     private fun applyPreferences(resetLanguage: Boolean = false) {
         val snapshot = runBlocking { settingsRepository.snapshot() }
-        mHardwareMoachigi = snapshot.hardwareUseMoachigi
-        mFullMoachigi = snapshot.hardwareFullMoachigi
-        mMoachigiDelay = snapshot.hardwareFullMoachigiDelay
-        mStandardJamo = snapshot.systemUseStandardJamo
+        hardwareMoachigiEnabled = snapshot.hardwareUseMoachigi
+        fullMoachigiEnabled = snapshot.hardwareFullMoachigi
+        moachigiDelayMs = snapshot.hardwareFullMoachigiDelay
+        standardJamoEnabled = snapshot.systemUseStandardJamo
         if (resetLanguage) {
             applyStartLanguage(snapshot.systemStartHangulMode)
         }
-        mHardLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
+        hardwareLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
 
-        // Use subtype layout when explicitly set; otherwise use app settings.
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
-        val currentSubtype = imm?.currentInputMethodSubtype
-        val subtypeLayout =
-            currentSubtype?.extraValue?.let { extraValue ->
-                Regex("KeyboardLayoutSet=(\\w+)").find(extraValue)?.groupValues?.get(1)
-            }
-        mAlphabetLayout =
-            if (subtypeLayout != null && subtypeLayout != SettingsDefaults.HARDWARE_ALPHABET_LAYOUT) {
-                subtypeLayout
-            } else {
-                snapshot.hardwareAlphabetLayout
-            }
+        // 서브타입에서 레이아웃을 지정했다면 우선 적용하고, 없으면 앱 설정을 사용합니다.
+        alphabetLayout = resolveAlphabetLayout(snapshot)
 
         val modeKey =
-            if (mCurrentLanguage == EngineMode.LANG_EN) {
-                mAlphabetLayout
+            if (currentLanguage == EngineMode.LANG_EN) {
+                alphabetLayout
             } else {
                 snapshot.hardwareHangulLayout
             }
@@ -234,53 +201,53 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     }
 
     private fun applyStartLanguage(mode: String) {
-        when (mode) {
-            SettingsValues.START_HANGUL_MODE_START_HANGUL ->
-                mCurrentLanguage = EngineMode.LANG_KO
-            SettingsValues.START_HANGUL_MODE_START_ENGLISH ->
-                mCurrentLanguage = EngineMode.LANG_EN
-            "new_input",
-            "always",
-            -> mCurrentLanguage = EngineMode.LANG_KO
-        }
+        currentLanguage =
+            when (mode) {
+                SettingsValues.START_HANGUL_MODE_START_HANGUL -> EngineMode.LANG_KO
+                SettingsValues.START_HANGUL_MODE_START_ENGLISH -> EngineMode.LANG_EN
+                "new_input",
+                "always",
+                -> EngineMode.LANG_KO
+                else -> currentLanguage
+            }
     }
 
     private fun applyEngineMode(mode: EngineMode) {
-        mCurrentEngineMode = mode
+        currentEngineMode = mode
         if (mode == EngineMode.DIRECT) {
-            mDirectInputMode = true
-            mEnableTimeout = false
-            mFullMoachigi = false
-            mQwertyEngine.jamoTable = null
-            mQwertyEngine.setCombinationTable(null)
+            directInputMode = true
+            timeoutEnabled = false
+            fullMoachigiEnabled = false
+            hangulEngine.jamoTable = null
+            hangulEngine.setCombinationTable(null)
             return
         }
 
         val prop = mode.properties
-        mDirectInputMode = prop.direct
-        mEnableTimeout = prop.timeout
-        mFullMoachigi = prop.fullMoachigi
+        directInputMode = prop.direct
+        timeoutEnabled = prop.timeout
+        fullMoachigiEnabled = prop.fullMoachigi
         if (mode.jamoset != null) {
-            mQwertyEngine.jamoSet = mode.jamoset
+            hangulEngine.jamoSet = mode.jamoset
         } else {
-            mQwertyEngine.jamoTable = mode.layout
+            hangulEngine.jamoTable = mode.layout
         }
-        mQwertyEngine.setCombinationTable(mode.combination)
-        mQwertyEngine.firstMidEnd = mStandardJamo
-        mQwertyEngine.moachigi = mHardwareMoachigi
-        mQwertyEngine.fullMoachigi = mFullMoachigi
-        if (mFullMoachigi) {
-            mEnableTimeout = true
+        hangulEngine.setCombinationTable(mode.combination)
+        hangulEngine.firstMidEnd = standardJamoEnabled
+        hangulEngine.moachigi = hardwareMoachigiEnabled
+        hangulEngine.fullMoachigi = fullMoachigiEnabled
+        if (fullMoachigiEnabled) {
+            timeoutEnabled = true
         }
     }
 
     private fun resetCharComposition() {
-        mQwertyEngine.resetComposition()
+        hangulEngine.resetComposition()
     }
 
     private fun toggleLanguage() {
-        mCurrentLanguage =
-            if (mCurrentLanguage == EngineMode.LANG_EN) {
+        currentLanguage =
+            if (currentLanguage == EngineMode.LANG_EN) {
                 EngineMode.LANG_KO
             } else {
                 EngineMode.LANG_EN
@@ -290,7 +257,7 @@ class IMEService() : InputMethodService(), HangulEngineListener {
 
     override fun hideWindow() {
         super.hideWindow()
-        mDirectInputMode = true
+        directInputMode = true
         hideStatusIcon()
     }
 
@@ -304,35 +271,25 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         keyCode: Int,
         event: KeyEvent,
     ): Boolean {
-        var ret = mConsumeDownEvent
-        ret =
-            if (!ret) {
-                super.onKeyUp(keyCode, event)
-            } else {
-                InputEventBus.emitBlocking(KeyUpEvent(event))
-                ret
-            }
-        return ret
+        if (!consumeDownEvent) {
+            return super.onKeyUp(keyCode, event)
+        }
+        InputEventBus.emitBlocking(KeyUpEvent(event))
+        return true
     }
 
     override fun onKeyDown(
         keyCode: Int,
         event: KeyEvent,
     ): Boolean {
-        if (mTimeOutHandler == null) {
-            mTimeOutHandler = Handler(Looper.getMainLooper())
-            mTimeOutHandler?.postDelayed({
-                InputEventBus.emitBlocking(InputTimeoutEvent())
-                mTimeOutHandler = null
-            }, mMoachigiDelay.toLong())
-        }
+        startTimeoutIfNeeded()
         val inputKeyEvent = InputKeyEvent(event)
         InputEventBus.emitBlocking(inputKeyEvent)
-        mConsumeDownEvent = inputKeyEvent.isCancelled
-        if (!mConsumeDownEvent) {
+        consumeDownEvent = inputKeyEvent.isCancelled
+        if (!consumeDownEvent) {
             return super.onKeyDown(keyCode, event)
         }
-        return mConsumeDownEvent
+        return consumeDownEvent
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {
@@ -359,5 +316,33 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     override fun onComputeInsets(outInsets: Insets) {
         super.onComputeInsets(outInsets)
         outInsets.contentTopInsets = outInsets.visibleTopInsets
+    }
+
+    private fun resolveAlphabetLayout(snapshot: SettingsSnapshot): String {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        val currentSubtype = imm?.currentInputMethodSubtype
+        val subtypeLayout =
+            currentSubtype?.extraValue?.let { extraValue ->
+                Regex("KeyboardLayoutSet=(\\w+)").find(extraValue)?.groupValues?.get(1)
+            }
+        return if (subtypeLayout != null &&
+            subtypeLayout != SettingsDefaults.HARDWARE_ALPHABET_LAYOUT
+        ) {
+            subtypeLayout
+        } else {
+            snapshot.hardwareAlphabetLayout
+        }
+    }
+
+    private fun startTimeoutIfNeeded() {
+        if (timeoutHandler != null) {
+            return
+        }
+        // 모아치기 입력 지연 타이머는 중복으로 등록하지 않습니다.
+        timeoutHandler = Handler(Looper.getMainLooper())
+        timeoutHandler?.postDelayed({
+            InputEventBus.emitBlocking(InputTimeoutEvent())
+            timeoutHandler = null
+        }, moachigiDelayMs.toLong())
     }
 }
