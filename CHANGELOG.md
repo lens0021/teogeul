@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0](https://github.com/lens0021/teogeul/compare/v0.6.2...v0.7.0) (2025-12-27)
+
+
+### Features
+
+* implement clickable links in About section ([#64](https://github.com/lens0021/teogeul/issues/64)) ([489f78c](https://github.com/lens0021/teogeul/commit/489f78c28c1237b31d8af5151681a2537d1268b9))
+
+
+### Bug Fixes
+
+* Check double conversion ([#76](https://github.com/lens0021/teogeul/issues/76)) ([79c2f7d](https://github.com/lens0021/teogeul/commit/79c2f7d1993a5a458e7877b716b35bf9a47f5a6c))
+
 ## [0.6.2](https://github.com/lens0021/teogeul/compare/v0.6.1...v0.6.2) (2025-12-27)
 
 
