@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/lens0021/teogeul/compare/v1.1.0...v1.2.0) (2025-12-27)
+
+
+### Features
+
+* Add multiple hardware key mappings support ([#92](https://github.com/lens0021/teogeul/issues/92)) ([2286a3f](https://github.com/lens0021/teogeul/commit/2286a3ff94f97377b1453f2ff825305f2c8addaf))
+
 ## [1.1.0](https://github.com/lens0021/teogeul/compare/v1.0.0...v1.1.0) (2025-12-27)
 
 
