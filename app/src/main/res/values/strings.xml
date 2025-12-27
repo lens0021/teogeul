@@ -1,34 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2008,2009 OMRON SOFTWARE Co., Ltd. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008,2009 OMRON SOFTWARE Co., Ltd. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. -->
 <resources>
-	<!-- common part -->
-
+	<!-- App -->
 	<string name="app_name">터글</string>
 	<string name="ime_name">터글</string>
+	<string name="teogeul_korean">터글</string>
 
-	<!-- Preferences -->
+	<!-- Settings -->
 	<string name="preference_ime_setting_app">터글 키보드 설정</string>
-
-	<string name="preference_method_setting_menu">입력 방식</string>
-
+	<string name="preference_installation_section">설치</string>
 	<string name="preference_method_enabler_title">입력 방식 활성화 창 열기</string>
 	<string name="preference_method_enabler_summary">&#8216;터글&#8217;을 활성화해 주세요.</string>
 	<string name="preference_method_picker_title">입력 방식 선택 창 열기</string>
 
-	<string name="preference_aboutime_menu">IME 정보</string>
-
-	<!-- Dialog Messages -->
-	<string name="dialog_button_ok">확인</string>
-	<string name="dialog_button_cancel">취소</string>
-
-
-	<!-- IME dependency -->
-	<!-- Teogeul -->
-	<string name="teogeul_korean">터글</string>
-
-	<!-- After Config Change -->
-
-	<!-- Korean-specific strings -->
-
+	<!-- Keyboard Layouts - Hangul -->
 	<string name="preference_keyboard_dubul_standard">두벌식 표준</string>
 	<string name="preference_keyboard_dubul_nk">두벌식 북한 국규</string>
 	<string name="preference_keyboard_sebul_390">세벌식 390</string>
@@ -43,53 +28,44 @@
 	<string name="preference_keyboard_sebul_shin_m">신세벌식 M (메탈리쟈)</string>
 	<string name="preference_keyboard_sebul_ahnmatae">모아치기세벌식 안마태 소리글판</string>
 
-
+	<!-- Keyboard Layouts - Alphabet -->
 	<string name="preference_keyboard_alphabet_qwerty">QWERTY</string>
 	<string name="preference_keyboard_alphabet_dvorak">DVORAK</string>
 	<string name="preference_keyboard_alphabet_colemak">COLEMAK</string>
-	<string name="toast_hardware_keyboard_missing">하드웨어 키보드가 없어 다음 입력기로 전환합니다.</string>
 
-
-	<string name="preference_hardware_setting_menu">하드웨어 키보드</string>
-
+	<!-- Hardware Keyboard Settings -->
 	<string name="preference_hardware_hangul_title">하드웨어 한글 키보드 종류</string>
 	<string name="preference_hardware_hangul_summary">하드웨어 키보드 사용 시 사용할 한글 레이아웃을 설정합니다. 키캡 각인과 달라도 설정한 레이아웃 기준으로 입력됩니다.</string>
-
 	<string name="preference_hardware_alphabet_title">하드웨어 영문 키보드 종류</string>
 	<string name="preference_hardware_alphabet_summary">하드웨어 키보드 사용 시 사용할 영문 레이아웃을 설정합니다. 키캡 각인과 달라도 설정한 레이아웃 기준으로 입력됩니다.</string>
-
 	<string name="preference_hardware_use_moachigi_title">모아주기 사용</string>
-	<string name="preference_hardware_use_moachigi_summary">하드웨어 키보드 사용시 모아주기를 사용합니다.\n모아주기: 세벌식 자판에서 자음과 모음을
-		입력하면 자동으로 한 글자로 합쳐주는 기능입니다.</string>
-
+	<string name="preference_hardware_use_moachigi_summary">하드웨어 키보드 사용시 모아주기를 사용합니다.\n모아주기: 세벌식 자판에서 자음과 모음을 입력하면 자동으로 한 글자로 합쳐주는 기능입니다.</string>
 	<string name="preference_hardware_full_moachigi_title">한 번에 모아치기</string>
-	<string name="preference_hardware_full_moachigi_summary">모아치기 자판(자음과 모음을 순서 상관없이 입력할 수 있는 특수한 세벌식 자판)에서 한 번에
-		모아치기를 사용합니다.\n한 번에 모아치기: 모든 자모를 입력한 후 한 번에 조합하는 방식입니다. (예: ㄱ+ㅏ+ㄴ을 입력하면
-		잠시 대기 후 \'간\'으로 조합됩니다)</string>
-
+	<string name="preference_hardware_full_moachigi_summary">모아치기 자판(자음과 모음을 순서 상관없이 입력할 수 있는 특수한 세벌식 자판)에서 한 번에 모아치기를 사용합니다.\n한 번에 모아치기: 모든 자모를 입력한 후 한 번에 조합하는 방식입니다. (예: ㄱ+ㅏ+ㄴ을 입력하면 잠시 대기 후 \'간\'으로 조합됩니다)</string>
 	<string name="preference_hardware_full_moachigi_delay_title">한 번에 모아치기 대기 시간</string>
-	<string name="preference_hardware_full_moachigi_delay_summary">한 번에 모아치기 사용 시 조합 종료 대기 시간을 밀리초(ms) 단위로 정합니다. 이 시간
-		동안 추가 입력이 없으면 입력된 자모들이 한 글자로 조합됩니다. 기본값은 100ms입니다.</string>
+	<string name="preference_hardware_full_moachigi_delay_summary">한 번에 모아치기 사용 시 조합 종료 대기 시간을 밀리초(ms) 단위로 정합니다. 이 시간 동안 추가 입력이 없으면 입력된 자모들이 한 글자로 조합됩니다. 기본값은 100ms입니다.</string>
+	<string name="preference_hardware_lang_key_title">하드웨어 키보드 한영 키</string>
+	<string name="preference_hardware_lang_key_summary">하드웨어 키보드 사용시 한영 키를 설정합니다.</string>
 
-	<string name="preference_system_setting_menu">시스템 설정</string>
-
+	<!-- System Settings -->
 	<string name="preference_system_use_standard_jamo_title">표준 한글 자모 사용</string>
-	<string name="preference_system_use_standard_jamo_summary">필요할 경우 표준 한글 자모(유니코드 U+1100-U+11FF 영역)로 첫가끝 한글 조합을
-		합니다.\n첫가끝 한글 조합: 초성-중성-종성을 분리하여 조합하는 방식입니다. 일부 앱에서 호환성을 위해 필요할 수 있습니다.</string>
-
+	<string name="preference_system_use_standard_jamo_summary">필요할 경우 표준 한글 자모(유니코드 U+1100-U+11FF 영역)로 첫가끝 한글 조합을 합니다.\n첫가끝 한글 조합: 초성-중성-종성을 분리하여 조합하는 방식입니다. 일부 앱에서 호환성을 위해 필요할 수 있습니다.</string>
 	<string name="preference_system_start_hangul_mode_title">시작 언어 모드</string>
-	<string name="preference_system_start_hangul_mode_summary">입력 시작 시 동작을 선택합니다.\n입력 시작: 텍스트 입력 칸에서 터글이 활성화되는
-		시점(다른 입력기에서 전환하거나 입력창으로 돌아올 때). 기본값: 마지막 언어 유지.</string>
+	<string name="preference_system_start_hangul_mode_summary">입력 시작 시 동작을 선택합니다.\n입력 시작: 텍스트 입력 칸에서 터글이 활성화되는 시점(다른 입력기에서 전환하거나 입력창으로 돌아올 때). 기본값: 마지막 언어 유지.</string>
 	<string name="preference_system_start_hangul_mode_start_hangul">입력 시작에 한글 모드로 초기화</string>
 	<string name="preference_system_start_hangul_mode_keep_last">마지막 언어 유지(기본값)</string>
 	<string name="preference_system_start_hangul_mode_start_english">항상 영어로 초기화</string>
 
-	<string name="preference_hardware_lang_key_title">하드웨어 키보드 한영 키</string>
-	<string name="preference_hardware_lang_key_summary">하드웨어 키보드 사용시 한영 키를 설정합니다.</string>
+	<!-- About -->
+	<string name="preference_aboutime_menu">IME 정보</string>
 	<string name="preference_about_license">라이센스</string>
 	<string
 		name="teogeul_korean_license"
-		translatable="false">Apache
-		License 2.0</string>
+		translatable="false">Apache License 2.0</string>
 	<string name="preference_about_source_code">소스코드</string>
+
+	<!-- Dialogs -->
+	<string name="dialog_button_ok">확인</string>
+	<string name="dialog_button_cancel">취소</string>
 </resources>
+
