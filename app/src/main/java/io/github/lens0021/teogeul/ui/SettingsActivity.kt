@@ -1,5 +1,7 @@
 package io.github.lens0021.teogeul.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -402,7 +404,10 @@ fun AboutScreen(navController: NavController) {
                 PreferenceItem(
                     title = stringResource(R.string.preference_about_license),
                     summary = stringResource(R.string.teogeul_korean_license),
-                    onClick = { /* TODO: Open license */ },
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.apache.org/licenses/LICENSE-2.0"))
+                        startActivity(intent)
+                    },
                 )
             }
 
@@ -410,7 +415,10 @@ fun AboutScreen(navController: NavController) {
                 PreferenceItem(
                     title = stringResource(R.string.preference_about_source_code),
                     summary = "https://github.com/lens0021/Teogeul",
-                    onClick = { /* TODO: Open URL */ },
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/lens0021/Teogeul"))
+                        startActivity(intent)
+                    },
                 )
             }
         }
