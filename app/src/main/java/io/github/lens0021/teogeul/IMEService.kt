@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import io.github.lens0021.teogeul.config.SettingsDefaults
 import io.github.lens0021.teogeul.config.SettingsRepository
 import io.github.lens0021.teogeul.config.SettingsSnapshot
@@ -69,6 +70,7 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     var timeoutHandler: Handler? = null
 
     var hardwareLangKey: KeyStroke? = null
+    private var skipNextWindowHiddenSwitch: Boolean = false
 
     private val layoutConverter = LayoutConverter()
     private val keyEventHandler by lazy {
@@ -127,6 +129,7 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         setCandidatesViewShown(false)
         directInputMode = inputConnection == null
         applyPreferences(resetLanguage = true)
+        handleNoHardwareOnStart()
     }
 
     override fun onStartInput(
@@ -297,8 +300,18 @@ class IMEService() : InputMethodService(), HangulEngineListener {
     }
 
     override fun onEvaluateInputViewShown(): Boolean {
-        super.onEvaluateInputViewShown()
-        return true
+        return super.onEvaluateInputViewShown()
+    }
+
+    override fun onWindowHidden() {
+        super.onWindowHidden()
+        if (skipNextWindowHiddenSwitch) {
+            skipNextWindowHiddenSwitch = false
+            return
+        }
+        if (!isHardwareKeyboardActive()) {
+            switchToPreviousInputMethod()
+        }
     }
 
     override fun requestHideSelf(flag: Int) {
@@ -332,6 +345,27 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         } else {
             snapshot.hardwareAlphabetLayout
         }
+    }
+
+    private fun handleNoHardwareOnStart() {
+        if (isHardwareKeyboardActive()) {
+            return
+        }
+        Toast
+            .makeText(
+                this,
+                R.string.toast_hardware_keyboard_missing,
+                Toast.LENGTH_SHORT,
+            )
+            .show()
+        skipNextWindowHiddenSwitch = true
+        switchToNextInputMethod(false)
+    }
+
+    private fun isHardwareKeyboardActive(): Boolean {
+        val config = resources.configuration
+        return config.keyboard != android.content.res.Configuration.KEYBOARD_NOKEYS &&
+            config.hardKeyboardHidden == android.content.res.Configuration.HARDKEYBOARDHIDDEN_NO
     }
 
     private fun startTimeoutIfNeeded() {

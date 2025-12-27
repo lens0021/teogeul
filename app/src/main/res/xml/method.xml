@@ -8,22 +8,4 @@
 	android:settingsActivity="io.github.lens0021.teogeul.ui.TeogeulSettingsActivity"
 	android:supportsSwitchingToNextInputMethod="true">
 
-	<!-- Alphabet layout subtypes for physical keyboard -->
-	<subtype
-		android:label="@string/subtype_korean_qwerty"
-		android:imeSubtypeMode="keyboard"
-		android:imeSubtypeExtraValue="KeyboardLayoutSet=keyboard_alphabet_qwerty"
-		android:isAsciiCapable="true" />
-
-	<subtype
-		android:label="@string/subtype_korean_dvorak"
-		android:imeSubtypeMode="keyboard"
-		android:imeSubtypeExtraValue="KeyboardLayoutSet=keyboard_alphabet_dvorak"
-		android:isAsciiCapable="true" />
-
-	<subtype
-		android:label="@string/subtype_korean_colemak"
-		android:imeSubtypeMode="keyboard"
-		android:imeSubtypeExtraValue="KeyboardLayoutSet=keyboard_alphabet_colemak"
-		android:isAsciiCapable="true" />
 </input-method>
