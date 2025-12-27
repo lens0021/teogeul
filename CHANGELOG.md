@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/lens0021/teogeul/compare/v0.7.3...v1.0.0) (2025-12-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* add sigstore/cosign APK signing ([#84](https://github.com/lens0021/teogeul/issues/84))
+
+### Features
+
+* add sigstore/cosign APK signing ([#84](https://github.com/lens0021/teogeul/issues/84)) ([90f6356](https://github.com/lens0021/teogeul/commit/90f6356ac0414cdc82ac6bccce9e67a76a324e1b))
+
 ## [0.7.3](https://github.com/lens0021/teogeul/compare/v0.7.2...v0.7.3) (2025-12-27)
 
 
