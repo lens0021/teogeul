@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.1](https://github.com/lens0021/teogeul/compare/v0.6.0...v0.6.1) (2025-12-27)
+
+
+### Bug Fixes
+
+* Remove hardware layout choices ([#69](https://github.com/lens0021/teogeul/issues/69)) ([215744b](https://github.com/lens0021/teogeul/commit/215744bd36de908b3a0efec3ef59ae96ac661efb))
+* Use LazyColumn ([#71](https://github.com/lens0021/teogeul/issues/71)) ([0bcad66](https://github.com/lens0021/teogeul/commit/0bcad66c3b94e92eb2f90a5afd0855c063266804))
+
 ## [0.6.0](https://github.com/lens0021/teogeul/compare/v0.5.0...v0.6.0) (2025-12-27)
 
 
