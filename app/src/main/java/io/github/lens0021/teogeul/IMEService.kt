@@ -172,7 +172,9 @@ class IMEService() : InputMethodService(), HangulEngineListener {
         }
     }
 
-    private fun handleKeyUp(event: KeyUpEvent) {
+    private fun handleKeyUp(
+        @Suppress("UNUSED_PARAMETER") event: KeyUpEvent,
+    ) {
         // Shift/Caps key state is now handled by the system
     }
 

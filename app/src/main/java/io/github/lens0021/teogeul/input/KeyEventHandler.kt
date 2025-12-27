@@ -24,27 +24,27 @@ class KeyEventHandler(
     companion object {
         val SHIFT_CONVERT =
             arrayOf(
-                intArrayOf(0x60, 0x7e),
-                intArrayOf(0x31, 0x21),
-                intArrayOf(0x32, 0x40),
-                intArrayOf(0x33, 0x23),
-                intArrayOf(0x34, 0x24),
-                intArrayOf(0x35, 0x25),
-                intArrayOf(0x36, 0x5e),
-                intArrayOf(0x37, 0x26),
-                intArrayOf(0x38, 0x2a),
-                intArrayOf(0x39, 0x28),
-                intArrayOf(0x30, 0x29),
-                intArrayOf(0x2d, 0x5f),
-                intArrayOf(0x3d, 0x2b),
-                intArrayOf(0x5b, 0x7b),
-                intArrayOf(0x5d, 0x7d),
-                intArrayOf(0x5c, 0x7c),
-                intArrayOf(0x3b, 0x3a),
-                intArrayOf(0x27, 0x22),
-                intArrayOf(0x2c, 0x3c),
-                intArrayOf(0x2e, 0x3e),
-                intArrayOf(0x2f, 0x3f),
+                intArrayOf('`'.code, '~'.code),
+                intArrayOf('1'.code, '!'.code),
+                intArrayOf('2'.code, '@'.code),
+                intArrayOf('3'.code, '#'.code),
+                intArrayOf('4'.code, '$'.code),
+                intArrayOf('5'.code, '%'.code),
+                intArrayOf('6'.code, '^'.code),
+                intArrayOf('7'.code, '&'.code),
+                intArrayOf('8'.code, '*'.code),
+                intArrayOf('9'.code, '('.code),
+                intArrayOf('0'.code, ')'.code),
+                intArrayOf('-'.code, '_'.code),
+                intArrayOf('='.code, '+'.code),
+                intArrayOf('['.code, '{'.code),
+                intArrayOf(']'.code, '}'.code),
+                intArrayOf('\\'.code, '|'.code),
+                intArrayOf(';'.code, ':'.code),
+                intArrayOf('\''.code, '"'.code),
+                intArrayOf(','.code, '<'.code),
+                intArrayOf('.'.code, '>'.code),
+                intArrayOf('/'.code, '?'.code),
             )
     }
 
@@ -222,7 +222,7 @@ class KeyEventHandler(
         var isDirect = false
 
         if (mutableCode.code == 128) {
-            mutableCode = if (shift > 0) 0x2c.toChar() else 0x2e.toChar()
+            mutableCode = if (shift > 0) ','.code.toChar() else '.'.code.toChar()
             shift = 0
             isDirect = true
         }
