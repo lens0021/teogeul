@@ -167,23 +167,10 @@ class KeyEventHandler(
 
         if (ev.isPrintingKey) {
             val qwertyCharCode = layoutConverter.getQwertyCharCode(ev)
-            val isKorean = currentLanguageProvider() == EngineMode.LANG_KO
             // Don't apply Alt meta state for character input - Alt is only used for shortcuts/language switching
             val code =
                 if (qwertyCharCode != null) {
-                    if (isKorean) {
-                        qwertyCharCode
-                    } else {
-                        val alphabetLayout = alphabetLayoutProvider()
-                        if (layoutConverter.shouldConvertAlphabetLayout(ev, alphabetLayout)) {
-                            layoutConverter.convertQwertyCharCodeToLayout(
-                                qwertyCharCode,
-                                alphabetLayout,
-                            ) ?: qwertyCharCode
-                        } else {
-                            qwertyCharCode
-                        }
-                    }
+                    qwertyCharCode
                 } else {
                     ev.getUnicodeChar(ev.metaState)
                 }
