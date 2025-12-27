@@ -46,12 +46,31 @@ class KeyEventHandler(
                 intArrayOf('.'.code, '>'.code),
                 intArrayOf('/'.code, '?'.code),
             )
+
+        private fun isModifierKey(keyCode: Int): Boolean =
+            when (keyCode) {
+                KeyEvent.KEYCODE_SHIFT_LEFT,
+                KeyEvent.KEYCODE_SHIFT_RIGHT,
+                KeyEvent.KEYCODE_CTRL_LEFT,
+                KeyEvent.KEYCODE_CTRL_RIGHT,
+                KeyEvent.KEYCODE_ALT_LEFT,
+                KeyEvent.KEYCODE_ALT_RIGHT,
+                KeyEvent.KEYCODE_META_LEFT,
+                KeyEvent.KEYCODE_META_RIGHT,
+                -> true
+                else -> false
+            }
     }
 
     fun processKeyEvent(ev: KeyEvent): Boolean {
         val inputConnection = inputConnectionProvider() ?: return false
         val hangulEngine = hangulEngineProvider()
         val key = ev.keyCode
+
+        // Modifier keys should not break composition
+        if (isModifierKey(key)) {
+            return false
+        }
 
         // Ctrl key handling (available since API 11, always true for minSdk 26)
         if (ev.isCtrlPressed) {
