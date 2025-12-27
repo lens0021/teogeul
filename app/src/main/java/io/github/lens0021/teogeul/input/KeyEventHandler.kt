@@ -5,7 +5,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import io.github.lens0021.teogeul.korean.EngineMode
 import io.github.lens0021.teogeul.korean.HangulEngine
-import io.github.lens0021.teogeul.model.KeyMapping
 import io.github.lens0021.teogeul.model.KeyMappings
 import io.github.lens0021.teogeul.model.KeyStroke
 import io.github.lens0021.teogeul.model.VirtualKeyAction
@@ -79,14 +78,7 @@ class KeyEventHandler(
         }
 
         // Ctrl key handling (available since API 11, always true for minSdk 26)
-        if (ev.isCtrlPressed) {
-            val converted =
-                layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
-            inputConnection.sendKeyEvent(converted ?: ev)
-            return true
-        }
-
-        if (ev.isAltPressed || ev.isMetaPressed) {
+        if (ev.isCtrlPressed || ev.isAltPressed || ev.isMetaPressed) {
             val converted =
                 layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
             inputConnection.sendKeyEvent(converted ?: ev)
@@ -105,11 +97,10 @@ class KeyEventHandler(
         }
 
         // Handle custom key mappings
-        val mappings = keyMappingsProvider()
-        val matchedMapping = mappings.mappings.find { it.physicalKey == key }
-        if (matchedMapping != null) {
+        val action = keyMappingsProvider().mappings.firstOrNull { it.physicalKey == key }?.virtualAction
+        if (action != null) {
             resetCharComposition()
-            when (val action = matchedMapping.virtualAction) {
+            when (action) {
                 is VirtualKeyAction.ToggleLanguage -> {
                     toggleLanguage()
                 }
