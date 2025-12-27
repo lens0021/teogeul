@@ -48,102 +48,20 @@ class KeyEventHandler(
             )
     }
 
-    private var selectionMode: Boolean = false
-    private var selectionStart: Int = 0
-    private var selectionEnd: Int = 0
-
     fun processKeyEvent(ev: KeyEvent): Boolean {
         val inputConnection = inputConnectionProvider() ?: return false
         val hangulEngine = hangulEngineProvider()
         val key = ev.keyCode
 
-        if (ev.isShiftPressed) {
-            when (key) {
-                KeyEvent.KEYCODE_DPAD_UP,
-                KeyEvent.KEYCODE_DPAD_DOWN,
-                KeyEvent.KEYCODE_DPAD_LEFT,
-                KeyEvent.KEYCODE_DPAD_RIGHT,
-                -> {
-                    if (!selectionMode) {
-                        val beforeAll = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0)
-                        selectionEnd = beforeAll?.length ?: 0
-                        selectionStart = selectionEnd
-                        selectionMode = true
-                    } else {
-                        if (key == KeyEvent.KEYCODE_DPAD_LEFT) selectionEnd--
-                        if (key == KeyEvent.KEYCODE_DPAD_RIGHT) selectionEnd++
-                        if (key == KeyEvent.KEYCODE_DPAD_UP) {
-                            var i = 1
-                            var text: CharSequence = ""
-                            var end: Boolean
-                            while (true) {
-                                val before = inputConnection.getTextBeforeCursor(i, 0) ?: ""
-                                end = before == text
-                                text = before
-                                if (end || (text.isNotEmpty() && text[0] == '\n')) {
-                                    break
-                                }
-                                i++
-                            }
-                            if (end) {
-                                val beforeAll = inputConnection.getTextBeforeCursor(Int.MAX_VALUE, 0)
-                                selectionEnd -= beforeAll?.length ?: 0
-                            } else {
-                                selectionEnd -= i
-                            }
-                        }
-                        if (key == KeyEvent.KEYCODE_DPAD_DOWN) {
-                            var i = 1
-                            var text: CharSequence = ""
-                            var end: Boolean
-                            while (true) {
-                                val after = inputConnection.getTextAfterCursor(i, 0) ?: ""
-                                end = after == text
-                                text = after
-                                if (end || (text.isNotEmpty() && text[text.length - 1] == '\n')) {
-                                    break
-                                }
-                                i++
-                            }
-                            if (end) {
-                                val afterAll = inputConnection.getTextAfterCursor(Char.MAX_VALUE.code, 0)
-                                selectionEnd += afterAll?.length ?: 0
-                            } else {
-                                selectionEnd += i
-                            }
-                        }
-                        var start = selectionStart
-                        var end = selectionEnd
-                        if (selectionStart > selectionEnd) {
-                            start = selectionEnd
-                            end = selectionStart
-                        }
-                        inputConnection.setSelection(start, end)
-                    }
-                    return true
-                }
-
-                else -> {
-                    selectionMode = false
-                }
-            }
-        } else {
-            selectionMode = false
-        }
-
         // Ctrl key handling (available since API 11, always true for minSdk 26)
         if (ev.isCtrlPressed) {
-            val convertedEvent = layoutConverter.convertKeyEventForShortcut(ev, alphabetLayoutProvider())
-            if (convertedEvent != null) {
-                inputConnection.sendKeyEvent(convertedEvent)
-                return true
-            }
-            return false
+            inputConnection.sendKeyEvent(ev)
+            return true
         }
 
-        // Alt/Meta key is not handled by IME - let system handle it for shortcuts
         if (ev.isAltPressed || ev.isMetaPressed) {
-            return false
+            inputConnection.sendKeyEvent(ev)
+            return true
         }
 
         if (key >= KeyEvent.KEYCODE_NUMPAD_0 && key <= KeyEvent.KEYCODE_NUMPAD_RIGHT_PAREN) {
