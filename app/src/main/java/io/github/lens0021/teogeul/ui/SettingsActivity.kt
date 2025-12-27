@@ -416,7 +416,7 @@ fun AboutScreen(navController: NavController) {
                     title = stringResource(R.string.preference_about_source_code),
                     summary = "https://github.com/lens0021/Teogeul",
                     onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/lens0021/Teogeul"))
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/lens0021/teogeul"))
                         startActivity(intent)
                     },
                 )
