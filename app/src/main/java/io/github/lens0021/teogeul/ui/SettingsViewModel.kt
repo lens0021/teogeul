@@ -76,6 +76,13 @@ class SettingsViewModel
                 SettingsDefaults.SYSTEM_HARDWARE_LANG_KEY_STROKE,
             )
 
+        val systemKeyMappings: StateFlow<String> =
+            repository.systemKeyMappings.stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5_000),
+                SettingsDefaults.SYSTEM_KEY_MAPPINGS,
+            )
+
         fun updatePreference(
             key: String,
             value: Any,
@@ -113,6 +120,8 @@ class SettingsViewModel
                                 repository.updateString(SettingsKeys.systemStartHangulMode, value)
                             "system_hardware_lang_key_stroke" ->
                                 repository.updateString(SettingsKeys.systemHardwareLangKeyStroke, value)
+                            "system_key_mappings" ->
+                                repository.updateString(SettingsKeys.systemKeyMappings, value)
                             else -> Unit
                         }
                     is Int ->

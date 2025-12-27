@@ -64,6 +64,11 @@ class SettingsRepository(
                 ?: SettingsDefaults.SYSTEM_HARDWARE_LANG_KEY_STROKE
         }
 
+    val systemKeyMappings: Flow<String> =
+        dataStore.data.map {
+            it[SettingsKeys.systemKeyMappings] ?: SettingsDefaults.SYSTEM_KEY_MAPPINGS
+        }
+
     suspend fun updateBoolean(
         key: Preferences.Key<Boolean>,
         value: Boolean,
@@ -115,6 +120,9 @@ class SettingsRepository(
             systemHardwareLangKeyStroke =
                 prefs[SettingsKeys.systemHardwareLangKeyStroke]
                     ?: SettingsDefaults.SYSTEM_HARDWARE_LANG_KEY_STROKE,
+            systemKeyMappings =
+                prefs[SettingsKeys.systemKeyMappings]
+                    ?: SettingsDefaults.SYSTEM_KEY_MAPPINGS,
         )
     }
 }

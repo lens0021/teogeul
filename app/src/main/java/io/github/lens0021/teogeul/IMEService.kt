@@ -26,6 +26,7 @@ import io.github.lens0021.teogeul.korean.HangulEngine.FinishComposingEvent
 import io.github.lens0021.teogeul.korean.HangulEngine.HangulEngineEvent
 import io.github.lens0021.teogeul.korean.HangulEngine.HangulEngineListener
 import io.github.lens0021.teogeul.korean.HangulEngine.SetComposingEvent
+import io.github.lens0021.teogeul.model.KeyMappings
 import io.github.lens0021.teogeul.model.KeyStroke
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +69,8 @@ class IMEService() :
 
     var timeoutHandler: Handler? = null
 
-    var hardwareLangKey: KeyStroke? = null
+    var hardwareLangKey: KeyStroke? = null // deprecated
+    var keyMappings: KeyMappings = KeyMappings.EMPTY
     private var skipNextWindowHiddenSwitch: Boolean = false
 
     private val layoutConverter = LayoutConverter()
@@ -80,12 +82,20 @@ class IMEService() :
             directInputModeProvider = { directInputMode },
             alphabetLayoutProvider = { alphabetLayout },
             hardLangKeyProvider = { hardwareLangKey },
+            keyMappingsProvider = { keyMappings },
             currentLanguageProvider = { currentLanguage },
             toggleLanguage = { toggleLanguage() },
             resetCharComposition = { resetCharComposition() },
             currentInputEditorInfoProvider = { currentInputEditorInfo },
             sendDefaultEditorAction = { sendDefaultEditorAction(it) },
             markInput = {},
+            sendKeyEvent = { keyEvent ->
+                currentInputConnection?.sendKeyEvent(keyEvent)
+            },
+            openIMEPicker = {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.showInputMethodPicker()
+            },
         )
     }
 
@@ -188,7 +198,8 @@ class IMEService() :
         if (resetLanguage) {
             applyStartLanguage(snapshot.systemStartHangulMode)
         }
-        hardwareLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke)
+        hardwareLangKey = KeyStroke.parse(snapshot.systemHardwareLangKeyStroke) // deprecated
+        keyMappings = KeyMappings.parse(snapshot.systemKeyMappings)
 
         // 서브타입에서 레이아웃을 지정했다면 우선 적용하고, 없으면 앱 설정을 사용합니다.
         alphabetLayout = resolveAlphabetLayout(snapshot)
